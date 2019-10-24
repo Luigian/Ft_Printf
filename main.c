@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/21 20:17:31 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:35:23 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,56 +16,36 @@
 int		main(void)
 {
 
-	void		*p = "pointer";
-	char		ch = -128;							//hh
-	short		sh = -32768;						//h
-	int			in = -2147483647;					// no flag
-	long		lon = -9223372036854775807;			//l
-	long long	lonlon = -9223372036854775807;		//ll	
-	unsigned char			uch = 255;						//hh
-	unsigned short			ush = 65535;					//h
-	unsigned int			uin = 4294967295;				// no flag
-	unsigned long			ulon = 18446744073709551615;	//l
-	unsigned long long		ulonlon = 18446744073709551615;	//ll
-
-
-//	ft_printf("hola\n%c\n%s\n%d\n", 'L', "como", 8 + 5);
-
-/*
-	printf("%#p\n", p);
-	printf("%0p\n", p);
-	printf("%-p\n", p);
-	printf("% p\n", p);
-	printf("%+p\n", p);
-	printf("%10p\n", p);
-	printf("%.5p\n", p);
-	printf("%hp\n", p);
-	printf("%hhp\n", p);
-	printf("%lp\n", p);
-	printf("%llp\n", p);
-	printf("%Lp\n", p);
-*/
+	void					*p = "pointer";
+	char					ch = -128;							//hh
+	short					sh = -32768;						//h
+	int						in = -2147483647;					// no flag
+	long					lon = -9223372036854775807;			//l
+	long long				lonlon = -9223372036854775807;		//ll	
+	unsigned char			uch = 255;							//hh
+	unsigned short			ush = 65535;						//h
+	unsigned int			uin = 4294967295;					// no flag
+	unsigned long			ulon = 9223372036854775807;			//l
+	unsigned long long		ulonlon = 9223372036854775807;		//ll
 
 	printf("%c\n", 42);
+	printf("%-c\n", 42);
 	printf("%20c\n", 42);
-	printf("%-20c\n", 42);
 printf("-------------------------------------------------------------------\n");
 	printf("%s\n", "silicon valley");
-	printf("%.13s\n", "silicon valley");
-	printf("%15.13s\n", "silicon valley");
-	printf("%-15.13s\n", "silicon valley");
-	printf("%15s\n", "silicon valley");
-	printf("%-15s\n", "silicon valley");
+	printf("%-s\n", "silicon valley");
+	printf("%20s\n", "silicon valley");
+	printf("%.3s\n", "silicon valley");
 printf("-------------------------------------------------------------------\n");
 	printf("%p\n", p);
+	printf("%-p\n", p);
 	printf("%20p\n", p);
-	printf("%-20p\n", p);
 printf("-------------------------------------------------------------------\n");
-	printf("%d\n", in);						// must be signed 'int' (-2,147,483,647, +2,147,483,647) 
-	printf("%hhd\n", ch); 					// must be declared as signed 'char' (−128, +127) 
-	printf("%hd\n", sh);					// must be declared as signed 'short' (−32,768, +32,767)
-	printf("%ld\n", lon);					// must be declared as signed 'long' (-9,223,372,036,854,775,807, +9,223,372,036,854,775,807)
-	printf("%lld\n", lonlon);				// must be declared as signed 'long long' (-9,223,372,036,854,775,807, +9,223,372,036,854,775,807)
+	printf("%d\n", in);
+	printf("%hhd\n", ch);
+	printf("%hd\n", sh);
+	printf("%ld\n", lon);
+	printf("%lld\n", lonlon);
 	printf("%0d\n", 777);
 	printf("%-d\n", 777);
 	printf("% d\n", 777);
@@ -73,9 +53,9 @@ printf("-------------------------------------------------------------------\n");
 	printf("%10d\n", 777);
 	printf("%.5d\n", 777);
 printf("-------------------------------------------------------------------\n");
-	printf("%o\n", 112);					// dec 112 = oct 160
-	printf("%o\n", 160);					// dec 160 = oct 240
-	printf("%o\n", 'p');					// 'p' = dec 112 = oct 160
+	printf("%o\n", 112);										// dec 112 = oct 160
+	printf("%o\n", 160);										// dec 160 = oct 240
+	printf("%o\n", 'p');										// 'p' = dec 112 = oct 160
 	printf("%hho\n", uch);
 	printf("%ho\n", ush);
 	printf("%o\n", uin);
@@ -122,10 +102,24 @@ printf("-------------------------------------------------------------------\n");
 	printf("%10X\n", 2010);
 	printf("%.5X\n", 2010);
 printf("-------------------------------------------------------------------\n");
-
-
-
-
-
+	printf("%f\n", 3.1416);
+	printf("%lf\n", (double) 3.1416);
+	printf("%Lf\n", (long double) 3.1416);
+	printf("%0+20.1f\n", 3.1);
+	printf("%#0+20.1f\n", 3.1);					// '#' valid, but reflects no change
+	printf("%0f\n", 3.1416);
+	printf("%-f\n", 3.1416);
+	printf("% f\n", 3.1416);
+	printf("%+f\n", 3.1416);
+	printf("%20f\n", 3.1416);
+	printf("%.20f\n", 3.1416);
+printf("--------------------------------\n");
+	
+	
+	
+	
+	
+	
+	
 	return (0);
 }
