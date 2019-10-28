@@ -6,33 +6,44 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/26 21:55:56 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/27 21:40:15 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-int		store_conversion_specs(t_cs *cs)
+void	print_object(t_cs *cs)
 {
-	while (is_format_specificator(*(cs->ptr)))
+	printf("hash: %u\n", cs->hash);
+	printf("zero: %u\n", cs->zero);
+	printf("minus: %u\n", cs->minus);
+	printf("space: %u\n", cs->space);
+	printf("plus: %u\n", cs->plus);
+	printf("minwid: %u\n", cs->minwid);
+	printf("preci: %d\n", cs->preci);
+	printf("len: %u\n", cs->len);
+	printf("ext: %d\n", cs->ext);
+	printf("type: %c\n", cs->type);
+	printf("scape: %d\n", cs->scape);
+	printf("other: %c\n", cs->other);
+	printf("ptr: %s", cs->ptr);
+	printf("-----------\n");
+}
+
+int		store_format_specifications(t_cs *cs)
+{
+	while (1)
 	{
-		if (is_flag_spec(*(cs->ptr)))
-			store_flag_value(cs);
-		else if (is_decimal_spec(*(cs->ptr)))
-			store_decimal_value(cs);
-		else if (is_length_spec(*(cs->ptr)))
-			store_length_value(cs);
+		if (is_flag(*cs->ptr))
+			store_flag(cs);
+		else if (is_decimal(*cs->ptr))
+			store_decimal(cs);
+		else if (is_length(*cs->ptr))
+			store_length(cs);
+		else
+			break;
 	}
-	if (is_type_specificator(*(cs->ptr)))
-		cs->type = *(cs->ptr);
-	else if (is_scape_specificator(*(cs->ptr)))
-		cs->scape = *(cs->ptr);
-	else if (*(cs->ptr))
-		cs->other = *(cs->ptr);
-	else
-		return (1);
-	++(cs->ptr);
 	return (0);
 }
 
@@ -47,9 +58,9 @@ void	reset_object(t_cs *cs)
 	cs->preci = 0;
 	cs->len = 0;
 	cs->ext = 0;
-	cs->type = 0;
+	cs->type = '0';
 	cs->scape = 0;
-	cs->other = 0;
+	cs->other = '0';
 }
 
 t_cs	*create_object(const char *fmt)
@@ -58,78 +69,54 @@ t_cs	*create_object(const char *fmt)
 
 	if (!(cs = (t_cs *)malloc(sizeof(t_cs) * 1)))
 		return (NULL);
-/*	cs->hash = 0;
-	cs->zero = 0;
-	cs->minus = 0;
-	cs->space = 0;
-	cs->plus = 0;
-	cs->minwid = 0;
-	cs->preci = 0;
-	cs->len = 0;
-	cs->ext = 0;
-	cs->type = 0;
-	cs->scape = 0;
-	cs->other = 0;
-*/	cs->ptr = fmt;
+	reset_object(cs);
+	cs->ptr = fmt;
 	return (cs);
 }
 
-int		print_argument(/*va_list ap,*/ t_cs *cs)
+int		print_argument(va_list ap, t_cs *cs)
 {
 	reset_object(cs);
-	store_conversion_specs(cs);
-	
-	
-	
-/*	
-	char	c;
-	char	*s;
-	int		d;
-	
-	if (*fmt == 'c')
-	{
-		c = va_arg(ap, int);
-		ft_putchar(c);
-	}
-	else if (*fmt == 's')
-	{
-		s = va_arg(ap, char *);
-		ft_putstr(s);
-	}
-	else if (*fmt == 'd')
-	{
-		d = va_arg(ap, int);
-		ft_putnbr(d);
-	}
-*/	
+	store_format_specifications(cs);
+	if (is_type_specificator(*cs->ptr))
+		print_type(ap, cs);
+	else if (is_scape_specificator(*cs->ptr))
+		cs->scape = *cs->ptr;
+	else if (*cs->ptr)
+		cs->other = *cs->ptr;
+	else
+		return (1);
+	++(cs->ptr);
 	return (0);
 }
 	
 int		ft_printf(const char *fmt, ...)
 {
 	t_cs		*cs;
-//	va_list		ap;
+	va_list		ap;
 	int			ret;
 	
 	if (!(cs = create_object(fmt)))
 		exit (-1);
-//	va_start(ap, fmt);
+//	print_object(cs);
+	va_start(ap, fmt);
 	ret = 0;
-	while (*(cs->ptr))
+	while (*cs->ptr)
 	{
-		if (*(cs->ptr) == '%')
+		if (*cs->ptr == '%')
 		{
-			++(cs->ptr);
-			print_argument(/*ap,*/ cs);
+			++cs->ptr;
+			print_argument(ap, cs);
+//			print_object(cs);
 		}	
 		else
 		{
-			ft_putchar(*(cs->ptr));
-			++(cs->ptr);
+			ft_putchar(*cs->ptr);
+			++cs->ptr;
 			++ret;
 		}
 	}
 	free(cs);
-//	va_end(ap);
+	va_end(ap);
 	return (ret);
 }

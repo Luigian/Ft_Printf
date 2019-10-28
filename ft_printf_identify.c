@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_is_tools.c                               :+:      :+:    :+:   */
+/*   ft_printf_identify.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:02:57 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/26 21:29:19 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/27 19:48:12 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,17 @@ int		is_type_specificator(char c)
 		   	|| c == 'o'	|| c == 'u' || c == 'x' || c == 'X' || c == 'f');
 }
 
-int		is_length_spec(char c)
+int		is_length(char c)
 {
 	return (c == 'h' || c == 'l' || c == 'L');
 }
 
-int		is_decimal_spec(char c)
+int		is_decimal(char c)
 {
 	return (ft_isdigit(c) || c == '.');
 }
 
-int		is_flag_spec(char c)
+int		is_flag(char c)
 {
 	return (c == '#' || c == '0' || c == '-' || c == ' ' || c == '+');
-}
-
-int		is_format_specificator(char c)
-{
-	return (is_flag_spec(c) || is_decimal_spec(c) || is_length_spec(c));
 }
