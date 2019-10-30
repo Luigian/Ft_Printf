@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/28 19:27:28 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/29 20:41:07 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,19 @@ int		store_format_specifications(t_cs *cs)
 			store_length(cs);
 		else
 			break;
+	}
+	if (*cs->ptr == 'd')
+		cs->hash = 0;
+	if (*cs->ptr == 'u')
+	{
+		cs->hash = 0;
+		cs->space = 0;
+		cs->plus = 0;
+	}
+	if (*cs->ptr == 'o' || *cs->ptr == 'x' || *cs->ptr == 'X')
+	{
+		cs->space = 0;
+		cs->plus = 0;
 	}
 	return (0);
 }

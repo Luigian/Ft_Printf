@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/28 18:36:01 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/29 20:24:20 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "libft/libft.h"
 #include <stdarg.h>
+#include <stdio.h>
 
 typedef struct		s_cs
 {
@@ -52,10 +53,14 @@ int			is_length(char c);
 
 int			print_type(va_list ap, t_cs *cs);
 char		*get_string(va_list ap, t_cs *cs);
+char		*hash(char *str, t_cs *cs);
 char		*precision(char *str, t_cs *cs);
 char		*minimum_and_minus(char *str, t_cs *cs);
 char		*plus_and_space(char *str, t_cs *cs);
 char		*zero(char *str, t_cs *cs);
 char		*ft_itoa_long(long long n);
 int			ft_nbrlen_long(long long n);
+char		*ft_itoa_long_un(unsigned long long n);
+int			ft_nbrlen_long_un(unsigned long long n);
+char		*ft_itoa_base(long long n, int base);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/28 19:59:36 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/29 22:04:36 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,12 @@ char	*zero(char *str, t_cs *cs)
 	char	*ret;
 	int		len;
 		
+	len = 0;
 	if (str[0] != '-')
-			len = 0 - (cs->plus || cs->space); 
-	if ((len = cs->minwid - ft_strlen(str)) > 0)
+		len = 0 - (cs->plus || cs->space); 
+	if (cs->hash && *cs->ptr == 'x')
+		len -= 2; 
+	if ((len = len + cs->minwid - ft_strlen(str)) > 0)
 	{
 		new = ft_memset(ft_strnew(len), '0', len);
 		if (str[0] == '-')
@@ -102,4 +105,22 @@ char	*precision(char *str, t_cs *cs)
 		free(str);
 	}
 	return (ret);
+}
+
+char	*hash(char *str, t_cs *cs)
+{
+	char	*new;
+	char	*ret;
+
+	if (cs->hash)
+	{
+		if (*cs->ptr == 'x')
+			new = "0x";
+		else if (*cs->ptr == 'o')
+			new = "0";
+		ret = ft_strjoin(new, str);
+		free(str);
+		return (ret);
+	}
+	return (str);
 }
