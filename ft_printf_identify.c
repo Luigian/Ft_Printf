@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:02:57 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/28 19:27:44 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/31 21:02:48 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int		is_scape_specificator(char c)
 int		is_type_specificator(char c)
 {
 	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'\
-		   	|| c == 'o'	|| c == 'u' || c == 'x' || c == 'X' || c == 'f');
+		   	|| c == 'o'	|| c == 'u' || c == 'x' || c == 'X' || c == 'f'\
+			|| c == '%');
 }
 
 int		is_length(char c)

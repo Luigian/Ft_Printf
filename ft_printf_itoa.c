@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/29 20:59:04 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/31 14:28:07 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,15 @@ char	*ft_itoa_long(long long n)
 	return (str);
 }
 
-char	*ft_itoa_base(long long n, int base)
+char	*ft_itoa_base(long long n, int base, t_cs *cs)
 {
 	int			len;
 	long long	nbr;
 	char		*str;
 	char		*base_string = "0123456789abcdef";
 
+	if (*cs->ptr == 'X')
+		base_string = "0123456789ABCDEF";
 	if (n == 0)
 		return ("0");
 	len = 0;

@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/29 20:41:07 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/10/31 20:47:10 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,25 @@ int		store_format_specifications(t_cs *cs)
 		cs->space = 0;
 		cs->plus = 0;
 	}
+	if (*cs->ptr == 'c' || *cs->ptr == '%')
+	{
+		cs->hash = 0;
+		cs->space = 0;
+		cs->plus = 0;
+		cs->preci = -1;
+	}
+	if (*cs->ptr == 's')
+	{
+		cs->hash = 0;
+		cs->space = 0;
+		cs->plus = 0;
+	}
+	if (*cs->ptr == 'p')
+	{
+		cs->space = 0;
+		cs->plus = 0;
+		cs->hash = 1;
+	}
 	return (0);
 }
 
@@ -83,7 +102,7 @@ t_cs	*create_object(const char *fmt)
 	if (!(cs = (t_cs *)malloc(sizeof(t_cs) * 1)))
 		return (NULL);
 	reset_object(cs);
-	cs->ptr = fmt;
+	cs->ptr = (char *)fmt;
 	return (cs);
 }
 
