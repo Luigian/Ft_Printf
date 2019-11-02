@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/31 20:08:24 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/01 20:27:39 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*precision(char *str, t_cs *cs)
 	int		len;
 
 	ret = str;
-	if (cs->preci < 0)
+	if (cs->preci < 0 || *cs->ptr == 'f')
 	{
 		if (cs->zero && !cs->minus)
 			ret = zero(str, cs);

@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/31 20:47:10 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/01 13:43:56 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ int		store_format_specifications(t_cs *cs)
 		cs->plus = 0;
 		cs->hash = 1;
 	}
+	if (*cs->ptr == 'f')
+	{
+		if (cs->preci == -1)
+			cs->preci = 6;
+	}
 	return (0);
 }
 
@@ -130,7 +135,6 @@ int		ft_printf(const char *fmt, ...)
 	
 	if (!(cs = create_object(fmt)))
 		exit (-1);
-//	print_object(cs);
 	va_start(ap, fmt);
 	ret = 0;
 	while (*cs->ptr)
@@ -139,7 +143,6 @@ int		ft_printf(const char *fmt, ...)
 		{
 			++cs->ptr;
 			print_argument(ap, cs);
-//			print_object(cs);
 		}	
 		else
 		{

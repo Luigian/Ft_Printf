@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/31 20:52:59 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/01 21:29:04 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,8 @@ int		main(void)
 	printf("[empty] --------------------------------------------------------\n");
 	printf("%-20", 128);
 	printf("%-20hh", 128);
-	printf("%", 128);
-*/	printf("[ft_printf] ----------------------------------------------------\n");
-	//fflush(stdout);
+	printf("%", 128);*/
+//fflush(stdout);
 	printf("[d int] --------------------------------------------------\n");
 	printf("%#0- +30.20lllhhhLlLhhhlll.20+30 -0#dcsphola\n", 20);
 	ft_printf("%#0- +30.20lllhhhLlLhhhlll.20+30 -0#dcsphola\n", 20);
@@ -655,6 +654,75 @@ int		main(void)
 	ft_printf("%# +.6%\n");
 	printf("%# +.5%\n");
 	ft_printf("%# +.5%\n");
+	printf("[f float] --------------------------------------------------\n");
+//	printf("%#0- +30.20lllhhhLlLhhhlll.20+30 -0#fcsphola\n", 3.1416);
+//	ft_printf("%#0- +30.20lllhhhLlLhhhlll.20+30 -0#fcsphola\n", 3.1416);
+	printf("%#0- +40.20f\n", 0.1234);
+	ft_printf("%#0- +40.20Lf\n", 0.1234);
+	printf("%#0 +40.30f\n", 0.1234);
+//	ft_printf("%#0 +40.30f\n", 0.1234);
+	printf("%#- +40.30f\n", 0.1234);
+//	ft_printf("%#- +40.30f\n", 0.1234);
+	printf("%# +.30f\n", 0.1234);
+//	ft_printf("%# +.30f\n", 0.1234);
+	printf("%# +.f\n", 0.1416);
+//	ft_printf("%# +.f\n", 0.1416);
+	printf("%# +f\n", 0.5678);
+//	ft_printf("%# +f\n", 0.5678);
+	printf("%#0- +40f\n", 0.5678);
+//	ft_printf("%#0- +40f\n", 0.5678);
+	printf("%#0 +40f\n", 0.5678);
+//	ft_printf("%#0 +40f\n", 0.5678);
+	printf("%# +40f\n", 0.5678);
+//	ft_printf("%# +40f\n", 0.5678);
+	printf("%f\n", 3.1416);
+//	ft_printf("%f\n", 3.1416);
+	printf("%.2f\n", 3.1416);
+//	ft_printf("%.2f\n", 3.1416);
+	printf("%.f\n", 3.1416);
+//	ft_printf("%.f\n", 3.1416);
+	printf("%f\n", -3.1416);
+//	ft_printf("%f\n", -3.1416);
+	printf("%010.2f\n", -3.1416);
+//	ft_printf("%010.2f\n", -3.1416);
+	printf("%-10.2f\n", -3.1416);
+//	ft_printf("%-10.2f\n", -3.1416);
+	printf("%-+10.2f\n", -3.1416);
+//	ft_printf("%-+10.2f\n", -3.1416);
+	printf("%-+10.2f\n", 3.1416);
+//	ft_printf("%-+10.2f\n", 3.1416);
+	printf("%- 10.2f\n", 3.1416);
+//	ft_printf("%- 10.2f\n", 3.1416);
+	printf("%- 10.2f\n", -3.1416);
+//	ft_printf("%- 10.2f\n", -3.1416);
+	printf("%#- 10.f\n", 3.1416);
+//	ft_printf("%#- 10.f\n", 3.1416);
+	printf("%.9f\n", 3.141631416);
+//	ft_printf("%.9f\n", 3.141631416);
+	printf("%.9lf\n", (double) 3.141631416);
+//	ft_printf("%.9lf\n", (double) 3.141631416);
+	printf("%.9Lf\n", (long double) 3.1416);
+//	ft_printf("%.9Lf\n", (long double) 3.1416);
+	printf("%f\n", 31.416);
+//	ft_printf("%f\n", 31.416);
+	printf("%f\n", 314.16);
+//	ft_printf("%f\n", 314.16);
+	printf("%f\n", 3141.6);
+//	ft_printf("%f\n", 3141.6);
+	printf("%#.f\n", 3.1);
+//	ft_printf("%#.f\n", 3.1);
+	printf("%0f\n", 3.1416);
+//	ft_printf("%0f\n", 3.1416);
+	printf("%-f\n", 3.1416);
+//	ft_printf("%-f\n", 3.1416);
+	printf("% f\n", 3.1416);
+//	ft_printf("% f\n", 3.1416);
+	printf("%+f\n", 3.1416);
+//	ft_printf("%+f\n", 3.1416);
+	printf("%20f\n", 3.1416);
+//	ft_printf("%20f\n", 3.1416);
+	printf("%.20f\n", 3.1416);
+//	ft_printf("%.20f\n", 3.1416);
 	
 	system("leaks a.out");
 	return (0);

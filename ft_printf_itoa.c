@@ -6,52 +6,11 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/31 14:28:07 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/01 21:02:12 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int		ft_nbrlen_long(long long n)
-{
-	int len;
-
-	len = 0;
-	if (n == 0)
-		return (1);
-	(n < 0) ? (++len) : 0;
-	while (n != 0)
-	{
-		++len;
-		n /= 10;
-	}
-	return (len);
-}
-
-char	*ft_itoa_long(long long n)
-{
-	int		i;
-	int		len;
-	char	*str;
-
-	i = 1;
-	len = ft_nbrlen_long(n);
-	if (!(str = ft_strnew(len)))
-		return (NULL);
-	if (n < 0)
-	{
-		str[0] = '-';
-		n *= -1;
-	}
-	if (n == 0)
-		str[0] = '0';
-	while (n > 0)
-	{
-		str[len - i++] = (n % 10) + 48;
-		n /= 10;
-	}
-	return (str);
-}
 
 char	*ft_itoa_base(long long n, int base, t_cs *cs)
 {
@@ -90,64 +49,67 @@ char	*ft_itoa_base(long long n, int base, t_cs *cs)
 	return (str);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-int		ft_nbrlen_long_un(unsigned long long n)
-{
-	int len;
-
-	len = 0;
-	if (n == 0)
-		return (1);
-//	(n < 0) ? (++len) : 0;
-	while (n != 0)
-	{
-		++len;
-		n /= 10;
-	}
-	return (len);
-}
-
-char	*ft_itoa_long_un(unsigned long long n)
+char	*ft_itoa_float(double n, t_cs *cs)
 {
 	int		i;
-	int		len;
-	char	*str;
+	int		d;
+	char	*s;
+	char	*t;
+	char	*j;
+	int		sign;
 
-	i = 1;
-	len = ft_nbrlen_long_un(n);
-	if (!(str = ft_strnew(len)))
-		return (NULL);
-//	if (n < 0)
-//	{
-//		str[0] = '-';
-//		n *= -1;
-//	}
-	if (n == 0)
-		str[0] = '0';
-	while (n > 0)
+	i = 0;
+	d = 1;
+	sign = 0;
+	if (n < 0)
 	{
-		str[len - i++] = (n % 10) + 48;
-		n /= 10;
+		n *= -1;
+		sign = 1;
 	}
-	return (str);
-}*/
+	while (n > d)
+	{
+		++i;
+		d *= 10;
+	}
+	d = 0;
+	while (d < cs->preci)
+	{
+		n *= 10;
+		++d;
+	}
+	s = ft_itoa_base((long long)n, 10, cs);
+	if (cs->preci == 0 && cs->hash == 0)
+	{
+		if (sign)
+		{
+			t = ft_memset(ft_strnew(1), '-', 1);
+			j = ft_strjoin(t, s);
+			free(t);
+			free(s);	
+			return (j);
+		}
+		else
+			return (s);
+	}
+	t = ft_strnew(ft_strlen(s + i) + 1);
+	t[0] = '.';
+	ft_strcpy(t + 1, s + i);
+	s[i] = '\0';
+	if (i == 0)
+	{
+		free(s);
+		s = "0";
+	}
+	j = ft_strjoin(s, t);
+	i != 0 ? free(s) : 0;
+	free(t);
+	if (sign)
+	{
+		t = ft_memset(ft_strnew(1), '-', 1);
+		s = ft_strjoin(t, j);
+		free(t);
+		free(j);	
+		return (s);
+	}		
+	return (j);
+}

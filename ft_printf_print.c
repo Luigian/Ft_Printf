@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/31 21:03:22 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/01 21:28:22 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,6 @@
 
 char	*get_string(va_list ap, t_cs *cs)
 {
-/*	if (*cs->ptr == 'd' || *cs->ptr == 'i')
-	{
-		if (cs->len < 3)
-			return (ft_itoa_long(va_arg(ap, int)));
-		else if (cs->len == 3)
-			return (ft_itoa_long(va_arg(ap, long)));
-		else if (cs->len == 4)
-			return (ft_itoa_long(va_arg(ap, long long)));
-	}
-	if (*cs->ptr == 'u')
-	{
-		if (cs->len < 3)
-			return (ft_itoa_long(va_arg(ap, unsigned int)));
-		else if (cs->len == 3)
-			return (ft_itoa_long(va_arg(ap, unsigned long)));
-		else if (cs->len == 4)
-			return (ft_itoa_long(va_arg(ap, unsigned long long)));
-	}*/
 	if (*cs->ptr == 'd' || *cs->ptr == 'i')
 	{
 		if (cs->len < 3)
@@ -84,6 +66,13 @@ char	*get_string(va_list ap, t_cs *cs)
 	{
 		return (ft_memset(ft_strnew(1), '%', 1));
 	}	
+	if (*cs->ptr == 'f')
+	{
+//		if (cs->ext)
+//			return (ft_itoa_float(va_arg(ap, long double), cs));
+//		else
+			return (ft_itoa_float(va_arg(ap, double), cs));
+	}
 	return ("no type");
 }
 
@@ -94,7 +83,8 @@ int		print_type(va_list ap, t_cs *cs)
 	str = get_string(ap, cs);
 	*cs->ptr == 'o' ? str = hash(str, cs) : 0;
 	str = precision(str, cs);
-	*cs->ptr == 'x' || *cs->ptr == 'X' || *cs->ptr == 'p' ? str = hash(str, cs) : 0;
+	*cs->ptr == 'x' || *cs->ptr == 'X' ||\
+		*cs->ptr == 'p' ? str = hash(str, cs) : 0;
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);
