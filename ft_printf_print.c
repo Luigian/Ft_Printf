@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/01 21:28:22 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/02 11:11:27 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		print_type(va_list ap, t_cs *cs)
 {
 	char	*str;
 
+	
 	str = get_string(ap, cs);
 	*cs->ptr == 'o' ? str = hash(str, cs) : 0;
 	str = precision(str, cs);
@@ -88,6 +89,7 @@ int		print_type(va_list ap, t_cs *cs)
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);
+	printf("\n");
 	free(str);
 	return (0);
 }

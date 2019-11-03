@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/01 19:03:49 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/02 11:50:07 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ char		*minimum_and_minus(char *str, t_cs *cs);
 char		*plus_and_space(char *str, t_cs *cs);
 char		*zero(char *str, t_cs *cs);
 char		*ft_itoa_base(long long n, int base, t_cs *cs);
-char		*ft_itoa_float(double n, t_cs *cs);
+char		*ft_itoa_float(long double n, t_cs *cs);
+char		*ft_itoa_extended(long double n, t_cs *cs);
+char		*ft_itoa_unsigned(unsigned long long n);
 #endif
