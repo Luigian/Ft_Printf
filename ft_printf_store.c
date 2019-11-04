@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/10/29 20:50:43 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/03 20:21:10 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		store_length(t_cs *cs)
 			++cs->ptr;
 		}
 	}
-	else
+	else if (*cs->ptr == 'L')
 		cs->ext = 1;
 	++cs->ptr;
 	return (0);

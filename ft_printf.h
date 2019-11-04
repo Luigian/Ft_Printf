@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/02 11:50:07 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/03 09:44:18 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct		s_cs
 	unsigned char	scape;
 	unsigned char	other;
 	char			*ptr;
+	char			*bef;
+	char			*aft;
 }					t_cs;
 
 int			ft_printf(const char *fmt, ...);

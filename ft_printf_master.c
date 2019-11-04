@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/01 13:43:56 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/03 10:00:51 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	reset_object(t_cs *cs)
 	cs->type = '0';
 	cs->scape = 0;
 	cs->other = '0';
+	cs->bef = NULL;
+	cs->aft = NULL;
 }
 
 t_cs	*create_object(const char *fmt)
@@ -108,6 +110,8 @@ t_cs	*create_object(const char *fmt)
 		return (NULL);
 	reset_object(cs);
 	cs->ptr = (char *)fmt;
+	cs->bef = NULL;
+	cs->aft = NULL;
 	return (cs);
 }
 
