@@ -6,13 +6,13 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/03 10:00:51 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/04 20:04:33 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
-
+/*
 void	print_object(t_cs *cs)
 {
 	printf("hash: %u\n", cs->hash);
@@ -30,7 +30,7 @@ void	print_object(t_cs *cs)
 	printf("ptr: %s", cs->ptr);
 	printf("-----------\n");
 }
-
+*/
 int		store_format_specifications(t_cs *cs)
 {
 	while (1)
@@ -112,6 +112,7 @@ t_cs	*create_object(const char *fmt)
 	cs->ptr = (char *)fmt;
 	cs->bef = NULL;
 	cs->aft = NULL;
+	cs->ret = 0;
 	return (cs);
 }
 
@@ -135,12 +136,10 @@ int		ft_printf(const char *fmt, ...)
 {
 	t_cs		*cs;
 	va_list		ap;
-	int			ret;
 	
 	if (!(cs = create_object(fmt)))
 		exit (-1);
 	va_start(ap, fmt);
-	ret = 0;
 	while (*cs->ptr)
 	{
 		if (*cs->ptr == '%')
@@ -152,10 +151,10 @@ int		ft_printf(const char *fmt, ...)
 		{
 			ft_putchar(*cs->ptr);
 			++cs->ptr;
-			++ret;
+			++cs->ret;
 		}
 	}
 	free(cs);
 	va_end(ap);
-	return (ret);
+	return (cs->ret);
 }

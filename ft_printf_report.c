@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/02 08:40:06 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/04 21:28:39 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ char	*precision(char *str, t_cs *cs)
 			ret = zero(ret, cs);
 		free(str);
 	}
+	else if (!cs->hash && !cs->preci && ft_strlen(str) == 1 && str[0] == '0')
+	{
+		str[0] = '\0';
+	}
 	else if ((len = cs->preci - ft_strlen(str)) > 0)
 	{
 		if (str[0] == '-')
@@ -128,7 +132,12 @@ char	*hash(char *str, t_cs *cs)
 		else if (*cs->ptr == 'X')
 			new = "0X";
 		else if (*cs->ptr == 'o')
-			new = "0";
+		{
+			if (str[0] != '0')
+				new = "0";
+			else
+				return (str);
+		}
 		ret = ft_strjoin(new, str);
 		free(str);
 		return (ret);

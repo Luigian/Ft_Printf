@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/03 09:44:18 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/04 19:21:53 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct		s_cs
 	char			*ptr;
 	char			*bef;
 	char			*aft;
+	int				ret;
 }					t_cs;
 
 int			ft_printf(const char *fmt, ...);
@@ -61,6 +62,7 @@ char		*minimum_and_minus(char *str, t_cs *cs);
 char		*plus_and_space(char *str, t_cs *cs);
 char		*zero(char *str, t_cs *cs);
 char		*ft_itoa_base(long long n, int base, t_cs *cs);
+char		*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs);
 char		*ft_itoa_float(long double n, t_cs *cs);
 char		*ft_itoa_extended(long double n, t_cs *cs);
 char		*ft_itoa_unsigned(unsigned long long n);
