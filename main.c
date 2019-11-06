@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/04 21:32:16 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/06 11:46:11 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1088,13 +1088,89 @@ int		main(void)
 	printf("%d\n", printf("%0-10.8c %0-10s %#0-10.8p %#0- +10.8lld %#0- +10.8li %#0-10.8llo %#0-10.8llu %#0-10.8llx %#0-10.8llX %#0- +10.8Lf %010%\n", 'Q', "test", p, (long long)18446744073709551615, (long)18446744073709551615, (unsigned long long)18446744073709551615, (unsigned long long)18446744073709551615, (unsigned long long)18446744073709551615, (unsigned long long)18446744073709551615, (long double)18446744073709551615.18446744073709551615));
 	printf("%d\n", ft_printf("%0-10.8c %0-10s %#0-10.8p %#0- +10.8lld %#0- +10.8li %#0-10.8llo %#0-10.8llu %#0-10.8llx %#0-10.8llX %#0- +10.8Lf %010%\n", 'Q', "test", p, (long long)18446744073709551615, (long)18446744073709551615, (unsigned long long)18446744073709551615, (unsigned long long)18446744073709551615, (unsigned long long)18446744073709551615, (unsigned long long)18446744073709551615, (long double)18446744073709551615.18446744073709551615));
 
-	printf("[filchecker fails] --------------------------------------------------\n");
+	printf("[filchecker] --------------------------------------------------\n");
 	printf("@moulitest: %#.x %#.0x\n", 0, 0);
 	ft_printf("@moulitest: %#.x %#.0x\n", 0, 0);
 	printf("@moulitest: %#.o %#.0o\n", 0, 0);	
 	ft_printf("@moulitest: %#.o %#.0o\n", 0, 0);	
 	printf("%hd\n", 32768);	
 	ft_printf("%hd\n", 32768);	
+	printf("%lld\n", -9223372036854775808);	
+	ft_printf("%lld\n", -9223372036854775808);	
+	printf("%03.2d\n", -1);	
+	ft_printf("%03.2d\n", -1);
+	printf("%Z\n");
+	ft_printf("%Z\n");
+	printf("% hZ\n");
+	ft_printf("% hZ\n");
+	printf("%jx\n", 4294967295);
+	ft_printf("%jx\n", 4294967295);
+	printf("%x\n", 4294967296);
+	ft_printf("%x\n", 4294967296);
+	printf("%.c\n", 0);
+	ft_printf("%.c\n", 0);
+	printf("{%3c}\n", 0);	
+	ft_printf("{%3c}\n", 0);
+	printf("%s\n", "k^@l");
+	ft_printf("%s\n", "k^@l");
+	printf("%hhu\n", 255 + 42);
+	ft_printf("%hhu\n", 255 + 42);
+	printf("%hho\n", 255 + 42);
+	ft_printf("%hho\n", 255 + 42);
+	printf("%.p, %.0p\n", 0, 0);
+	ft_printf("%.p, %.0p\n", 0, 0);
+	printf("{%c}\n", "hello");
+	ft_printf("{%c}\n", "hello");
+	static unsigned int		mx_u = 235;
+//	static long double		mx_Lf = 0.375l;
+//	static double			mx_f = 0.625;
+	static long				mx_li =  4223372036854775800;
+//	static long long		mx_lli = 3223372036654775200;
+//	static char				mx_c = 'G';
+	static short			mx_hi = -3244;
+//	static char				mx_hhi = 'F';
+//	static char				*mx_s = "Hello, World!";
+	static int				mx_i = 42;
+	printf("%i %li %X %p %hi %o\n",mx_i, mx_li, mx_u, &mx_i, mx_hi, mx_u);
+	ft_printf("%i %li %X %p %hi %o\n",mx_i, mx_li, mx_u, &mx_i, mx_hi, mx_u);
+	printf("[nan] --------------------------------------------------\n");
+	printf("%#0 +010.2Lf\n", 42.5);	
+	ft_printf("%#0 +10.2Lf\n", 42.5);
+	printf("[* flag] --------------------------------------------------\n");
+	printf("{%*d}\n", 5, 0);
+	ft_printf("{%*d}\n", 5, 0);
+	printf("{%*20d}\n", 5, 123);
+	ft_printf("{%*20d}\n", 5, 123);
+	printf("{%-10.5d}\n", 123);
+	ft_printf("{%-10.5d}\n", 123);
+	printf("{%.*d}\n", 5, 123);
+	ft_printf("{%.*d}\n", 5, 123);
+	printf("{%-10.*.44d}\n", 5, 123);
+	ft_printf("{%-10.*.44d}\n", 5, 123);
+	printf("{%-10*.4d}\n", 5, 123);
+	ft_printf("{%-10*.4d}\n", 5, 123);
+	printf("{%*d}\n", -5, 42);
+	ft_printf("{%*d}\n", -5, 42);
+	printf("{%.*f}\n", -2, 42.123456);
+	ft_printf("{%.*f}\n", -2, 42.123456);
+	printf("[j z flag] --------------------------------------------------\n");
+	printf("%jx\n", 4294967297);	
+	ft_printf("%jx\n", 4294967297);	
+	printf("%zd\n", 4294967295);
+	ft_printf("%zd\n", 4294967295);
+	printf("[U type] --------------------------------------------------\n");
+	printf("%U\n", 4294967295);
+	ft_printf("%U\n", 4294967295);
+
+
+//	printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", "hello", "world");
+//	printf("{%*3d}\n", 5, 0);
+//	ft_printf("{%*3d}\n", 5, 0);
+	
+	
+	
+	
+	
 	
 	//fflush(stdout);
 	system("leaks a.out");

@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/04 21:39:18 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/06 08:36:46 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 char	*ft_itoa_base(long long n, int base, t_cs *cs)
 {
-	int			len;
-	long long	nbr;
-	char		*str;
-	char		*base_string = "0123456789abcdef";
+	int					len;
+	long long			nbr;
+	unsigned long long	unlon;
+	char				*str;
+	char				*base_string = "0123456789abcdef";
 
 	if (*cs->ptr == 'X')
 		base_string = "0123456789ABCDEF";
@@ -37,12 +38,13 @@ char	*ft_itoa_base(long long n, int base, t_cs *cs)
 			len += 1;
 		nbr *= -1;
 	}
+	unlon = (unsigned long long)nbr;
 	if (!(str = ft_strnew(len)))
 		return (NULL);
-	while (nbr)
+	while (unlon)
 	{
-		str[--len] = base_string[nbr % base];
-		nbr /= base;
+		str[--len] = base_string[unlon % base];
+		unlon /= base;
 	}
 	if (n < 0 && base == 10)
 		str[0] = '-';
@@ -214,7 +216,16 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	int						sign;
 	long double				af;
 
+//	printf("real: %f\n", (float)n);
 //	printf("real: %.100Lf\n", n);
+	if (!(n == 0 || n > 0 || n < 0))
+	{
+		cs->zero = 0;
+		cs->space = 0;
+		cs->plus = 0;
+		cs->preci = -1;
+		return(ft_strcpy(ft_strnew(3), "nan"));
+	}
 	sign = n < 0 ? 1 : 0;
 	n *= n < 0 ? -1 : 1;
 	if (n > 1 && (unsigned long long)n == 0)

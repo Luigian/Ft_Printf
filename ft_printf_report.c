@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/04 21:28:39 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:53:37 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,19 @@ char	*precision(char *str, t_cs *cs)
 			ret = zero(ret, cs);
 		free(str);
 	}
-	else if (!cs->hash && !cs->preci && ft_strlen(str) == 1 && str[0] == '0')
+	else if (!cs->preci && ft_strlen(str) == 1 && str[0] == '0')
 	{
-		str[0] = '\0';
+		if (*cs->ptr == 'p')
+			str[0] = '\0';
+		else if (!cs->hash)
+			str[0] = '\0';
 	}
-	else if ((len = cs->preci - ft_strlen(str)) > 0)
+	else if ((len = cs->preci - ft_strlen(str) + (str[0] == '-')) > 0)
 	{
 		if (str[0] == '-')
 		{
 			str[0] = '0';
-			new = ft_memset(ft_strnew(len + 1), '0', len + 1);
+			new = ft_memset(ft_strnew(len + 1), '0', len);
 			new[0] = '-';
 		}
 		else
@@ -144,3 +147,6 @@ char	*hash(char *str, t_cs *cs)
 	}
 	return (str);
 }
+/*	
+else if (!cs->hash && !cs->preci && ft_strlen(str) == 1 && str[0] == '0')
+		str[0] = '\0';*/

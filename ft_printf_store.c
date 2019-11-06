@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/03 20:21:10 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/06 11:41:40 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 int		store_length(t_cs *cs)
 {
-	if (*cs->ptr == 'h' && cs->len < 2)
+	if (*cs->ptr == 'j')
+		cs->len = 3;
+	else if (*cs->ptr == 'z')
+		cs->len = 4;
+	else if (*cs->ptr == 'h' && cs->len < 2)
 	{
 		cs->len = 2;
 		if (*(cs->ptr + 1) == 'h')
@@ -38,11 +42,30 @@ int		store_length(t_cs *cs)
 	return (0);
 }
 
-int		store_decimal(t_cs *cs)
+int		store_decimal(va_list ap, t_cs *cs)
 {
-	if (*cs->ptr == '.')
+	if (*cs->ptr == '*')
+	{
+		cs->minwid = va_arg(ap, int);
+		if (cs->minwid < 0)
+		{
+			cs->minus = 1;
+			cs->minwid *= -1;
+		}
+		++cs->ptr;
+		return (0);
+	}
+	else if (*cs->ptr == '.')
 	{
 		++cs->ptr;
+		if (*cs->ptr == '*')
+		{
+			cs->preci = va_arg(ap, int);
+			if (cs->preci < 0)
+				cs->preci = -1;
+			++cs->ptr;
+			return (0);
+		}
 		if (!(ft_isdigit(*cs->ptr)))
 			cs->preci = 0;
 		else
@@ -73,3 +96,20 @@ int		store_flag(t_cs *cs)
 	++cs->ptr;
 	return (0);
 }
+/*
+int		store_decimal(t_cs *cs)
+{
+	if (*cs->ptr == '.')
+	{
+		++cs->ptr;
+		if (!(ft_isdigit(*cs->ptr)))
+			cs->preci = 0;
+		else
+			cs->preci = ft_atoi(cs->ptr);
+	}
+	else
+		cs->minwid = ft_atoi(cs->ptr);
+	while (ft_isdigit(*cs->ptr))
+		++cs->ptr;
+	return (0);
+}*/

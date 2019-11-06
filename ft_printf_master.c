@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/04 20:04:33 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/06 12:21:46 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,37 @@ void	print_object(t_cs *cs)
 	printf("-----------\n");
 }
 */
-int		store_format_specifications(t_cs *cs)
+int		store_format_specifications(va_list ap, t_cs *cs)
 {
 	while (1)
 	{
 		if (is_flag(*cs->ptr))
 			store_flag(cs);
 		else if (is_decimal(*cs->ptr))
-			store_decimal(cs);
+			store_decimal(ap, cs);
 		else if (is_length(*cs->ptr))
 			store_length(cs);
+		else if (is_other_flag(*cs->ptr))
+			++cs->ptr;
 		else
 			break;
 	}
 	if (*cs->ptr == 'd')
 		cs->hash = 0;
-	if (*cs->ptr == 'u')
+	if (*cs->ptr == 'u' || *cs->ptr == 'U')
 	{
 		cs->hash = 0;
 		cs->space = 0;
 		cs->plus = 0;
+		if (*cs->ptr == 'U')
+			cs->len = 3;
 	}
 	if (*cs->ptr == 'o' || *cs->ptr == 'x' || *cs->ptr == 'X')
 	{
 		cs->space = 0;
 		cs->plus = 0;
 	}
-	if (*cs->ptr == 'c' || *cs->ptr == '%')
+	if (*cs->ptr == 'c' || *cs->ptr == '%' || is_other_char(*cs->ptr))
 	{
 		cs->hash = 0;
 		cs->space = 0;
@@ -119,13 +123,16 @@ t_cs	*create_object(const char *fmt)
 int		print_argument(va_list ap, t_cs *cs)
 {
 	reset_object(cs);
-	store_format_specifications(cs);
+	store_format_specifications(ap, cs);
 	if (is_type_specificator(*cs->ptr))
 		print_type(ap, cs);
 	else if (is_scape_specificator(*cs->ptr))
 		cs->scape = *cs->ptr;
 	else if (*cs->ptr)
-		cs->other = *cs->ptr;
+	{
+		print_type(ap, cs);
+//		cs->other = *cs->ptr;
+	}
 	else
 		return (1);
 	++(cs->ptr);
