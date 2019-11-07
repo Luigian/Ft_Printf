@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/06 09:58:23 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/07 11:56:13 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_cs
 	char			*bef;
 	char			*aft;
 	int				ret;
+	int				exp;
 }					t_cs;
 
 int			ft_printf(const char *fmt, ...);

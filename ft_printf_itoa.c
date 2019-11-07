@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/06 21:31:19 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/07 12:56:02 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,16 @@ int		round_all_nines(t_cs *cs, char *join, int len)
 		cs->bef[0] = '1';
 		free(del);
 		i = 0;
-		while (i < cs->preci)
-			cs->aft[i++] = '0';
+		if (*cs->ptr == 'e')
+		{
+			while (i < (cs->preci - (int)(ft_strlen(cs->bef) - 1)))
+				cs->aft[i++] = '0';
+		}
+		else
+		{
+			while (i < cs->preci)
+				cs->aft[i++] = '0';
+		}
 		return (1);
 	}
 	return (0);
@@ -174,7 +182,10 @@ int		round_float(t_cs *cs)
 	int		j;
 
 	join = ft_strjoin(cs->bef, cs->aft);
-	len = ft_strlen(cs->bef) + cs->preci;
+	if (*cs->ptr == 'e')
+		len = 1 + cs->preci;
+	else
+		len = ft_strlen(cs->bef) + cs->preci;
 	if (round_all_nines(cs, join, len))
 	{
 		free (join);
@@ -188,8 +199,16 @@ int		round_float(t_cs *cs)
 		while (i < (int)ft_strlen(cs->bef))
 			cs->bef[i++] = join[j++];
 		i = 0;
-		while (i < cs->preci)
-			cs->aft[i++] = join[j++];
+		if (*cs->ptr == 'e')
+		{
+			while (i < (cs->preci - ((int)ft_strlen(cs->bef) - 1)))
+				cs->aft[i++] = join[j++];
+		}
+		else
+		{
+			while (i < cs->preci)
+				cs->aft[i++] = join[j++];
+		}
 		free (join);
 		return (1);
 	}
@@ -217,13 +236,18 @@ int		get_exp_format(t_cs *cs)
 	char	*num;
 	char	*j;
 
+	
+	round_float(cs);
 	a = ft_strncpy(ft_strnew(1), cs->bef, 1);
+	b = NULL;
 	b = ft_strncpy(ft_strnew(cs->preci + 4), cs->bef + 1, cs->preci);
-	ft_strncpy(b + ft_strlen(cs->bef + 1), cs->aft, \
+	if ((cs->preci - (int)ft_strlen(cs->bef + 1)) > 0)
+		ft_strncpy_zero(b + ft_strlen(cs->bef + 1), cs->aft,\
 			cs->preci - ft_strlen(cs->bef + 1));
 	b[cs->preci] = 'e';
-	len = ft_strlen(cs->bef) - 1;
+	len = ft_strlen(cs->bef) - 1 - cs->exp;
 	b[cs->preci + 1] = len >= 0 ? '+' : '-';
+	len *= len >= 0 ? 1 : -1;
 	if (len < 10)
 	{
 		b[cs->preci + 2] = '0';
@@ -236,14 +260,11 @@ int		get_exp_format(t_cs *cs)
 		free(num);
 		free(b);
 		b = j;
-		free(j);
 	}
 	free (cs->bef);
 	free (cs->aft);
 	cs->bef = a;
 	cs->aft = b;
-	free (a);
-	free (b);
 	return (0);
 }
 
@@ -255,7 +276,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	long double				af;
 
 //	printf("real: %f\n", (float)n);
-	printf("real: %.100Lf\n", n);
+//	printf("real: %.100Lf\n", n);
 	if (!(n == 0 || n > 0 || n < 0))
 	{
 		cs->zero = 0;
@@ -273,6 +294,12 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	}
 	else
 	{	
+		while (*cs->ptr == 'e' && n && n < 1)
+		{
+			n *= 10;
+			++cs->exp;
+		}	
+//		printf("n: %.100Lf\n", n);
 		cs->bef = ft_itoa_unsigned((unsigned long long)n);
 		af = n - (unsigned long long)n;
 		if (af == 0)
@@ -288,17 +315,25 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			pt = cs->aft;	
 			af -= (unsigned long long)af;
 		}
-		printf("bef: %s\n", cs->bef);
-		printf("aft: %s\n", cs->aft);
+//		printf("bef: %s\n", cs->bef);
+//		printf("aft: %s\n", cs->aft);
 		if (*cs->ptr == 'e')
 			get_exp_format(cs);
-		printf("bef: %s\n", cs->bef);
-		printf("aft: %s\n", cs->aft);
+//		printf("bef: %s\n", cs->bef);
+//		printf("aft: %s\n", cs->aft);
 		if ((int)ft_strlen(cs->aft) > cs->preci && !(*cs->ptr == 'e'))
 			round_float(cs);
 	}
-	if (cs->preci == 0 && cs->hash == 0 && !(*cs->ptr == 'e'))
+	if (cs->preci == 0 && cs->hash == 0)
 	{
+		if (*cs->ptr == 'e')
+		{
+			tm = ft_strjoin(cs->bef, cs->aft);
+			free(cs->bef);
+			free(cs->aft);
+			sign ? tm = add_minus(tm) : 0;
+			return (tm);
+		}
 		free(cs->aft);
 		sign ? cs->bef = add_minus(cs->bef) : 0;
 		return (cs->bef);
@@ -311,7 +346,10 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 		sign ? tm = add_minus(tm) : 0;
 		return (tm);
 	}
-	pt = ft_strncpy_zero(ft_strnew(cs->preci), cs->aft, cs->preci);
+	if (!(*cs->ptr == 'e'))
+		pt = ft_strncpy_zero(ft_strnew(cs->preci), cs->aft, cs->preci);
+	else
+		pt = ft_strdup(cs->aft);
 	free(cs->aft);
 	cs->aft = ft_strjoin(".", pt);
 	tm = ft_strjoin(cs->bef, cs->aft);
