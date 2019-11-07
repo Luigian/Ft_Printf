@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/05 16:53:37 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/06 21:11:28 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ char	*precision(char *str, t_cs *cs)
 	int		len;
 
 	ret = str;
-	if (cs->preci < 0 || *cs->ptr == 'f')
+	if (cs->preci < 0 || (*cs->ptr == 'f' || *cs->ptr == 'e'))
 	{
 		if (cs->zero && !cs->minus)
 			ret = zero(str, cs);
-		if (*cs->ptr == 'f')
+		if (*cs->ptr == 'f' || *cs->ptr == 'e')
 			return (ret);
 	}	
 	else if (*cs->ptr == 's')
@@ -147,6 +147,3 @@ char	*hash(char *str, t_cs *cs)
 	}
 	return (str);
 }
-/*	
-else if (!cs->hash && !cs->preci && ft_strlen(str) == 1 && str[0] == '0')
-		str[0] = '\0';*/

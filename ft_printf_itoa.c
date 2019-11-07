@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/06 08:36:46 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/06 21:31:19 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,44 @@ char	*add_minus(char *str)
 	return (ret);
 }
 
+int		get_exp_format(t_cs *cs)
+{
+	char	*a;
+	char	*b;
+	int		len;
+	char	*num;
+	char	*j;
+
+	a = ft_strncpy(ft_strnew(1), cs->bef, 1);
+	b = ft_strncpy(ft_strnew(cs->preci + 4), cs->bef + 1, cs->preci);
+	ft_strncpy(b + ft_strlen(cs->bef + 1), cs->aft, \
+			cs->preci - ft_strlen(cs->bef + 1));
+	b[cs->preci] = 'e';
+	len = ft_strlen(cs->bef) - 1;
+	b[cs->preci + 1] = len >= 0 ? '+' : '-';
+	if (len < 10)
+	{
+		b[cs->preci + 2] = '0';
+		b[cs->preci + 3] = len + '0';
+	}
+	else
+	{
+		num = ft_itoa(len);
+		j = ft_strjoin(b, num);
+		free(num);
+		free(b);
+		b = j;
+		free(j);
+	}
+	free (cs->bef);
+	free (cs->aft);
+	cs->bef = a;
+	cs->aft = b;
+	free (a);
+	free (b);
+	return (0);
+}
+
 char	*ft_itoa_float(long double n, t_cs *cs)
 {
 	char					*tm;
@@ -217,7 +255,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	long double				af;
 
 //	printf("real: %f\n", (float)n);
-//	printf("real: %.100Lf\n", n);
+	printf("real: %.100Lf\n", n);
 	if (!(n == 0 || n > 0 || n < 0))
 	{
 		cs->zero = 0;
@@ -250,16 +288,22 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			pt = cs->aft;	
 			af -= (unsigned long long)af;
 		}
-		if ((int)ft_strlen(cs->aft) > cs->preci)
+		printf("bef: %s\n", cs->bef);
+		printf("aft: %s\n", cs->aft);
+		if (*cs->ptr == 'e')
+			get_exp_format(cs);
+		printf("bef: %s\n", cs->bef);
+		printf("aft: %s\n", cs->aft);
+		if ((int)ft_strlen(cs->aft) > cs->preci && !(*cs->ptr == 'e'))
 			round_float(cs);
 	}
-	if (cs->preci == 0 && cs->hash == 0)
+	if (cs->preci == 0 && cs->hash == 0 && !(*cs->ptr == 'e'))
 	{
 		free(cs->aft);
 		sign ? cs->bef = add_minus(cs->bef) : 0;
 		return (cs->bef);
 	}
-	else if (cs->preci == 0 && cs->hash)
+	else if (cs->preci == 0 && cs->hash && !(*cs->ptr == 'e'))
 	{
 		tm = ft_strjoin(cs->bef, ".");
 		free(cs->aft);
