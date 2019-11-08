@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/07 21:14:50 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/08 11:52:14 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,9 @@ int		print_type(va_list ap, t_cs *cs)
 	char	*str;
 
 	
+//	printf("%c\n", *cs->ptr);
 	str = get_string(ap, cs);
+//	printf("%c\n", *cs->ptr);
 	*cs->ptr == 'o' ? str = hash(str, cs) : 0;
 	str = precision(str, cs);
 	*cs->ptr == 'x' || *cs->ptr == 'X' ||\

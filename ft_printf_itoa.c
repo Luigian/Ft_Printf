@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/07 12:56:02 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/08 12:52:11 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ int		round_float(t_cs *cs)
 		len = ft_strlen(cs->bef) + cs->preci;
 	if (round_all_nines(cs, join, len))
 	{
+		cs->g ? --cs->preci : 0;
 		free (join);
 		return (2);
 	}
@@ -268,6 +269,54 @@ int		get_exp_format(t_cs *cs)
 	return (0);
 }
 
+int		turnback_ptr_content(t_cs *cs)
+{
+	cs->ptr = cs->temp;
+	return (0);
+}
+
+int		change_ptr_content(t_cs *cs, long double n)
+{
+	char	*flags;
+	int		exp;
+
+	flags = "fe";
+	exp = 0;
+	while (n > 0 && n < 1)
+	{
+		--exp;
+		n *= 10;
+	}	
+	while (n >= 10)
+	{
+		++exp;
+		n /= 10;
+	}
+	if (exp < -4 || exp >= cs->preci)
+	{
+		cs->temp = cs->ptr;
+		cs->ptr = flags + 1;
+		--cs->preci;
+	}
+	else
+	{
+		cs->temp = cs->ptr;
+		cs->ptr = flags;
+		cs->preci = cs->preci - (exp + 1);
+	}
+	cs->g = 1;
+	return (0);
+}
+		
+int		trim_trailing_zeros(char *tm, int len)
+{
+	while (tm[--len] == '0')
+		tm[len] = '\0';
+	if (tm[len] == '.')
+		tm[len] = '\0';
+	return (0);
+}
+
 char	*ft_itoa_float(long double n, t_cs *cs)
 {
 	char					*tm;
@@ -289,17 +338,29 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	n *= n < 0 ? -1 : 1;
 	if (n > 1 && (unsigned long long)n == 0)
 	{
-		cs->bef = ft_strcpy(ft_strnew(20), "18446744073709551616"); 
-		cs->aft = ft_memset(ft_strnew(1), '0', 1);
+		if (*cs->ptr == 'e')
+		{
+			cs->bef = ft_strcpy(ft_strnew(19), "18446744073709551616"); 
+			cs->aft = ft_memset(ft_strnew(1), '0', 1); 
+			get_exp_format(cs);
+		}
+		else
+		{
+			cs->bef = ft_strcpy(ft_strnew(20), "18446744073709551616"); 
+			cs->aft = ft_memset(ft_strnew(1), '0', 1);
+		}
 	}
 	else
 	{	
+		if (*cs->ptr == 'g')
+			change_ptr_content(cs, n);				//////////////////////////
+		
+		
 		while (*cs->ptr == 'e' && n && n < 1)
 		{
 			n *= 10;
 			++cs->exp;
 		}	
-//		printf("n: %.100Lf\n", n);
 		cs->bef = ft_itoa_unsigned((unsigned long long)n);
 		af = n - (unsigned long long)n;
 		if (af == 0)
@@ -315,12 +376,8 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			pt = cs->aft;	
 			af -= (unsigned long long)af;
 		}
-//		printf("bef: %s\n", cs->bef);
-//		printf("aft: %s\n", cs->aft);
 		if (*cs->ptr == 'e')
 			get_exp_format(cs);
-//		printf("bef: %s\n", cs->bef);
-//		printf("aft: %s\n", cs->aft);
 		if ((int)ft_strlen(cs->aft) > cs->preci && !(*cs->ptr == 'e'))
 			round_float(cs);
 	}
@@ -332,10 +389,14 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			free(cs->bef);
 			free(cs->aft);
 			sign ? tm = add_minus(tm) : 0;
+			if (cs->g)
+				turnback_ptr_content(cs);			//////////////////////////
 			return (tm);
 		}
 		free(cs->aft);
 		sign ? cs->bef = add_minus(cs->bef) : 0;
+		if (cs->g)
+			turnback_ptr_content(cs);			//////////////////////////
 		return (cs->bef);
 	}
 	else if (cs->preci == 0 && cs->hash && !(*cs->ptr == 'e'))
@@ -344,6 +405,8 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 		free(cs->aft);
 		free(cs->bef);
 		sign ? tm = add_minus(tm) : 0;
+		if (cs->g)
+			turnback_ptr_content(cs);			//////////////////////////
 		return (tm);
 	}
 	if (!(*cs->ptr == 'e'))
@@ -356,6 +419,10 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	free(pt);
 	free(cs->bef);
 	free(cs->aft);
+	if (cs->g && !cs->hash)
+		trim_trailing_zeros(tm, (int)ft_strlen(tm));
 	sign ? tm = add_minus(tm) : 0;
+	if (cs->g)
+		turnback_ptr_content(cs);				//////////////////////////
 	return (tm);
 }
