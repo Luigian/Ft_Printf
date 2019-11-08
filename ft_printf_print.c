@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/06 21:09:36 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/07 21:14:50 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char	*get_string(va_list ap, t_cs *cs)
 	{
 		return (ft_memset(ft_strnew(1), '%', 1));
 	}	
-	if (*cs->ptr == 'f' || *cs->ptr == 'e')
+	if (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g')
 	{
 		if (cs->ext)
 			return (ft_itoa_float(va_arg(ap, long double), cs));

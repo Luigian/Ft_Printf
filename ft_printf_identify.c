@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:02:57 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/07 13:00:03 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/07 21:08:59 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		is_type_specificator(char c)
 {
 	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'\
 		   	|| c == 'o'	|| c == 'u' || c == 'x' || c == 'X' || c == 'f'\
-			|| c == '%' || c == 'U' || c == 'e');
+			|| c == '%' || c == 'U' || c == 'e' || c == 'g');
 }
 
 int		is_length(char c)
@@ -44,7 +44,7 @@ int		is_other_flag(char c)
 {
 	return (c == 't' || c == 'q' || c == 'a'\
 			|| c == 'A' || c == 'E' || c == 'F'\
-			|| c == 'g' || c == 'G' || c == 'v' || c == 'D'\
+			|| c == 'G' || c == 'v' || c == 'D'\
 			|| c == 'O' || c == 'S');
 }
 
