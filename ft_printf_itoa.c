@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/08 12:52:11 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/08 21:57:33 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,8 +324,8 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	int						sign;
 	long double				af;
 
+//	printf("real: %.30Lf\n", n);
 //	printf("real: %f\n", (float)n);
-//	printf("real: %.100Lf\n", n);
 	if (!(n == 0 || n > 0 || n < 0))
 	{
 		cs->zero = 0;
@@ -336,31 +336,36 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	}
 	sign = n < 0 ? 1 : 0;
 	n *= n < 0 ? -1 : 1;
+	if (*cs->ptr == 'g')
+		change_ptr_content(cs, n);				
+	while (*cs->ptr == 'e' && n && n < 1)
+	{
+		n *= 10;
+		++cs->exp;
+	}	
 	if (n > 1 && (unsigned long long)n == 0)
 	{
-		if (*cs->ptr == 'e')
+		af = n;
+		while (af >= 100000000000000000)
 		{
-			cs->bef = ft_strcpy(ft_strnew(19), "18446744073709551616"); 
-			cs->aft = ft_memset(ft_strnew(1), '0', 1); 
-			get_exp_format(cs);
-		}
-		else
-		{
-			cs->bef = ft_strcpy(ft_strnew(20), "18446744073709551616"); 
-			cs->aft = ft_memset(ft_strnew(1), '0', 1);
-		}
-	}
-	else
-	{	
-		if (*cs->ptr == 'g')
-			change_ptr_content(cs, n);				//////////////////////////
-		
-		
-		while (*cs->ptr == 'e' && n && n < 1)
-		{
-			n *= 10;
 			++cs->exp;
-		}	
+			af /= 10;
+		}
+		af *= 100;
+//		printf("%Lf\n", af);
+		cs->exp -= 2;
+		pt = ft_itoa_unsigned((unsigned long long)af);
+//		printf("%s\n", pt);
+		
+		tm = ft_memset(ft_strnew(cs->exp), '0', cs->exp);
+		cs->exp = 0;
+		cs->bef = ft_strjoin(pt, tm);
+		free(pt);
+		free(tm);
+		cs->aft = ft_memset(ft_strnew(1), '0', 1);
+	}	
+	else	
+	{
 		cs->bef = ft_itoa_unsigned((unsigned long long)n);
 		af = n - (unsigned long long)n;
 		if (af == 0)
@@ -372,15 +377,15 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			tm = ft_itoa(af);
 			cs->aft = ft_strjoin(pt, tm);
 			free(tm);
-	   		*pt ? free(pt) : 0;
+   			*pt ? free(pt) : 0;
 			pt = cs->aft;	
 			af -= (unsigned long long)af;
 		}
-		if (*cs->ptr == 'e')
-			get_exp_format(cs);
 		if ((int)ft_strlen(cs->aft) > cs->preci && !(*cs->ptr == 'e'))
 			round_float(cs);
 	}
+	if (*cs->ptr == 'e')
+		get_exp_format(cs);
 	if (cs->preci == 0 && cs->hash == 0)
 	{
 		if (*cs->ptr == 'e')
@@ -390,13 +395,13 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			free(cs->aft);
 			sign ? tm = add_minus(tm) : 0;
 			if (cs->g)
-				turnback_ptr_content(cs);			//////////////////////////
+				turnback_ptr_content(cs);
 			return (tm);
 		}
 		free(cs->aft);
 		sign ? cs->bef = add_minus(cs->bef) : 0;
 		if (cs->g)
-			turnback_ptr_content(cs);			//////////////////////////
+			turnback_ptr_content(cs);
 		return (cs->bef);
 	}
 	else if (cs->preci == 0 && cs->hash && !(*cs->ptr == 'e'))
@@ -406,7 +411,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 		free(cs->bef);
 		sign ? tm = add_minus(tm) : 0;
 		if (cs->g)
-			turnback_ptr_content(cs);			//////////////////////////
+			turnback_ptr_content(cs);
 		return (tm);
 	}
 	if (!(*cs->ptr == 'e'))
@@ -423,6 +428,6 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 		trim_trailing_zeros(tm, (int)ft_strlen(tm));
 	sign ? tm = add_minus(tm) : 0;
 	if (cs->g)
-		turnback_ptr_content(cs);				//////////////////////////
+		turnback_ptr_content(cs);
 	return (tm);
 }
