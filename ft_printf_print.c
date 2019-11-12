@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/11 20:47:00 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:19:33 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,35 @@ void	ft_putstr_null(char *str)
 		}
 	}
 }
+		
+char	*thousands_separation(char *str)
+{
+	char 	*result;
+
+	int		increment;
+	int		counter;
+
+	result = str;
+	increment = 0;
+	counter = 0;
+	while (*str &&  *str != '.' && (!ft_isdigit(*str) || *str == '0'))
+		++str;
+	while (ft_isdigit(*str))
+	{
+		++str;
+		++counter;
+	}
+	printf("counter: %d\n", counter);
+	if (counter > 3)
+	{
+		if (counter % 3 != 0)
+			increment = counter / 3;
+		else
+			increment = (counter / 3) - 1;
+	}
+	printf("increment: %d\n", increment);
+	return (result);
+}
 
 int		print_type(va_list ap, va_list bp, t_cs *cs)
 {
@@ -174,6 +203,9 @@ int		print_type(va_list ap, va_list bp, t_cs *cs)
 		*cs->ptr == 'p' ? str = hash(str, cs) : 0;
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
+	if (cs->apo && (*cs->ptr == 'd' || *cs->ptr == 'i'\
+		|| *cs->ptr == 'u' || *cs->ptr == 'f'))
+		str = thousands_separation(str);
 	if (!cs->type)
 		ft_putstr_null(str);
 	else

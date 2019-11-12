@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/11 20:24:41 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/12 13:09:24 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	reset_object(t_cs *cs)
 	cs->g = 0;
 	cs->temp = NULL;
 	cs->arg = 0;
+	cs->apo = 0;
 }
 
 t_cs	*create_object(const char *fmt)

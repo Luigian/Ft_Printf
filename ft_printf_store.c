@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/11 20:25:03 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/12 13:20:00 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ int		store_flag(t_cs *cs)
 		cs->space = 1;
 	else if (c == '+')
 		cs->plus = 1;
+	else if (c == '\'')
+		cs->apo = 1;
 	++cs->ptr;
 	return (0);
 }
