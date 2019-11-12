@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/08 09:53:35 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/11 20:24:25 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,25 @@ typedef struct		s_cs
 	unsigned char	scape;
 	unsigned char	other;
 	char			*ptr;
+	const char		*begin;
 	char			*bef;
 	char			*aft;
 	int				ret;
 	int				exp;
 	unsigned int	g;
 	char			*temp;
+	unsigned int	arg;
 }					t_cs;
 
 int			ft_printf(const char *fmt, ...);
-int			print_argument(va_list ap, t_cs *cs);
+int			print_argument(va_list ap, va_list bp, t_cs *cs);
 
 t_cs		*create_object(const char *fmt);
 void		reset_object(t_cs *cs);
 
-int			store_format_specifications(va_list ap, t_cs *cs);
+int			store_format_specifications(va_list ap, va_list bp, t_cs *cs);
 int			store_flag(t_cs *cs);
-int			store_decimal(va_list ap, t_cs *cs);
+int			store_decimal(va_list ap, va_list bp, t_cs *cs);
 int			store_length(t_cs *cs);
 
 int			is_type_specificator(char c);
@@ -59,7 +61,7 @@ int			is_length(char c);
 int			is_other_flag(char c);
 int			is_other_char(char c);
 
-int			print_type(va_list ap, t_cs *cs);
+int			print_type(va_list ap, va_list bp, t_cs *cs);
 char		*get_string(va_list ap, t_cs *cs);
 char		*hash(char *str, t_cs *cs);
 char		*precision(char *str, t_cs *cs);

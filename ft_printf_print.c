@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/08 22:00:03 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/11 20:47:00 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,14 +153,21 @@ void	ft_putstr_null(char *str)
 	}
 }
 
-int		print_type(va_list ap, t_cs *cs)
+int		print_type(va_list ap, va_list bp, t_cs *cs)
 {
-	char	*str;
+	char		*str;
+	va_list		tp;
 
-	
-//	printf("%c\n", *cs->ptr);
+	if (cs->arg)
+	{
+		va_copy(tp, bp);
+		while (--cs->arg)
+			va_arg(tp, void*);
+		va_end(ap);
+		va_copy(ap,tp);
+		va_end(tp);
+	}	
 	str = get_string(ap, cs);
-//	printf("%c\n", *cs->ptr);
 	*cs->ptr == 'o' ? str = hash(str, cs) : 0;
 	str = precision(str, cs);
 	*cs->ptr == 'x' || *cs->ptr == 'X' ||\

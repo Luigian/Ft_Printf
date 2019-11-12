@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/08 11:45:55 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/11 20:24:41 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	print_object(t_cs *cs)
 	printf("-----------\n");
 }
 */
-int		store_format_specifications(va_list ap, t_cs *cs)
+int		store_format_specifications(va_list ap, va_list bp, t_cs *cs)
 {
 	while (1)
 	{
 		if (is_flag(*cs->ptr))
 			store_flag(cs);
 		else if (is_decimal(*cs->ptr))
-			store_decimal(ap, cs);
+			store_decimal(ap, bp, cs);
 		else if (is_length(*cs->ptr))
 			store_length(cs);
 		else if (is_other_flag(*cs->ptr))
@@ -109,6 +109,7 @@ void	reset_object(t_cs *cs)
 	cs->exp = 0;
 	cs->g = 0;
 	cs->temp = NULL;
+	cs->arg = 0;
 }
 
 t_cs	*create_object(const char *fmt)
@@ -118,6 +119,7 @@ t_cs	*create_object(const char *fmt)
 	if (!(cs = (t_cs *)malloc(sizeof(t_cs) * 1)))
 		return (NULL);
 	reset_object(cs);
+	cs->begin = fmt;
 	cs->ptr = (char *)fmt;
 	cs->bef = NULL;
 	cs->aft = NULL;
@@ -125,17 +127,17 @@ t_cs	*create_object(const char *fmt)
 	return (cs);
 }
 
-int		print_argument(va_list ap, t_cs *cs)
+int		print_argument(va_list ap, va_list bp, t_cs *cs)
 {
 	reset_object(cs);
-	store_format_specifications(ap, cs);
+	store_format_specifications(ap, bp, cs);
 	if (is_type_specificator(*cs->ptr))
-		print_type(ap, cs);
+		print_type(ap, bp, cs);
 	else if (is_scape_specificator(*cs->ptr))
 		cs->scape = *cs->ptr;
 	else if (*cs->ptr)
 	{
-		print_type(ap, cs);
+		print_type(ap, bp, cs);
 //		cs->other = *cs->ptr;
 	}
 	else
@@ -148,16 +150,18 @@ int		ft_printf(const char *fmt, ...)
 {
 	t_cs		*cs;
 	va_list		ap;
+	va_list		bp;
 	
 	if (!(cs = create_object(fmt)))
 		exit (-1);
 	va_start(ap, fmt);
+	va_copy(bp, ap);
 	while (*cs->ptr)
 	{
 		if (*cs->ptr == '%')
 		{
 			++cs->ptr;
-			print_argument(ap, cs);
+			print_argument(ap, bp, cs);
 		}	
 		else
 		{
@@ -168,5 +172,6 @@ int		ft_printf(const char *fmt, ...)
 	}
 	free(cs);
 	va_end(ap);
+	va_end(bp);
 	return (cs->ret);
 }

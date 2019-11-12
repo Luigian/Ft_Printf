@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/08 21:57:33 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/11 11:29:08 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,19 @@ char	*add_minus(char *str)
 	return (ret);
 }
 
+int		trim_trailing_zeros_e(char *str, int len)
+{
+	int		counter;
+
+	counter = 0;
+	while (str[--len] == '0')
+	{
+		str[len] = '\0';
+		++counter;
+	}
+	return (counter);
+}
+
 int		get_exp_format(t_cs *cs)
 {
 	char	*a;
@@ -236,6 +249,7 @@ int		get_exp_format(t_cs *cs)
 	int		len;
 	char	*num;
 	char	*j;
+	int		trz;;
 
 	
 	round_float(cs);
@@ -245,14 +259,19 @@ int		get_exp_format(t_cs *cs)
 	if ((cs->preci - (int)ft_strlen(cs->bef + 1)) > 0)
 		ft_strncpy_zero(b + ft_strlen(cs->bef + 1), cs->aft,\
 			cs->preci - ft_strlen(cs->bef + 1));
-	b[cs->preci] = 'e';
+	trz = 0;
+	if (cs->g)
+		trz	= trim_trailing_zeros_e(b, cs->preci); 
+	b[cs->preci - trz] = 'e';
 	len = ft_strlen(cs->bef) - 1 - cs->exp;
-	b[cs->preci + 1] = len >= 0 ? '+' : '-';
+	b[cs->preci - trz + 1] = len >= 0 ? '+' : '-';
 	len *= len >= 0 ? 1 : -1;
+	b[cs->preci - trz + 2] = '\0';
 	if (len < 10)
 	{
-		b[cs->preci + 2] = '0';
-		b[cs->preci + 3] = len + '0';
+		b[cs->preci - trz + 2] = '0';
+		b[cs->preci - trz + 3] = len + '0';
+		b[cs->preci - trz + 4] = '\0';
 	}
 	else
 	{
@@ -308,12 +327,12 @@ int		change_ptr_content(t_cs *cs, long double n)
 	return (0);
 }
 		
-int		trim_trailing_zeros(char *tm, int len)
+int		trim_trailing_zeros(char *str, int len)
 {
-	while (tm[--len] == '0')
-		tm[len] = '\0';
-	if (tm[len] == '.')
-		tm[len] = '\0';
+	while (str[--len] == '0')
+		str[len] = '\0';
+	if (str[len] == '.')
+		str[len] = '\0';
 	return (0);
 }
 
@@ -325,7 +344,6 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	long double				af;
 
 //	printf("real: %.30Lf\n", n);
-//	printf("real: %f\n", (float)n);
 	if (!(n == 0 || n > 0 || n < 0))
 	{
 		cs->zero = 0;
@@ -352,11 +370,8 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			af /= 10;
 		}
 		af *= 100;
-//		printf("%Lf\n", af);
 		cs->exp -= 2;
 		pt = ft_itoa_unsigned((unsigned long long)af);
-//		printf("%s\n", pt);
-		
 		tm = ft_memset(ft_strnew(cs->exp), '0', cs->exp);
 		cs->exp = 0;
 		cs->bef = ft_strjoin(pt, tm);
@@ -424,7 +439,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	free(pt);
 	free(cs->bef);
 	free(cs->aft);
-	if (cs->g && !cs->hash)
+	if (cs->g && *cs->ptr == 'f' && !cs->hash)
 		trim_trailing_zeros(tm, (int)ft_strlen(tm));
 	sign ? tm = add_minus(tm) : 0;
 	if (cs->g)

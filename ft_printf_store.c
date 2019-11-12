@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/06 11:41:40 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/11 20:25:03 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,93 @@ int		store_length(t_cs *cs)
 	return (0);
 }
 
-int		store_decimal(va_list ap, t_cs *cs)
+int		is_arg_index(char *str)
 {
+	while (ft_isdigit(*str))
+		++str;
+	if (*str == '$')
+		return (1);
+	else
+		return (0);
+}
+
+int		store_decimal(va_list ap, va_list bp, t_cs *cs)
+{
+	va_list		tp;
+	
 	if (*cs->ptr == '*')
 	{
-		cs->minwid = va_arg(ap, int);
-		if (cs->minwid < 0)
+		if (is_arg_index(cs->ptr + 1))
 		{
-			cs->minus = 1;
-			cs->minwid *= -1;
+			cs->arg = ft_atoi(cs->ptr + 1);
+			va_copy(tp, bp);
+			while (--cs->arg)
+				va_arg(tp, void*);
+			cs->minwid = va_arg(tp, int);
+			if (cs->minwid < 0)
+			{
+				cs->minus = 1;
+				cs->minwid *= -1;
+			}
+			va_end(tp);
+			cs->arg = 0;
+			++cs->ptr;
 		}
-		++cs->ptr;
-		return (0);
+		else
+		{
+			cs->minwid = va_arg(ap, int);
+			if (cs->minwid < 0)
+			{
+				cs->minus = 1;
+				cs->minwid *= -1;
+			}
+			++cs->ptr;
+			return (0);
+		}
 	}
 	else if (*cs->ptr == '.')
 	{
 		++cs->ptr;
 		if (*cs->ptr == '*')
 		{
-			cs->preci = va_arg(ap, int);
-			if (cs->preci < 0)
-				cs->preci = -1;
-			++cs->ptr;
-			return (0);
+			if (is_arg_index(cs->ptr + 1))
+			{
+				cs->arg = ft_atoi(cs->ptr + 1);
+				va_copy(tp, bp);
+				while (--cs->arg)
+					va_arg(tp, void*);
+				cs->preci = va_arg(tp, int);
+				if (cs->preci < 0)
+					cs->preci = -1;
+				va_end(tp);
+				cs->arg = 0;
+				++cs->ptr;
+			}
+			else
+			{
+				cs->preci = va_arg(ap, int);
+				if (cs->preci < 0)
+					cs->preci = -1;
+				++cs->ptr;
+				return (0);
+			}
 		}
-		if (!(ft_isdigit(*cs->ptr)))
-			cs->preci = 0;
 		else
-			cs->preci = ft_atoi(cs->ptr);
+		{
+			if (!(ft_isdigit(*cs->ptr)))
+				cs->preci = 0;
+			else
+				cs->preci = ft_atoi(cs->ptr);
+		}
 	}
 	else
-		cs->minwid = ft_atoi(cs->ptr);
-	while (ft_isdigit(*cs->ptr))
+	{
+		if (is_arg_index(cs->ptr))
+			cs->arg = ft_atoi(cs->ptr);
+		else
+			cs->minwid = ft_atoi(cs->ptr);
+	}
+	while (ft_isdigit(*cs->ptr) || *cs->ptr == '$')
 		++cs->ptr;
 	return (0);
 }
