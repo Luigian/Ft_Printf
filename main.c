@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/12 14:18:17 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/12 20:32:24 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1823,9 +1823,14 @@ int		main(void)
 	printf("%'d\n", 1844674407); 
 	printf("%d\n", 1844674407); 
 	printf("[' flag] ----------------------------------------------------------\n");
-	printf("%'d\n", 1000000);	
+	ft_printf("%'d\n", 400);	
+	ft_printf("%'d\n", 1400);	
 	ft_printf("%'d\n", 1000000);	
-	ft_printf("%20'f\n", -1080040050.345);	
+	ft_printf("%'i\n", 123456789);	
+	ft_printf("%'u\n", 9876543210);	
+	ft_printf("%22'f\n", -1080040050.345);	
+	ft_printf("%22'f\n", 0.0080045);	
+	ft_printf("%022'f\n", -1080040050.345);	
 	
 //	printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", "hello", "world");
 //	printf("{%*3d}\n", 5, 0);

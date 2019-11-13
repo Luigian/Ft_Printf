@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/12 14:19:33 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/12 20:55:21 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,21 +156,26 @@ void	ft_putstr_null(char *str)
 char	*thousands_separation(char *str)
 {
 	char 	*result;
-
 	int		increment;
 	int		counter;
+	int		dot;
+	char	*new;
+	int		len;
+	int		i;
 
 	result = str;
 	increment = 0;
 	counter = 0;
-	while (*str &&  *str != '.' && (!ft_isdigit(*str) || *str == '0'))
+	dot = 0;
+	while (*str && *str != '.' && (!ft_isdigit(*str) || *str == '0'))
 		++str;
 	while (ft_isdigit(*str))
 	{
 		++str;
 		++counter;
 	}
-	printf("counter: %d\n", counter);
+	if (*str == '.')
+		dot = 1;
 	if (counter > 3)
 	{
 		if (counter % 3 != 0)
@@ -178,7 +183,43 @@ char	*thousands_separation(char *str)
 		else
 			increment = (counter / 3) - 1;
 	}
-	printf("increment: %d\n", increment);
+	len = ft_strlen(result) + increment;
+	if (increment)
+	{
+		new = ft_strnew(len);
+		if (dot)
+		{
+			--len;
+			while (result[len - increment] != '.') 
+			{
+				new[len] = result[len - increment];
+				--len;
+			}
+			new[len] = result[len - increment];
+		}
+		--len;
+		while (increment)
+		{
+			i = 0;
+			while (i < 3)
+			{
+				new[len] = result[len - increment];
+				--len;
+				++i;
+			}
+			new[len] = ',';
+			--increment;
+			--len;
+		}
+		while (len)
+		{
+			new[len] = result[len - increment];
+			--len;
+		}
+		new[len] = result[len - increment];
+		free(result);
+		return (new);
+	}
 	return (result);
 }
 
