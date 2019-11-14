@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/12 13:09:24 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/13 12:51:21 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,23 @@ int		store_format_specifications(va_list ap, va_list bp, t_cs *cs)
 			cs->preci = 6;
 		if (*cs->ptr == 'g' && cs->preci == 0)
 			cs->preci = 1;
+	}
+	if (*cs->ptr == 'b')
+	{
+		cs->space = 0;
+		cs->plus = 0;
+		cs->hash = 0;
+		cs->preci = -1;
+		cs->apo = 0;
+	}
+	if (*cs->ptr == 'k')
+	{
+		cs->space = 0;
+		cs->plus = 0;
+		cs->hash = 0;
+		cs->preci = -1;
+		cs->apo = 0;
+		cs->zero = 0;
 	}
 	return (0);
 }

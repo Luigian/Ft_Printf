@@ -6,20 +6,93 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/12 20:55:21 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/13 19:59:39 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+char	*ft_print_bits(unsigned long long ulonlon, int bits)
+{
+	char	*result;
+	char	c;
+	int		i;
+
+	result = ft_strnew(bits);
+	i = 0;
+	while (bits--)
+	{
+		c = (ulonlon >> bits & 1) + 48;
+		result[i] = c;
+		++i;
+	}
+	return (result);
+}
+		
+char	*ft_itodate(unsigned long long ulonlon)
+{
+	t_tm	*tm;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	int		m;
+	int		counter;
+	int		dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	int		i;
+	
+	if (!(tm = (t_tm *)malloc(sizeof(t_tm) * 1)))
+		exit (-1);
+	tm->year = 1970; 
+	tm->month = 1;
+   	tm->day = 1;
+	tm->hour = 0; 
+	tm->minute = 0; 
+	tm->second = 0;
+
+	ulonlon++;
+	counter = 0;
+	i = 0;
+	m = 0;
+	while (m < 12)
+	{
+		l = 0;
+		while (l < dim[i])
+		{
+			k = 0;
+			while (k < 24)
+			{
+				j = 0;
+				while (j < 60)
+				{
+					i = 0;
+					while (i < 60)
+					{
+						++counter;
+						++i;
+					}
+					++j;
+				}
+				++k;
+			}
+			++l;
+		}
+		++m;
+	}
+	printf("%d\n", counter);
+	free(tm);
+	return (ft_strcpy(ft_strnew(4), "hola"));
+}
+
 char	*get_string(va_list ap, t_cs *cs)
 {
-	char *str;
-	char c;
-	char	ch;
-	short	sh;
-	unsigned char	uch;
-	unsigned short	ush;
+	char 				*str;
+	char				 c;
+	char				ch;
+	short				sh;
+	unsigned char		uch;
+	unsigned short		ush;
+	unsigned long long	ulonlon;
 	
 	if (*cs->ptr == 'd' || *cs->ptr == 'i')
 	{
@@ -131,6 +204,24 @@ char	*get_string(va_list ap, t_cs *cs)
 			return (ft_itoa_float(va_arg(ap, long double), cs));
 		else
 			return (ft_itoa_float(va_arg(ap, double), cs));
+	}
+	if (*cs->ptr == 'b')
+	{
+		ulonlon = va_arg(ap, unsigned long long);
+		
+		if (cs->len == 1)
+			return (ft_print_bits(ulonlon, 8));
+		else if (cs->len == 2)
+			return (ft_print_bits(ulonlon, 16));
+		else if (cs->len == 0)
+			return (ft_print_bits(ulonlon, 32));
+		else if (cs->len == 3 || cs->len == 4)
+			return (ft_print_bits(ulonlon, 64));
+	}
+	if (*cs->ptr == 'k')
+	{
+		ulonlon = va_arg(ap, unsigned long long);
+		return (ft_itodate(ulonlon));
 	}
 	c = *cs->ptr;
 	return (ft_memset(ft_strnew(1), c, 1));

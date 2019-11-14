@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/12 13:20:00 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/13 09:16:06 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,20 +153,3 @@ int		store_flag(t_cs *cs)
 	++cs->ptr;
 	return (0);
 }
-/*
-int		store_decimal(t_cs *cs)
-{
-	if (*cs->ptr == '.')
-	{
-		++cs->ptr;
-		if (!(ft_isdigit(*cs->ptr)))
-			cs->preci = 0;
-		else
-			cs->preci = ft_atoi(cs->ptr);
-	}
-	else
-		cs->minwid = ft_atoi(cs->ptr);
-	while (ft_isdigit(*cs->ptr))
-		++cs->ptr;
-	return (0);
-}*/

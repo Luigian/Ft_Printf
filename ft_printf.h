@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/12 13:09:14 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/13 11:49:23 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ typedef struct		s_cs
 	unsigned int	arg;
 	unsigned int	apo;
 }					t_cs;
+
+typedef struct		s_tm
+{
+	unsigned int	year;
+	unsigned int	month;
+	unsigned int	day;
+	unsigned int	hour;
+	unsigned int	minute;
+	unsigned int	second;
+}					t_tm;
 
 int			ft_printf(const char *fmt, ...);
 int			print_argument(va_list ap, va_list bp, t_cs *cs);
