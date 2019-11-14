@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/13 19:34:55 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/14 12:40:35 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1844,9 +1844,17 @@ int		main(void)
 	ft_printf("%-15hhb\n", 42);	
 	ft_printf("%015hhb\n", 42);	
 	printf("[%k type] ---------------------------------------------------------\n");
-	ft_printf("%k\n", 42);	
-
-	
+	ft_printf("%k\n", 1000000);	
+	ft_printf("%k\n", 68200000);	
+	ft_printf("%k\n", 4107585600);
+	ft_printf("%k\n", 951825600);
+	ft_printf("%k\n", 1573754679);
+	ft_printf("%k\n", 1234567890);
+	ft_printf("%k\n", 4294967295);
+	ft_printf("%k\n", 314159265359);
+	ft_printf("%-30k\n", 1);
+	ft_printf("%-30k\n", 0);
+	ft_printf("%-30k\n", -1);
 //	printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", "hello", "world");
 //	printf("{%*3d}\n", 5, 0);
 //	ft_printf("{%*3d}\n", 5, 0);

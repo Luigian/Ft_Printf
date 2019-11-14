@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/13 19:59:39 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/14 12:46:13 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,15 @@ char	*ft_print_bits(unsigned long long ulonlon, int bits)
 	return (result);
 }
 		
-char	*ft_itodate(unsigned long long ulonlon)
+char	*ft_itodate(long long ulonlon)
 {
 	t_tm	*tm;
+//	unsigned int	dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	int		i;
-	int		j;
-	int		k;
-	int		l;
-	int		m;
-	int		counter;
-	int		dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	int		i;
-	
+	char 	*date;
+	char 	*temp;
+	char 	*del;
+
 	if (!(tm = (t_tm *)malloc(sizeof(t_tm) * 1)))
 		exit (-1);
 	tm->year = 1970; 
@@ -49,39 +46,85 @@ char	*ft_itodate(unsigned long long ulonlon)
 	tm->hour = 0; 
 	tm->minute = 0; 
 	tm->second = 0;
-
-	ulonlon++;
-	counter = 0;
 	i = 0;
-	m = 0;
-	while (m < 12)
+	tm->second += ulonlon % 60;
+	tm->minute = (ulonlon % (60 * 60)) / 60;
+	tm->hour = (ulonlon % (60 * 60 * 24)) / (60 * 60);
+/*	while (ulonlon >= 86400)
 	{
-		l = 0;
-		while (l < dim[i])
+		++tm->day;
+		if (tm->day == dim[i] + 1)
 		{
-			k = 0;
-			while (k < 24)
+			tm->day = 1;
+			++tm->month;
+			++i;
+			if (tm->month == 12 + 1)
 			{
-				j = 0;
-				while (j < 60)
-				{
-					i = 0;
-					while (i < 60)
-					{
-						++counter;
-						++i;
-					}
-					++j;
-				}
-				++k;
+				tm->month = 1;
+				++tm->year;
+				if (tm->year % 4 == 0 && (tm->year % 100 != 0\
+					|| tm->year % 400 == 0))
+					dim[1] = 29;
+				else
+					dim[1] = 28;
+				i = 0;
 			}
-			++l;
 		}
-		++m;
+		ulonlon -= 86400;
 	}
-	printf("%d\n", counter);
+*/	date = ft_strcpy(ft_strnew(25), "-0.-0.T0.:0.:0.+00:00");
+	temp = ft_itoa(tm->second);
+	if (tm->second > 9)
+	{
+		date[13] = temp[0];
+		date[14] = temp[1];
+	}
+	else
+		date[14] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->minute);
+	if (tm->minute > 9)
+	{
+		date[10] = temp[0];
+		date[11] = temp[1];
+	}
+	else
+		date[11] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->hour);
+	if (tm->hour > 9)
+	{
+		date[7] = temp[0];
+		date[8] = temp[1];
+	}
+	else
+		date[8] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->day);
+	if (tm->day > 9)
+	{
+		date[4] = temp[0];
+		date[5] = temp[1];
+	}
+	else
+		date[5] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->month);
+	if (tm->month > 9)
+	{
+		date[1] = temp[0];
+		date[2] = temp[1];
+	}
+	else
+		date[2] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->year);
+	del = date;
+	date = ft_strjoin(temp, del);
+	free(del);
+	free(temp);
 	free(tm);
-	return (ft_strcpy(ft_strnew(4), "hola"));
+	return (date);
 }
 
 char	*get_string(va_list ap, t_cs *cs)
@@ -92,7 +135,7 @@ char	*get_string(va_list ap, t_cs *cs)
 	short				sh;
 	unsigned char		uch;
 	unsigned short		ush;
-	unsigned long long	ulonlon;
+	long long			ulonlon;
 	
 	if (*cs->ptr == 'd' || *cs->ptr == 'i')
 	{
@@ -220,7 +263,7 @@ char	*get_string(va_list ap, t_cs *cs)
 	}
 	if (*cs->ptr == 'k')
 	{
-		ulonlon = va_arg(ap, unsigned long long);
+		ulonlon = va_arg(ap, long long);
 		return (ft_itodate(ulonlon));
 	}
 	c = *cs->ptr;
@@ -346,3 +389,57 @@ int		print_type(va_list ap, va_list bp, t_cs *cs)
 	free(str);
 	return (0);
 }
+
+/*
+	counter = 0;
+	while (ulonlon)
+	{
+		i = 0;
+		n = 0;
+		while (n < 12 && ulonlon)
+		{
+			m = 0;
+			while (m < dim[i] && ulonlon)
+			{
+				l = 0;
+				while (l < 24 && ulonlon)
+				{
+					k = 0;
+					while (k < 60 && ulonlon)
+					{
+						j = 0;
+						while (j < 60 && ulonlon)
+						{
+							++tm->second;
+							if (tm->second == 60)
+							{
+								tm->second = 0;
+								++tm->minute;
+							}
+								
+								
+							++counter;
+							--ulonlon;
+							++j;
+						}
+						++tm->minute;
+						if (tm->minute == 60)
+							tm->minute = 0;
+						++k;
+						if (!ulonlon)
+							break;
+					}
+					++l;
+				}
+				++m;
+			}
+			++n;
+			++i;
+		}
+	}
+	printf("%d\n", counter);
+	printf("%d\n", tm->second);
+	printf("%d\n", tm->minute);
+	free(tm);
+	return (ft_strcpy(ft_strnew(4), "hola"));
+*/
