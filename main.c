@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/14 12:40:35 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/14 21:47:42 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1843,18 +1843,30 @@ int		main(void)
 	ft_printf("%15hhb\n", 42);	
 	ft_printf("%-15hhb\n", 42);	
 	ft_printf("%015hhb\n", 42);	
-	printf("[%k type] ---------------------------------------------------------\n");
-	ft_printf("%k\n", 1000000);	
-	ft_printf("%k\n", 68200000);	
-	ft_printf("%k\n", 4107585600);
-	ft_printf("%k\n", 951825600);
-	ft_printf("%k\n", 1573754679);
-	ft_printf("%k\n", 1234567890);
-	ft_printf("%k\n", 4294967295);
-	ft_printf("%k\n", 314159265359);
-	ft_printf("%-30k\n", 1);
-	ft_printf("%-30k\n", 0);
-	ft_printf("%-30k\n", -1);
+	printf("[%k type positive] ------------------------------------------------\n");
+	ft_printf("16 December 1979 2:27:45:\t%k\n", 314159265359);
+	ft_printf("7 February 2106 6:28:15:\t%k\n", 4294967295);
+	ft_printf("1 March 2100 12:00:00:\t\t%k\n", 4107585600);
+	ft_printf("14 November 2019 18:04:39:\t%k\n", 1573754679);
+	ft_printf("13 February 2009 23:31:30:\t%k\n", 1234567890);
+	ft_printf("29 February 2000 12:00:00:\t%k\n", 951825600);
+	ft_printf("29 February 1972 8:26:40:\t%k\n", 68200000);	
+	ft_printf("12 January 1970 13:46:40:\t%k\n", 1000000);	
+	ft_printf("1 January 1970 0:00:01:\t\t%-30k\n", 1);
+	ft_printf("1 January 1970 0:00:00:\t\t%-30k\n", 0);
+	printf("[%k negative type]  -----------------------------------------------\n");
+	ft_printf("31 December 1969 23:59:59:\t%-30k\n", (long long)-1);
+	ft_printf("31 December 1969 23:58:55:\t%-30k\n", (long long)-65);
+	ft_printf("31 December 1969 23:58:00:\t%-30k\n", (long long)-120);
+	ft_printf("31 December 1969 23:00:00:\t%-30k\n", (long long)-3600);
+	ft_printf("31 December 1969 11:00:00:\t%-30k\n", (long long)-46800);
+	ft_printf("31 December 1969 0:00:00:\t%-30k\n", (long long)-86400);
+	ft_printf("20 December 1969 10:13:20:\t%-30k\n", (long long)-1000000);
+	ft_printf("1 January 1969 0:00:00:\t\t%-30k\n", (long long)-31536000);
+	ft_printf("31 October 1966 14:00:20:\t%-30k\n", (long long)-100000780);
+	ft_printf("2 February 1966 2:26:51:\t%-30k\n", (long long)-123456789);
+	ft_printf("13 October 1578 4:44:59:\t%-30k\n", (long long)-12345678901);
+	printf("[colors]  ---------------------------------------------------------\n");
 //	printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", "hello", "world");
 //	printf("{%*3d}\n", 5, 0);
 //	ft_printf("{%*3d}\n", 5, 0);

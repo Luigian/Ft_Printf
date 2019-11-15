@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/14 12:46:13 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/14 21:49:28 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,50 +29,13 @@ char	*ft_print_bits(unsigned long long ulonlon, int bits)
 	return (result);
 }
 		
-char	*ft_itodate(long long ulonlon)
+char	*ft_date_format(t_tm *tm)
 {
-	t_tm	*tm;
-//	unsigned int	dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	int		i;
 	char 	*date;
 	char 	*temp;
 	char 	*del;
-
-	if (!(tm = (t_tm *)malloc(sizeof(t_tm) * 1)))
-		exit (-1);
-	tm->year = 1970; 
-	tm->month = 1;
-   	tm->day = 1;
-	tm->hour = 0; 
-	tm->minute = 0; 
-	tm->second = 0;
-	i = 0;
-	tm->second += ulonlon % 60;
-	tm->minute = (ulonlon % (60 * 60)) / 60;
-	tm->hour = (ulonlon % (60 * 60 * 24)) / (60 * 60);
-/*	while (ulonlon >= 86400)
-	{
-		++tm->day;
-		if (tm->day == dim[i] + 1)
-		{
-			tm->day = 1;
-			++tm->month;
-			++i;
-			if (tm->month == 12 + 1)
-			{
-				tm->month = 1;
-				++tm->year;
-				if (tm->year % 4 == 0 && (tm->year % 100 != 0\
-					|| tm->year % 400 == 0))
-					dim[1] = 29;
-				else
-					dim[1] = 28;
-				i = 0;
-			}
-		}
-		ulonlon -= 86400;
-	}
-*/	date = ft_strcpy(ft_strnew(25), "-0.-0.T0.:0.:0.+00:00");
+	
+	date = ft_strcpy(ft_strnew(25), "-0.-0.T0.:0.:0.+00:00");
 	temp = ft_itoa(tm->second);
 	if (tm->second > 9)
 	{
@@ -127,6 +90,112 @@ char	*ft_itodate(long long ulonlon)
 	return (date);
 }
 
+
+char	*get_date_positive(long long lonlon, t_tm *tm, int *dim)
+{
+	int		i;
+	
+	tm->year = 1970; 
+	tm->month = 1;
+   	tm->day = 1;
+	tm->hour = 0; 
+	tm->minute = 0; 
+	tm->second = 0;
+	i = 0;
+	tm->second = lonlon % 60;
+	tm->minute = (lonlon % (60 * 60)) / 60;
+	tm->hour = (lonlon % (60 * 60 * 24)) / (60 * 60);
+	while (lonlon >= 86400)
+	{
+		++tm->day;
+		if (tm->day == dim[i] + 1)
+		{
+			tm->day = 1;
+			++tm->month;
+			++i;
+			if (tm->month == 12 + 1)
+			{
+				tm->month = 1;
+				++tm->year;
+				if (tm->year % 4 == 0 && (tm->year % 100 != 0\
+					|| tm->year % 400 == 0))
+					dim[1] = 29;
+				else
+					dim[1] = 28;
+				i = 0;
+			}
+		}
+		lonlon -= 86400;
+	}
+	return (ft_date_format(tm));
+}
+
+char	*get_date_negative(long long lonlon, t_tm *tm, int *dim)
+{
+	int		i;
+	
+	tm->year = 1969; 
+	tm->month = 12;
+   	tm->day = dim[11];
+	tm->hour = 24; 
+	tm->minute = 60; 
+	tm->second = 60;
+	lonlon *= -1;
+	tm->second -= (lonlon % 60);
+	tm->minute -= ((lonlon % (60 * 60)) / 60);
+	tm->hour -= ((lonlon % (60 * 60 * 24)) / (60 * 60));
+	if (tm->second == 60)
+		tm->second = 0;
+	if (tm->second)
+		tm->minute -= 1;
+	if (tm->minute == 60)
+		tm->minute = 0;
+	if (tm->second || tm->minute)
+		tm->hour -= 1;
+	if (tm->hour == 24)
+		tm->hour = 0;
+
+	i = 11;
+	while (lonlon > 86400)
+	{
+		--tm->day;
+		if (tm->day == 0)
+		{
+			if (i)
+				--i;
+			else
+				i = 11;	
+			tm->day = dim[i];
+			--tm->month;
+			if (tm->month == 0)
+			{
+				tm->month = 12;
+				--tm->year;
+				if (tm->year % 4 == 0 && (tm->year % 100 != 0\
+					|| tm->year % 400 == 0))
+					dim[1] = 29;
+				else
+					dim[1] = 28;
+			}
+		}
+		lonlon -= 86400;
+	}
+	return (ft_date_format(tm));
+}
+
+char	*ft_itodate(long long lonlon)
+{
+	t_tm	*tm;
+	int		dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+	if (!(tm = (t_tm *)malloc(sizeof(t_tm) * 1)))
+		exit (-1);
+	if (lonlon < 0)
+		return (get_date_negative(lonlon, tm, dim));
+	else
+		return (get_date_positive(lonlon, tm, dim));
+}
+
 char	*get_string(va_list ap, t_cs *cs)
 {
 	char 				*str;
@@ -135,7 +204,8 @@ char	*get_string(va_list ap, t_cs *cs)
 	short				sh;
 	unsigned char		uch;
 	unsigned short		ush;
-	long long			ulonlon;
+	unsigned long long	ulonlon;
+	long long			lonlon;
 	
 	if (*cs->ptr == 'd' || *cs->ptr == 'i')
 	{
@@ -263,8 +333,8 @@ char	*get_string(va_list ap, t_cs *cs)
 	}
 	if (*cs->ptr == 'k')
 	{
-		ulonlon = va_arg(ap, long long);
-		return (ft_itodate(ulonlon));
+		lonlon = va_arg(ap, long long);
+		return (ft_itodate(lonlon));
 	}
 	c = *cs->ptr;
 	return (ft_memset(ft_strnew(1), c, 1));

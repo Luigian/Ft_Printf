@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/14 12:45:57 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/14 21:47:54 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ typedef struct		s_cs
 
 typedef struct		s_tm
 {
-	unsigned int	year;
-	unsigned int	month;
-	unsigned int	day;
-	unsigned int	hour;
-	unsigned int	minute;
-	unsigned int	second;
+	int				year;
+	int				month;
+	int				day;
+	int				hour;
+	int				minute;
+	int				second;
 }					t_tm;
 
 int			ft_printf(const char *fmt, ...);
