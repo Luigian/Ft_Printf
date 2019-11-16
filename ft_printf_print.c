@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/14 21:49:28 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/16 12:23:21 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -451,6 +451,8 @@ int		print_type(va_list ap, va_list bp, t_cs *cs)
 	if (cs->apo && (*cs->ptr == 'd' || *cs->ptr == 'i'\
 		|| *cs->ptr == 'u' || *cs->ptr == 'f'))
 		str = thousands_separation(str);
+//	printf("\033[01;31m");
+//	write(1, "\033[01;31m", 8);
 	if (!cs->type)
 		ft_putstr_null(str);
 	else

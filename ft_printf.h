@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/14 21:47:54 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/16 11:25:38 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@
 #include "libft/libft.h"
 #include <stdarg.h>
 #include <stdio.h>
-
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
 typedef struct		s_cs
 {
 	unsigned int	hash;
