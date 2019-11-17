@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 11:25:38 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/16 19:59:09 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,20 @@
 #include "libft/libft.h"
 #include <stdarg.h>
 #include <stdio.h>
-#define KNRM  "\x1B[0m"
-#define KRED  "\x1B[31m"
-#define KGRN  "\x1B[32m"
-#define KYEL  "\x1B[33m"
-#define KBLU  "\x1B[34m"
-#define KMAG  "\x1B[35m"
-#define KCYN  "\x1B[36m"
-#define KWHT  "\x1B[37m"
+
 typedef struct		s_cs
 {
-	unsigned int	hash;
-	unsigned int	zero;
-	unsigned int	minus;
-	unsigned int	space;
-	unsigned int	plus;
+	unsigned int	flag[128]; 
+//	unsigned int	hash; //
+//	unsigned int	zero; //
+//	unsigned int	minus; //
+//	unsigned int	space; //
+//	unsigned int	plus; //
 	int				minwid;
 	int				preci;
 	unsigned int	len;
 	unsigned int	ext;
 	unsigned char	type;
-	unsigned char	scape;
-	unsigned char	other;
 	char			*ptr;
 	const char		*begin;
 	char			*bef;
@@ -47,7 +39,7 @@ typedef struct		s_cs
 	unsigned int	g;
 	char			*temp;
 	unsigned int	arg;
-	unsigned int	apo;
+//	unsigned int	apo; //
 }					t_cs;
 
 typedef struct		s_tm
@@ -61,10 +53,10 @@ typedef struct		s_tm
 }					t_tm;
 
 int			ft_printf(const char *fmt, ...);
-int			print_argument(va_list ap, va_list bp, t_cs *cs);
-
 t_cs		*create_object(const char *fmt);
+void		print_error_and_exit(int code);
 void		reset_object(t_cs *cs);
+void		print_argument(va_list ap, va_list bp, t_cs *cs);
 
 int			store_format_specifications(va_list ap, va_list bp, t_cs *cs);
 int			store_flag(t_cs *cs);

@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/11 11:29:08 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/16 20:18:30 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs)
 		base_string = "0123456789ABCDEF";
 	if (n == 0)
 	{
-		*cs->ptr != 'o' ? cs->hash = 0 : 0;
+		*cs->ptr != 'o' ? cs->flag['#'] = 0 : 0;
 		return (ft_memset(ft_strnew(1), '0', 1));
 	}
 	len = 0;
@@ -346,9 +346,9 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 //	printf("real: %.30Lf\n", n);
 	if (!(n == 0 || n > 0 || n < 0))
 	{
-		cs->zero = 0;
-		cs->space = 0;
-		cs->plus = 0;
+		cs->flag['0'] = 0;
+		cs->flag[' '] = 0;
+		cs->flag['+'] = 0;
 		cs->preci = -1;
 		return(ft_strcpy(ft_strnew(3), "nan"));
 	}
@@ -401,7 +401,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	}
 	if (*cs->ptr == 'e')
 		get_exp_format(cs);
-	if (cs->preci == 0 && cs->hash == 0)
+	if (cs->preci == 0 && cs->flag['#'] == 0)
 	{
 		if (*cs->ptr == 'e')
 		{
@@ -419,7 +419,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 			turnback_ptr_content(cs);
 		return (cs->bef);
 	}
-	else if (cs->preci == 0 && cs->hash && !(*cs->ptr == 'e'))
+	else if (cs->preci == 0 && cs->flag['#'] && !(*cs->ptr == 'e'))
 	{
 		tm = ft_strjoin(cs->bef, ".");
 		free(cs->aft);
@@ -439,7 +439,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	free(pt);
 	free(cs->bef);
 	free(cs->aft);
-	if (cs->g && *cs->ptr == 'f' && !cs->hash)
+	if (cs->g && *cs->ptr == 'f' && !cs->flag['#'])
 		trim_trailing_zeros(tm, (int)ft_strlen(tm));
 	sign ? tm = add_minus(tm) : 0;
 	if (cs->g)

@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 12:23:21 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/16 20:24:32 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -448,11 +448,9 @@ int		print_type(va_list ap, va_list bp, t_cs *cs)
 		*cs->ptr == 'p' ? str = hash(str, cs) : 0;
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
-	if (cs->apo && (*cs->ptr == 'd' || *cs->ptr == 'i'\
+	if (cs->flag['\''] && (*cs->ptr == 'd' || *cs->ptr == 'i'\
 		|| *cs->ptr == 'u' || *cs->ptr == 'f'))
 		str = thousands_separation(str);
-//	printf("\033[01;31m");
-//	write(1, "\033[01;31m", 8);
 	if (!cs->type)
 		ft_putstr_null(str);
 	else
@@ -461,57 +459,3 @@ int		print_type(va_list ap, va_list bp, t_cs *cs)
 	free(str);
 	return (0);
 }
-
-/*
-	counter = 0;
-	while (ulonlon)
-	{
-		i = 0;
-		n = 0;
-		while (n < 12 && ulonlon)
-		{
-			m = 0;
-			while (m < dim[i] && ulonlon)
-			{
-				l = 0;
-				while (l < 24 && ulonlon)
-				{
-					k = 0;
-					while (k < 60 && ulonlon)
-					{
-						j = 0;
-						while (j < 60 && ulonlon)
-						{
-							++tm->second;
-							if (tm->second == 60)
-							{
-								tm->second = 0;
-								++tm->minute;
-							}
-								
-								
-							++counter;
-							--ulonlon;
-							++j;
-						}
-						++tm->minute;
-						if (tm->minute == 60)
-							tm->minute = 0;
-						++k;
-						if (!ulonlon)
-							break;
-					}
-					++l;
-				}
-				++m;
-			}
-			++n;
-			++i;
-		}
-	}
-	printf("%d\n", counter);
-	printf("%d\n", tm->second);
-	printf("%d\n", tm->minute);
-	free(tm);
-	return (ft_strcpy(ft_strnew(4), "hola"));
-*/

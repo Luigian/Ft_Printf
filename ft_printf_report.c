@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/07 21:17:25 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/16 20:13:10 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*minimum_and_minus(char *str, t_cs *cs)
 	if ((len = cs->minwid - ft_strlen(str)) > 0)
 	{
 		new = ft_memset(ft_strnew(len), ' ', len);
-		if (cs->minus)
+		if (cs->flag['-'])
 			ret = ft_strjoin(str, new);
 		else
 			ret = ft_strjoin(new, str);
@@ -37,9 +37,9 @@ char	*plus_and_space(char *str, t_cs *cs)
 	char	*new;
 	char	*ret;
 
-	if ((cs->plus || cs->space) && str[0] != '-')
+	if ((cs->flag['+'] || cs->flag[' ']) && str[0] != '-')
 	{
-		if (cs->plus)
+		if (cs->flag['+'])
 			new = ft_memset(ft_strnew(1), '+', 1);
 		else
 			new = ft_memset(ft_strnew(1), ' ', 1);
@@ -59,8 +59,8 @@ char	*zero(char *str, t_cs *cs)
 		
 	len = 0;
 	if (str[0] != '-')
-		len = 0 - (cs->plus || cs->space); 
-	if (cs->hash && (*cs->ptr == 'x' || *cs->ptr == 'X' || *cs->ptr == 'p'))
+		len = 0 - (cs->flag['+'] || cs->flag[' ']); 
+	if (cs->flag['#'] && (*cs->ptr == 'x' || *cs->ptr == 'X' || *cs->ptr == 'p'))
 		len -= 2; 
 	if ((len = len + cs->minwid - ft_strlen(str)) > 0)
 	{
@@ -87,7 +87,7 @@ char	*precision(char *str, t_cs *cs)
 	ret = str;
 	if (cs->preci < 0 || (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g'))
 	{
-		if (cs->zero && !cs->minus)
+		if (cs->flag['0'] && !cs->flag['-'])
 			ret = zero(str, cs);
 		if (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g')
 			return (ret);
@@ -95,7 +95,7 @@ char	*precision(char *str, t_cs *cs)
 	else if (*cs->ptr == 's')
 	{
 		ret = ft_strncpy(ft_strnew(cs->preci), str, cs->preci);
-		if (cs->zero && !cs->minus)
+		if (cs->flag['0'] && !cs->flag['-'])
 			ret = zero(ret, cs);
 		free(str);
 	}
@@ -103,7 +103,7 @@ char	*precision(char *str, t_cs *cs)
 	{
 		if (*cs->ptr == 'p')
 			str[0] = '\0';
-		else if (!cs->hash)
+		else if (!cs->flag['#'])
 			str[0] = '\0';
 	}
 	else if ((len = cs->preci - ft_strlen(str) + (str[0] == '-')) > 0)
@@ -128,7 +128,7 @@ char	*hash(char *str, t_cs *cs)
 	char	*new;
 	char	*ret;
 
-	if (cs->hash)
+	if (cs->flag['#'])
 	{
 		if (*cs->ptr == 'x' || *cs->ptr == 'p')
 			new = "0x";

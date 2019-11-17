@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 12:01:54 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/16 18:17:54 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1866,11 +1866,9 @@ int		main(void)
 	ft_printf("31 October 1966 14:00:20:\t%-30k\n", (long long)-100000780);
 	ft_printf("2 February 1966 2:26:51:\t%-30k\n", (long long)-123456789);
 	ft_printf("13 October 1578 4:44:59:\t%-30k\n", (long long)-12345678901);
-	printf("[colors]  -------------------------------------------------------\n");
-	printf("\033[0;31m%s\n", "hola");
-//	printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", "hello", "world");
-//	printf("{%*3d}\n", 5, 0);
-//	ft_printf("{%*3d}\n", 5, 0);
+	printf("[final tests]  ---------------------------------------------------\n");
+//	printf("%0-#15\n ");	
+//	ft_printf("%0-#15\n ");	
 	//fflush(stdout);
 	system("leaks a.out");
 	return (0);
