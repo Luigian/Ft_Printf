@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 20:22:24 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/17 20:14:45 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		store_length(t_cs *cs)
 	}
 	else if (*cs->ptr == 'L')
 		cs->ext = 1;
-	++cs->ptr;
 	return (0);
 }
 
@@ -52,7 +51,7 @@ int		is_arg_index(char *str)
 		return (0);
 }
 
-int		store_decimal(va_list ap, va_list bp, t_cs *cs)
+int		store_decimal(t_cs *cs, va_list ap, va_list bp)
 {
 	va_list		tp;
 	
@@ -82,7 +81,6 @@ int		store_decimal(va_list ap, va_list bp, t_cs *cs)
 				cs->flag['-'] = 1;
 				cs->minwid *= -1;
 			}
-			++cs->ptr;
 			return (0);
 		}
 	}
@@ -109,7 +107,6 @@ int		store_decimal(va_list ap, va_list bp, t_cs *cs)
 				cs->preci = va_arg(ap, int);
 				if (cs->preci < 0)
 					cs->preci = -1;
-				++cs->ptr;
 				return (0);
 			}
 		}
@@ -130,28 +127,23 @@ int		store_decimal(va_list ap, va_list bp, t_cs *cs)
 	}
 	while (ft_isdigit(*cs->ptr) || *cs->ptr == '$')
 		++cs->ptr;
+	--cs->ptr;
 	return (0);
 }
 
-int		store_flag(t_cs *cs)
+int		store_format_specifications(t_cs *cs)
 {
-	cs->flag[(int)*cs->ptr] = 1;
-		
-/*	char	c;
-		
-	c = *cs->ptr;
-	if (c == '#')
-		cs->hash = 1;
-	else if (c == '0')
-		cs->zero = 1;
-	else if (c == '-')
-		cs->minus = 1;
-	else if (c == ' ')
-		cs->space = 1;
-	else if (c == '+')
-		cs->plus = 1;
-	else if (c == '\'')
-		cs->apo = 1;*/
-	++cs->ptr;
+	while (1)
+	{
+		if (ft_chrstr(*cs->ptr, "#0- +\'"))
+			cs->flag[(int)*cs->ptr] = 1;
+		else if (ft_chrstr(*cs->ptr, "123456789.*"))
+			store_decimal(cs, cs->ap, cs->bp);
+		else if (ft_chrstr(*cs->ptr, "hlLjz"))
+			store_length(cs);
+		else
+			break;
+		++cs->ptr;
+	}
 	return (0);
 }

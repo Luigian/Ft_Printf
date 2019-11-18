@@ -6,25 +6,14 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 18:19:36 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 20:20:11 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/17 19:38:58 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		store_format_specifications(va_list ap, va_list bp, t_cs *cs)
+void	store_adjusts(t_cs *cs)
 {
-	while (1)
-	{
-		if (is_flag(*cs->ptr))
-			store_flag(cs);
-		else if (is_decimal(*cs->ptr))
-			store_decimal(ap, bp, cs);
-		else if (is_length(*cs->ptr))
-			store_length(cs);
-		else
-			break;
-	}
 	if (*cs->ptr == 'd' || *cs->ptr == 'i')
 		cs->flag['#'] = 0;
 	else if (*cs->ptr == 'u' || *cs->ptr == 'U')
@@ -83,5 +72,4 @@ int		store_format_specifications(va_list ap, va_list bp, t_cs *cs)
 		cs->flag['+'] = 0;
 		cs->preci = -1;
 	}
-	return (0);
 }

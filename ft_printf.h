@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 19:59:09 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/17 19:30:42 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 typedef struct		s_cs
 {
 	unsigned int	flag[128]; 
-//	unsigned int	hash; //
-//	unsigned int	zero; //
-//	unsigned int	minus; //
-//	unsigned int	space; //
-//	unsigned int	plus; //
 	int				minwid;
 	int				preci;
 	unsigned int	len;
@@ -39,7 +34,8 @@ typedef struct		s_cs
 	unsigned int	g;
 	char			*temp;
 	unsigned int	arg;
-//	unsigned int	apo; //
+	va_list			ap;
+	va_list			bp;
 }					t_cs;
 
 typedef struct		s_tm
@@ -53,25 +49,19 @@ typedef struct		s_tm
 }					t_tm;
 
 int			ft_printf(const char *fmt, ...);
-t_cs		*create_object(const char *fmt);
-void		print_error_and_exit(int code);
+void		print_argument(t_cs *cs);
+void		init_struct(const char *fmt, t_cs *cs);
 void		reset_object(t_cs *cs);
-void		print_argument(va_list ap, va_list bp, t_cs *cs);
+int			close_program(int code, t_cs cs);
 
-int			store_format_specifications(va_list ap, va_list bp, t_cs *cs);
-int			store_flag(t_cs *cs);
-int			store_decimal(va_list ap, va_list bp, t_cs *cs);
+
+int			store_format_specifications(t_cs *cs);
+int			store_decimal(t_cs *cs, va_list ap, va_list bp);
 int			store_length(t_cs *cs);
 
-int			is_type_specificator(char c);
-int			is_scape_specificator(char c);
-int			is_flag(char c);
-int			is_decimal(char c);
-int			is_length(char c);
-int			is_other_flag(char c);
-int			is_other_char(char c);
+void		store_adjusts(t_cs *cs);
 
-int			print_type(va_list ap, va_list bp, t_cs *cs);
+int			print_type(t_cs *cs, va_list ap, va_list bp);
 char		*get_string(va_list ap, t_cs *cs);
 char		*hash(char *str, t_cs *cs);
 char		*precision(char *str, t_cs *cs);

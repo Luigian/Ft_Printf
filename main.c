@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 18:17:54 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/17 12:32:39 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ int		main(void)
 	printf("%-20hh", 128);
 	printf("%", 128);*/
 	printf("[d int] --------------------------------------------------\n");
+	printf("%d%d\n", 12, 42);
+	ft_printf("%d%d\n", 12, 42);
 	printf("%#0- +30.20lllhhhLlLhhhlll.20+30 -0#dcsphola\n", 20);
 	ft_printf("%#0- +30.20lllhhhLlLhhhlll.20+30 -0#dcsphola\n", 20);
 	printf("%#0- +40.30d\n", in);

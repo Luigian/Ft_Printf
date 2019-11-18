@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 20:24:32 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/17 19:42:35 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -427,7 +427,7 @@ char	*thousands_separation(char *str)
 	return (result);
 }
 
-int		print_type(va_list ap, va_list bp, t_cs *cs)
+int		print_type(t_cs *cs, va_list ap, va_list bp)
 {
 	char		*str;
 	va_list		tp;
@@ -438,7 +438,7 @@ int		print_type(va_list ap, va_list bp, t_cs *cs)
 		while (--cs->arg)
 			va_arg(tp, void*);
 		va_end(ap);
-		va_copy(ap,tp);
+		va_copy(ap, tp);
 		va_end(tp);
 	}	
 	str = get_string(ap, cs);
@@ -457,5 +457,6 @@ int		print_type(va_list ap, va_list bp, t_cs *cs)
 		ft_putstr(str);
 	cs->ret += ft_strlen(str);
 	free(str);
+	++cs->ptr;
 	return (0);
 }
