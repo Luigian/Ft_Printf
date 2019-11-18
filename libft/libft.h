@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/29 23:42:40 by lusanche          #+#    #+#             */
-/*   Updated: 2019/08/29 22:32:53 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/17 18:48:41 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ int					ft_word_len(char const *str, char e);
 char				**ft_stranew(size_t size);
 
 int					get_next_line(const int fd, char **line);
-
+int					ft_chrstr(unsigned char c, const char *s);
 #endif
