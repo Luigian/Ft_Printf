@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/17 19:30:42 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/18 11:46:16 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,20 @@ typedef struct		s_tm
 	int				second;
 }					t_tm;
 
+// master 
 int			ft_printf(const char *fmt, ...);
 void		print_argument(t_cs *cs);
 void		init_struct(const char *fmt, t_cs *cs);
 void		reset_object(t_cs *cs);
 int			close_program(int code, t_cs cs);
 
-
-int			store_format_specifications(t_cs *cs);
-int			store_decimal(t_cs *cs, va_list ap, va_list bp);
-int			store_length(t_cs *cs);
+// store 
+void		store_format_specifications(t_cs *cs);
+void		store_length(t_cs *cs);
+void		store_precision_minwid(t_cs *cs);
+void		precision_as_argument(t_cs *cs);
+void		minwid_as_argument(t_cs *cs);
+int			is_arg_index(char *str);
 
 void		store_adjusts(t_cs *cs);
 
