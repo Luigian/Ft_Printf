@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/18 11:55:23 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/18 21:01:35 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,148 +196,185 @@ char	*ft_itodate(long long lonlon)
 		return (get_date_positive(lonlon, tm, dim));
 }
 
-char	*get_string(va_list ap, t_cs *cs)
+char	*print_decimal(t_cs *cs)
 {
-	char 				*str;
-	char				 c;
 	char				ch;
 	short				sh;
+
+	if (cs->len == 1)
+	{
+		ch = (char)va_arg(cs->ap, int);
+		return (ft_itoa_base(ch, 10, cs));
+	}	
+	else if (cs->len == 2)
+	{
+		sh = (short)va_arg(cs->ap, int);
+		return (ft_itoa_base(sh, 10, cs));
+	}
+	else if (cs->len == 3)
+		return (ft_itoa_base(va_arg(cs->ap, long), 10, cs));
+	else if (cs->len == 4)
+		return (ft_itoa_base(va_arg(cs->ap, long long), 10, cs));
+	return (ft_itoa_base(va_arg(cs->ap, int), 10, cs));
+}
+
+char	*print_unsigned(t_cs *cs)
+{
 	unsigned char		uch;
 	unsigned short		ush;
+	
+	if (cs->len == 1)
+	{
+		uch = (unsigned char)va_arg(cs->ap, unsigned int);
+		return (ft_itoa_base_uns(uch, 10, cs));
+	}	
+	else if (cs->len == 2)
+	{
+		ush = (unsigned short)va_arg(cs->ap, unsigned int);
+		return (ft_itoa_base_uns(ush, 10, cs));
+	}
+	else if (cs->len == 3)
+		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long), 10, cs));
+	else if (cs->len == 4)
+		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long long), 10, cs));
+	return (ft_itoa_base_uns(va_arg(cs->ap, unsigned int), 10, cs));
+}
+	
+char	*print_octal(t_cs *cs)
+{
+	unsigned char		uch;
+	unsigned short		ush;
+	
+	if (cs->len == 1)
+	{
+		uch = (unsigned char)va_arg(cs->ap, unsigned int);
+		return (ft_itoa_base_uns(uch, 8, cs));
+	}	
+	if (cs->len == 2)
+	{
+		ush = (unsigned short)va_arg(cs->ap, unsigned int);
+		return (ft_itoa_base_uns(ush, 8, cs));
+	}
+	else if (cs->len == 3)
+		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long), 8, cs));
+	else if (cs->len == 4)
+		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long long), 8, cs));
+	return (ft_itoa_base_uns(va_arg(cs->ap, unsigned int), 8, cs));
+}
+
+char	*print_hexa(t_cs *cs)
+{
+	unsigned char		uch;
+	unsigned short		ush;
+	
+	if (cs->len == 1)
+	{
+		uch = (unsigned char)va_arg(cs->ap, unsigned int);
+		return (ft_itoa_base_uns(uch, 16, cs));
+	}	
+	if (cs->len == 2)
+	{
+		ush = (unsigned short)va_arg(cs->ap, unsigned int);
+		return (ft_itoa_base_uns(ush, 16, cs));
+	}
+	else if (cs->len == 3)
+		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long), 16, cs));
+	else if (cs->len == 4)
+		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long long), 16, cs));
+	return (ft_itoa_base_uns(va_arg(cs->ap, unsigned int), 16, cs));
+}
+
+char	*print_char(t_cs *cs)
+{
+	char	 c;
+	
+	c = va_arg(cs->ap, unsigned int);
+	if (c == 0)
+	{	
+		cs->type = 0;
+		cs->minwid += 1;
+		cs->ret -= 1;
+		return (ft_strcpy(ft_strnew(2), "^@"));
+	}
+	return (ft_memset(ft_strnew(1), c, 1));
+}	
+
+char	*print_string(t_cs *cs)
+{
+	char 				*str;
+
+	str = va_arg(cs->ap, char *);
+	if (!str)
+		return (ft_strcpy(ft_strnew(6), "(null)"));
+	return (ft_strjoin("", str));
+}
+
+char	*print_pointer(t_cs *cs)
+{
+	return (ft_itoa_base((long long)va_arg(cs->ap, void *), 16, cs));
+}
+
+char	*print_float(t_cs *cs)
+{
+	if (cs->ext)
+		return (ft_itoa_float(va_arg(cs->ap, long double), cs));
+	return (ft_itoa_float(va_arg(cs->ap, double), cs));
+}
+
+char	*print_binary(t_cs *cs)
+{
 	unsigned long long	ulonlon;
+
+	ulonlon = va_arg(cs->ap, unsigned long long);
+	if (cs->len == 1)
+		return (ft_print_bits(ulonlon, 8));
+	else if (cs->len == 2)
+		return (ft_print_bits(ulonlon, 16));
+	else if (cs->len == 3 || cs->len == 4)
+		return (ft_print_bits(ulonlon, 64));
+	return (ft_print_bits(ulonlon, 32));
+}
+
+char	*print_date(t_cs *cs)
+{
 	long long			lonlon;
 	
-	if (*cs->ptr == 'd' || *cs->ptr == 'i')
-	{
-		if (cs->len == 1)
-		{
-			ch = (char)va_arg(ap, int);
-			return (ft_itoa_base(ch, 10, cs));
-		}	
-		if (cs->len == 2)
-		{
-			sh = (short)va_arg(ap, int);
-			return (ft_itoa_base(sh, 10, cs));
-		}
-		if (cs->len == 0)
-			return (ft_itoa_base(va_arg(ap, int), 10, cs));
-		else if (cs->len == 3)
-			return (ft_itoa_base(va_arg(ap, long), 10, cs));
-		else if (cs->len == 4)
-			return (ft_itoa_base(va_arg(ap, long long), 10, cs));
-	}
-	if (*cs->ptr == 'u' || *cs->ptr == 'U')
-	{
-		if (cs->len == 1)
-		{
-			uch = (unsigned char)va_arg(ap, unsigned int);
-			return (ft_itoa_base_uns(uch, 10, cs));
-		}	
-		if (cs->len == 2)
-		{
-			ush = (unsigned short)va_arg(ap, unsigned int);
-			return (ft_itoa_base_uns(ush, 10, cs));
-		}
-		if (cs->len == 0)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned int), 10, cs));
-		else if (cs->len == 3)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned long), 10, cs));
-		else if (cs->len == 4)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned long long), 10, cs));
-	}
-	if (*cs->ptr == 'o')
-	{
-		if (cs->len == 1)
-		{
-			uch = (unsigned char)va_arg(ap, unsigned int);
-			return (ft_itoa_base_uns(uch, 8, cs));
-		}	
-		if (cs->len == 2)
-		{
-			ush = (unsigned short)va_arg(ap, unsigned int);
-			return (ft_itoa_base_uns(ush, 8, cs));
-		}
-		if (cs->len == 0)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned int), 8, cs));
-		else if (cs->len == 3)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned long), 8, cs));
-		else if (cs->len == 4)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned long long), 8, cs));
-	}
-	if (*cs->ptr == 'x' || *cs->ptr == 'X')
-	{
-		if (cs->len == 1)
-		{
-			uch = (unsigned char)va_arg(ap, unsigned int);
-			return (ft_itoa_base_uns(uch, 16, cs));
-		}	
-		if (cs->len == 2)
-		{
-			ush = (unsigned short)va_arg(ap, unsigned int);
-			return (ft_itoa_base_uns(ush, 16, cs));
-		}
-		if (cs->len == 0)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned int), 16, cs));
-		else if (cs->len == 3)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned long), 16, cs));
-		else if (cs->len == 4)
-			return (ft_itoa_base_uns(va_arg(ap, unsigned long long), 16, cs));
-	}
-	if (*cs->ptr == 'c')
-	{
-		c = va_arg(ap, unsigned int);
-		if (c == 0)
-		{	
-			cs->type = 0;
-			cs->minwid += 1;
-			cs->ret -= 1;
-			return (ft_strcpy(ft_strnew(2), "^@"));
-		}
-		else
-			return (ft_memset(ft_strnew(1), c, 1));
-	}	
-	if (*cs->ptr == 's')
-	{
-		str = va_arg(ap, char *);
-		if (!str)
-			return (ft_strcpy(ft_strnew(6), "(null)"));
-		return (ft_strjoin("", str));
-	}
-	if (*cs->ptr == 'p')
-	{
-		return (ft_itoa_base((long long)va_arg(ap, void *), 16, cs));
-	}
-	if (*cs->ptr == '%')
-	{
-		return (ft_memset(ft_strnew(1), '%', 1));
-	}	
-	if (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g')
-	{
-		if (cs->ext)
-			return (ft_itoa_float(va_arg(ap, long double), cs));
-		else
-			return (ft_itoa_float(va_arg(ap, double), cs));
-	}
-	if (*cs->ptr == 'b')
-	{
-		ulonlon = va_arg(ap, unsigned long long);
-		
-		if (cs->len == 1)
-			return (ft_print_bits(ulonlon, 8));
-		else if (cs->len == 2)
-			return (ft_print_bits(ulonlon, 16));
-		else if (cs->len == 0)
-			return (ft_print_bits(ulonlon, 32));
-		else if (cs->len == 3 || cs->len == 4)
-			return (ft_print_bits(ulonlon, 64));
-	}
-	if (*cs->ptr == 'k')
-	{
-		lonlon = va_arg(ap, long long);
-		return (ft_itodate(lonlon));
-	}
+	lonlon = va_arg(cs->ap, long long);
+	return (ft_itodate(lonlon));
+}
+
+char	*print_other(t_cs *cs)
+{
+	char	 c;
+	
 	c = *cs->ptr;
 	return (ft_memset(ft_strnew(1), c, 1));
+}
+
+char	*get_string(t_cs *cs)
+{
+	
+	if (*cs->ptr == 'd' || *cs->ptr == 'i')
+		return (print_decimal(cs));
+	if (*cs->ptr == 'u' || *cs->ptr == 'U')
+		return (print_unsigned(cs));
+	if (*cs->ptr == 'o')
+		return (print_octal(cs));
+	if (*cs->ptr == 'x' || *cs->ptr == 'X')
+		return (print_hexa(cs));
+	if (*cs->ptr == 'c')
+		return (print_char(cs));
+	if (*cs->ptr == 's')
+		return (print_string(cs));
+	if (*cs->ptr == 'p')
+		return (print_pointer(cs));
+	if (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g')
+		return (print_float(cs));
+	if (*cs->ptr == 'b')
+		return (print_binary(cs));
+	if (*cs->ptr == 'k')
+		return (print_date(cs));
+	return (print_other(cs));
 }
 
 void	ft_putstr_null(char *str)
@@ -427,29 +464,19 @@ char	*thousands_separation(char *str)
 	return (result);
 }
 
-int		print_type(t_cs *cs, va_list ap, va_list bp)
+void		print_type(t_cs *cs)
 {
 	char		*str;
-	va_list		tp;
 
-	if (cs->arg)
-	{
-		va_copy(tp, bp);
-		while (--cs->arg)
-			va_arg(tp, void*);
-		va_end(ap);
-		va_copy(ap, tp);
-		va_end(tp);
-	}	
-	str = get_string(ap, cs);
-	*cs->ptr == 'o' ? str = hash(str, cs) : 0;
+	str = get_string(cs);
+	if (*cs->ptr == 'o')
+		str = hash(str, cs);
 	str = precision(str, cs);
-	*cs->ptr == 'x' || *cs->ptr == 'X' ||\
-		*cs->ptr == 'p' ? str = hash(str, cs) : 0;
+	if (*cs->ptr == 'x' || *cs->ptr == 'X' || *cs->ptr == 'p')
+		str = hash(str, cs);
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
-	if (cs->flag['\''] && (*cs->ptr == 'd' || *cs->ptr == 'i'\
-		|| *cs->ptr == 'u' || *cs->ptr == 'f'))
+	if (cs->flag['\''])
 		str = thousands_separation(str);
 	if (!cs->type)
 		ft_putstr_null(str);
@@ -458,5 +485,4 @@ int		print_type(t_cs *cs, va_list ap, va_list bp)
 	cs->ret += ft_strlen(str);
 	free(str);
 	++cs->ptr;
-	return (0);
 }

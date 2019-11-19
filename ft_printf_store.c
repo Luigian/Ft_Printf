@@ -6,12 +6,36 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/18 11:41:05 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:50:40 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+void	store_adjustments(t_cs *cs)
+{
+	if (ft_chrstr(*cs->ptr, "diuUsbkp"))
+		cs->flag['#'] = 0;
+	if (!(ft_chrstr(*cs->ptr, "difeg")))
+	{
+		cs->flag[' '] = 0;
+		cs->flag['+'] = 0;
+	}
+	if (*cs->ptr == 'U')
+		cs->len = 3;
+	if (*cs->ptr == 'p')
+		cs->flag['#'] = 1;
+	if (ft_chrstr(*cs->ptr, "feg") && cs->preci == -1)
+		cs->preci = 6;
+	if (*cs->ptr == 'g' && cs->preci == 0)
+		cs->preci = 1;
+	if (!(ft_chrstr(*cs->ptr, "diuf")))
+		cs->flag['\''] = 0;
+	if (*cs->ptr == 'k')
+		cs->flag['0'] = 0;
+	if (!(ft_chrstr(*cs->ptr, "diuUoxXspfeg")))
+		cs->preci = -1;
+}
 
 int		is_arg_index(char *str)
 {
@@ -146,4 +170,5 @@ void		store_format_specifications(t_cs *cs)
 			break;
 		++cs->ptr;
 	}
+	store_adjustments(cs);
 }

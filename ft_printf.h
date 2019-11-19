@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/18 11:46:16 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/18 20:16:15 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,12 @@ void		store_precision_minwid(t_cs *cs);
 void		precision_as_argument(t_cs *cs);
 void		minwid_as_argument(t_cs *cs);
 int			is_arg_index(char *str);
+void		store_adjustments(t_cs *cs);
 
-void		store_adjusts(t_cs *cs);
+void		print_type(t_cs *cs);
+char		*get_string(t_cs *cs);
 
-int			print_type(t_cs *cs, va_list ap, va_list bp);
-char		*get_string(va_list ap, t_cs *cs);
+
 char		*hash(char *str, t_cs *cs);
 char		*precision(char *str, t_cs *cs);
 char		*minimum_and_minus(char *str, t_cs *cs);

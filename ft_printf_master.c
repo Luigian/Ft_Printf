@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/17 19:31:29 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/18 20:15:04 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		close_program(int code, t_cs cs)
 	va_end(cs.bp);
 	if (code == -1)
 	{
-		write(1, "[SORRY] Not enough memory for malloc.\n", 38);
+		write(1, "[SORRY] Not type of conversion provided.\n", 41);
 		exit(code);
 	}
 	return (cs.ret);
@@ -56,11 +56,21 @@ void	init_struct(const char *fmt, t_cs *cs)
 
 void	print_argument(t_cs *cs)
 {
+	va_list		tp;
+
 	reset_object(cs);
 	store_format_specifications(cs);
-	store_adjusts(cs);
+	if (cs->arg)
+	{
+		va_copy(tp, cs->bp);
+		while (--cs->arg)
+			va_arg(tp, void*);
+		va_end(cs->ap);
+		va_copy(cs->ap, tp);
+		va_end(tp);
+	}	
 	if (*cs->ptr)
-		print_type(cs, cs->ap, cs->bp);
+		print_type(cs);
 }
 
 int		ft_printf(const char *fmt, ...)

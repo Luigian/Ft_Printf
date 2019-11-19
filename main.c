@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/17 12:32:39 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/18 19:24:24 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1834,17 +1834,17 @@ int		main(void)
 	ft_printf("%22'f\n", 0.0080045);	
 	ft_printf("%022'f\n", -1080040050.345);	
 	printf("[%b type] ---------------------------------------------------------\n");
-	ft_printf("%hhb\n", 42);	
-	ft_printf("%hb\n", 42);	
-	ft_printf("%b\n", 42);	
-	ft_printf("%lb\n", 42);	
-	ft_printf("%llb\n", 42);	
-	ft_printf("%llb\n", (unsigned long long)-4);	
-	ft_printf("%llb\n", (unsigned long long)18446744073709551615);	
-	ft_printf("%llb\n", 18446744073709551615);	
-	ft_printf("%15hhb\n", 42);	
-	ft_printf("%-15hhb\n", 42);	
-	ft_printf("%015hhb\n", 42);	
+	ft_printf("42char:%hhb\n", 42);	
+	ft_printf("42short:%hb\n", 42);	
+	ft_printf("42int:%b\n", 42);	
+	ft_printf("42l:%lb\n", 42);	
+	ft_printf("42ll:%llb\n", 42);	
+	ft_printf("-4ull:%llb\n", (unsigned long long)-4);	
+	ft_printf("maxllcasted:%llb\n", (unsigned long long)18446744073709551615);	
+	ft_printf("maxllnotcasted:%llb\n", 18446744073709551615);	
+	ft_printf("42hh15minwid::%15hhb\n", 42);	
+	ft_printf("42hh15minwid-:%-15hhb\n", 42);	
+	ft_printf("42hh15minwid0:%015hhb\n", 42);	
 	printf("[%k positive] ----------------------------------------------------\n");
 	ft_printf("16 December 1979 2:27:45:\t%k\n", 314159265359);
 	ft_printf("7 February 2106 6:28:15:\t%k\n", 4294967295);
@@ -1869,8 +1869,8 @@ int		main(void)
 	ft_printf("2 February 1966 2:26:51:\t%-30k\n", (long long)-123456789);
 	ft_printf("13 October 1578 4:44:59:\t%-30k\n", (long long)-12345678901);
 	printf("[final tests]  ---------------------------------------------------\n");
-//	printf("%0-#15\n ");	
-//	ft_printf("%0-#15\n ");	
+//	printf("%0-#+");	
+//	ft_printf("%0-#+");	
 	//fflush(stdout);
 	system("leaks a.out");
 	return (0);
