@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/18 20:15:04 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/19 16:27:42 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ int		close_program(int code, t_cs cs)
 
 void	reset_object(t_cs *cs)
 {
-	int		i;
-
-	i = 128;
-	while (i--)
-		cs->flag[i] = 0;
+	ft_memset(cs->flag, 0, 128 * sizeof(int));
 	cs->minwid = 0;
 	cs->preci = -1;
 	cs->len = 0; 
@@ -51,6 +47,12 @@ void	init_struct(const char *fmt, t_cs *cs)
 	cs->bef = NULL;
 	cs->aft = NULL;
 	cs->ret = 0;
+	ft_memset(cs->base, 0, 128 * sizeof(int));
+	cs->base['u'] = 10;
+	cs->base['U'] = 10;
+	cs->base['o'] = 8;
+	cs->base['x'] = 16;
+	cs->base['X'] = 16;
 	reset_object(cs);
 }
 
