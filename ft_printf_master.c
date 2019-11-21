@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/19 16:27:42 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/20 21:37:14 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	reset_object(t_cs *cs)
 	cs->preci = -1;
 	cs->len = 0; 
 	cs->ext = 0; 
-	cs->type = '0';
 	cs->bef = NULL;
 	cs->aft = NULL;
 	cs->exp = 0;

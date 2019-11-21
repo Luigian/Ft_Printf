@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 20:13:10 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/20 18:54:05 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,27 +123,11 @@ char	*precision(char *str, t_cs *cs)
 	return (ret);
 }
 
-char	*hash(char *str, t_cs *cs)
+char	*ft_strjoin_2(char *a, char *b)
 {
 	char	*new;
-	char	*ret;
-
-	if (cs->flag['#'])
-	{
-		if (*cs->ptr == 'x' || *cs->ptr == 'p')
-			new = "0x";
-		else if (*cs->ptr == 'X')
-			new = "0X";
-		else if (*cs->ptr == 'o')
-		{
-			if (str[0] != '0')
-				new = "0";
-			else
-				return (str);
-		}
-		ret = ft_strjoin(new, str);
-		free(str);
-		return (ret);
-	}
-	return (str);
+	
+	new = ft_strjoin(a, b);
+	free(b);
+	return (new);
 }

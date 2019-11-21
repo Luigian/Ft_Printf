@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/18 16:50:40 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/20 18:47:24 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	store_adjustments(t_cs *cs)
 {
-	if (ft_chrstr(*cs->ptr, "diuUsbkp"))
+	if (ft_chrstr(*cs->ptr, "diuUsbk"))
 		cs->flag['#'] = 0;
 	if (!(ft_chrstr(*cs->ptr, "difeg")))
 	{

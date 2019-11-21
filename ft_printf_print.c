@@ -6,12 +6,81 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/19 21:21:31 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/20 21:39:53 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+char	*thousands_separation(char *str)
+{
+	char 	*result;
+	int		increment;
+	int		counter;
+	int		dot;
+	char	*new;
+	int		len;
+	int		i;
+
+	result = str;
+	increment = 0;
+	counter = 0;
+	dot = 0;
+	while (*str && *str != '.' && (!ft_isdigit(*str) || *str == '0'))
+		++str;
+	while (ft_isdigit(*str))
+	{
+		++str;
+		++counter;
+	}
+	if (*str == '.')
+		dot = 1;
+	if (counter > 3)
+	{
+		if (counter % 3 != 0)
+			increment = counter / 3;
+		else
+			increment = (counter / 3) - 1;
+	}
+	len = ft_strlen(result) + increment;
+	if (increment)
+	{
+		new = ft_strnew(len);
+		if (dot)
+		{
+			--len;
+			while (result[len - increment] != '.') 
+			{
+				new[len] = result[len - increment];
+				--len;
+			}
+			new[len] = result[len - increment];
+		}
+		--len;
+		while (increment)
+		{
+			i = 0;
+			while (i < 3)
+			{
+				new[len] = result[len - increment];
+				--len;
+				++i;
+			}
+			new[len] = ',';
+			--increment;
+			--len;
+		}
+		while (len)
+		{
+			new[len] = result[len - increment];
+			--len;
+		}
+		new[len] = result[len - increment];
+		free(result);
+		return (new);
+	}
+	return (result);
+}
 		
 char	*ft_date_format(t_tm *tm)
 {
@@ -214,20 +283,6 @@ char	*print_base_unsigned(t_cs *cs)
 	return (ft_itoa_base_uns(va_arg(cs->ap, unsigned int), b, cs));
 }
 
-char	*print_char(t_cs *cs)
-{
-	char	 c;
-	
-	c = va_arg(cs->ap, unsigned int);
-	if (c == 0)
-	{	
-		cs->type = 0;
-		cs->minwid += 1;
-		cs->ret -= 1;
-		return (ft_strcpy(ft_strnew(2), "^@"));
-	}
-	return (ft_memset(ft_strnew(1), c, 1));
-}	
 
 
 
@@ -236,20 +291,7 @@ char	*print_char(t_cs *cs)
 
 
 
-char	*print_string(t_cs *cs)
-{
-	char 				*str;
 
-	str = va_arg(cs->ap, char *);
-	if (!str)
-		return (ft_strcpy(ft_strnew(6), "(null)"));
-	return (ft_strjoin("", str));
-}
-
-char	*print_pointer(t_cs *cs)
-{
-	return (ft_itoa_base((long long)va_arg(cs->ap, void *), 16, cs));
-}
 
 char	*print_float(t_cs *cs)
 {
@@ -301,7 +343,7 @@ char	*print_binary(t_cs *cs)
 
 char	*print_date(t_cs *cs)
 {
-	long long			lonlon;
+	long long		lonlon;
 	t_tm	tm;
 	int		dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
@@ -311,94 +353,124 @@ char	*print_date(t_cs *cs)
 	return (get_date_positive(lonlon, &tm, dim));
 }
 
+char	*print_string(t_cs *cs)
+{
+	char 	*str;
+
+	str = va_arg(cs->ap, char *);
+	if (!str)
+		return (ft_strcpy(ft_strnew(6), "(null)"));
+	return (ft_strjoin("", str));
+}
 
 
-void	ft_putstr_null(char *str)
+
+char	*do_o(t_cs *cs)
+{
+	unsigned long long	ulonlon;
+	char				*str;
+
+	ulonlon = va_arg(cs->ap, unsigned long long);
+	if (cs->len == 0)
+		str = ft_itoa_base_uns((unsigned int)ulonlon, 8, cs);
+	else if (cs->len == 1)
+		str = ft_itoa_base_uns((unsigned char)ulonlon, 8, cs);
+	else if (cs->len == 2)
+		str = ft_itoa_base_uns((unsigned short)ulonlon, 8, cs);
+	else if (cs->len == 3)
+		str = ft_itoa_base_uns((unsigned long)ulonlon, 8, cs);
+	else if (cs->len == 4)
+		str = ft_itoa_base_uns(ulonlon, 8, cs);
+	if (cs->flag['#'] && str[0] != '0')
+		str = ft_strjoin_2("0", str);
+	str = precision(str, cs);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
+}
+
+char	*do_x(t_cs *cs)
+{
+	unsigned long long	ulonlon;
+	char				*str;
+
+	ulonlon = va_arg(cs->ap, unsigned long long);
+	if (cs->len == 1)
+		str = ft_itoa_base_uns((unsigned char)ulonlon, 16, cs);
+	else if (cs->len == 2)
+		str = ft_itoa_base_uns((unsigned short)ulonlon, 16, cs);
+	else if (cs->len == 3)
+		str = ft_itoa_base_uns((unsigned long)ulonlon, 16, cs);
+	else if (cs->len == 4)
+		str = ft_itoa_base_uns(ulonlon, 16, cs);
+	else 
+		str = ft_itoa_base_uns((unsigned int)ulonlon, 16, cs);
+	str = precision(str, cs);
+	if (cs->flag['#'] && *cs->ptr == 'x')
+		str = ft_strjoin_2("0x", str);
+	else if (cs->flag['#'] && *cs->ptr == 'X')
+		str = ft_strjoin_2("0X", str);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
+}
+
+char	*print_pointer(t_cs *cs)
+{
+	char	*str;
+	
+	str = ft_itoa_base((long long)va_arg(cs->ap, void *), 16, cs);
+	str = precision(str, cs);
+	str = ft_strjoin_2("0x", str);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
+
+}
+
+void	put_char_null(char *str)
 {
 	while (*str)
 	{
-		while (*str && *str != '^')
-		{
-			ft_putchar(*str);
-			++str;
-		}
 		if (*str == '^')
 		{
 			ft_putchar(0);
 			str += 2;
 		}
-	}
-}
-		
-char	*thousands_separation(char *str)
-{
-	char 	*result;
-	int		increment;
-	int		counter;
-	int		dot;
-	char	*new;
-	int		len;
-	int		i;
-
-	result = str;
-	increment = 0;
-	counter = 0;
-	dot = 0;
-	while (*str && *str != '.' && (!ft_isdigit(*str) || *str == '0'))
-		++str;
-	while (ft_isdigit(*str))
-	{
-		++str;
-		++counter;
-	}
-	if (*str == '.')
-		dot = 1;
-	if (counter > 3)
-	{
-		if (counter % 3 != 0)
-			increment = counter / 3;
 		else
-			increment = (counter / 3) - 1;
+		{
+			ft_putchar(*str);
+			++str;
+		}
 	}
-	len = ft_strlen(result) + increment;
-	if (increment)
-	{
-		new = ft_strnew(len);
-		if (dot)
-		{
-			--len;
-			while (result[len - increment] != '.') 
-			{
-				new[len] = result[len - increment];
-				--len;
-			}
-			new[len] = result[len - increment];
-		}
-		--len;
-		while (increment)
-		{
-			i = 0;
-			while (i < 3)
-			{
-				new[len] = result[len - increment];
-				--len;
-				++i;
-			}
-			new[len] = ',';
-			--increment;
-			--len;
-		}
-		while (len)
-		{
-			new[len] = result[len - increment];
-			--len;
-		}
-		new[len] = result[len - increment];
-		free(result);
-		return (new);
-	}
-	return (result);
 }
+
+char	*print_char(t_cs *cs)
+{
+	char	 c;
+	char	*str;
+	
+	c = va_arg(cs->ap, unsigned int);
+	if (c == 0)
+	{
+		cs->minwid += 1;
+		str = ft_strcpy(ft_strnew(2), "^@");
+		str = precision(str, cs);
+		str = minimum_and_minus(str, cs);
+		put_char_null(str);
+		cs->ret -= 1;
+		return (str);
+	}
+	str = ft_memset(ft_strnew(1), c, 1);
+	str = precision(str, cs);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
+}	
+
 
 void	fill_fun_pointer_array(funPointer fpa[])
 {
@@ -411,12 +483,12 @@ void	fill_fun_pointer_array(funPointer fpa[])
 	fpa['i'] = &print_decimal;
 	fpa['u'] = &print_base_unsigned;
 	fpa['U'] = &print_base_unsigned;
-	fpa['o'] = &print_base_unsigned;
-	fpa['x'] = &print_base_unsigned;
-	fpa['X'] = &print_base_unsigned;
-	fpa['c'] = &print_char;
-	fpa['s'] = &print_string;
-	fpa['p'] = &print_pointer;
+//	fpa['o'] = &print_base_unsigned;
+//	fpa['x'] = &print_base_unsigned;
+//	fpa['X'] = &print_base_unsigned;
+//	fpa['c'] = &print_char;
+	fpa['s'] = &print_string;	//     <------------------------
+//	fpa['p'] = &print_pointer;
 	fpa['f'] = &print_float;
 	fpa['e'] = &print_float;
 	fpa['g'] = &print_float;
@@ -429,22 +501,32 @@ void		print_type(t_cs *cs)
 	char		*str;
 	funPointer	fpa[128];
 	
+	if (*cs->ptr == 'o')
+		str = do_o(cs);
+	else if (*cs->ptr == 'x' || *cs->ptr == 'X')
+		str = do_x(cs);
+	else if (*cs->ptr == 'p')
+		str = print_pointer(cs);
+	else if (*cs->ptr == 'c')
+		str = print_char(cs);
+
+	else
+	{
 	fill_fun_pointer_array(fpa);
 	str = fpa[(int)*cs->ptr](cs);
-	if (*cs->ptr == 'o')
-		str = hash(str, cs);
+
 	str = precision(str, cs);
-	if (*cs->ptr == 'x' || *cs->ptr == 'X' || *cs->ptr == 'p')
-		str = hash(str, cs);
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
+	
 	if (cs->flag['\''])
 		str = thousands_separation(str);
-	if (!cs->type)
-		ft_putstr_null(str);
-	else
-		ft_putstr(str);
+
+	ft_putstr(str);
+	}
+
 	cs->ret += ft_strlen(str);
 	free(str);
 	++cs->ptr;
+	
 }
