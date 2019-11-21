@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/20 18:54:05 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/21 11:56:28 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,8 @@ char	*precision(char *str, t_cs *cs)
 	int		len;
 
 	ret = str;
-	if (cs->preci < 0 || (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g'))
-	{
-		if (cs->flag['0'] && !cs->flag['-'])
+	if (cs->preci < 0 && cs->flag['0'] && !cs->flag['-'])
 			ret = zero(str, cs);
-		if (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g')
-			return (ret);
-	}	
-	else if (*cs->ptr == 's')
-	{
-		ret = ft_strncpy(ft_strnew(cs->preci), str, cs->preci);
-		if (cs->flag['0'] && !cs->flag['-'])
-			ret = zero(ret, cs);
-		free(str);
-	}
 	else if (!cs->preci && ft_strlen(str) == 1 && str[0] == '0')
 	{
 		if (*cs->ptr == 'p')

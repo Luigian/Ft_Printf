@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/20 21:39:53 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/21 12:20:57 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,51 +237,6 @@ char	*get_date_negative(long long lonlon, t_tm *tm, int *dim)
 }
 
 
-char	*print_decimal(t_cs *cs)
-{
-	char				ch;
-	short				sh;
-
-	if (cs->len == 1)
-	{
-		ch = (char)va_arg(cs->ap, int);
-		return (ft_itoa_base(ch, 10, cs));
-	}	
-	else if (cs->len == 2)
-	{
-		sh = (short)va_arg(cs->ap, int);
-		return (ft_itoa_base(sh, 10, cs));
-	}
-	else if (cs->len == 3)
-		return (ft_itoa_base(va_arg(cs->ap, long), 10, cs));
-	else if (cs->len == 4)
-		return (ft_itoa_base(va_arg(cs->ap, long long), 10, cs));
-	return (ft_itoa_base(va_arg(cs->ap, int), 10, cs));
-}
-
-char	*print_base_unsigned(t_cs *cs)
-{
-	unsigned char		uch;
-	unsigned short		ush;
-	int					b;
-
-	b = cs->base[(int)*cs->ptr];
-	if (cs->len == 1)
-	{
-		uch = (unsigned char)va_arg(cs->ap, unsigned int);
-		return (ft_itoa_base_uns(uch, b, cs));
-	}	
-	else if (cs->len == 2)
-	{
-		ush = (unsigned short)va_arg(cs->ap, unsigned int);
-		return (ft_itoa_base_uns(ush, b, cs));
-	}
-	else if (cs->len == 3)
-		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long), b, cs));
-	else if (cs->len == 4)
-		return (ft_itoa_base_uns(va_arg(cs->ap, unsigned long long), b, cs));
-	return (ft_itoa_base_uns(va_arg(cs->ap, unsigned int), b, cs));
-}
 
 
 
@@ -293,20 +248,6 @@ char	*print_base_unsigned(t_cs *cs)
 
 
 
-char	*print_float(t_cs *cs)
-{
-	if (cs->ext)
-		return (ft_itoa_float(va_arg(cs->ap, long double), cs));
-	return (ft_itoa_float(va_arg(cs->ap, double), cs));
-}
-
-char	*print_other(t_cs *cs)
-{
-	char	 c;
-	
-	c = *cs->ptr;
-	return (ft_memset(ft_strnew(1), c, 1));
-}
 
 
 
@@ -314,54 +255,6 @@ char	*print_other(t_cs *cs)
 
 
 
-char	*print_binary(t_cs *cs)
-{
-	unsigned long long	ulonlon;
-	char	*result;
-	char	c;
-	int		i;
-	int		bits;
-
-	ulonlon = va_arg(cs->ap, unsigned long long);
-	bits = 32;	
-	if (cs->len == 1)
-		bits = 8;	
-	else if (cs->len == 2)
-		bits = 16;	
-	else if (cs->len == 3 || cs->len == 4)
-		bits = 64;	
-	result = ft_strnew(bits);
-	i = 0;
-	while (bits--)
-	{
-		c = (ulonlon >> bits & 1) + 48;
-		result[i] = c;
-		++i;
-	}
-	return (result);
-}
-
-char	*print_date(t_cs *cs)
-{
-	long long		lonlon;
-	t_tm	tm;
-	int		dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	
-	lonlon = va_arg(cs->ap, long long);
-	if (lonlon < 0)
-		return (get_date_negative(lonlon, &tm, dim));
-	return (get_date_positive(lonlon, &tm, dim));
-}
-
-char	*print_string(t_cs *cs)
-{
-	char 	*str;
-
-	str = va_arg(cs->ap, char *);
-	if (!str)
-		return (ft_strcpy(ft_strnew(6), "(null)"));
-	return (ft_strjoin("", str));
-}
 
 
 
@@ -384,6 +277,91 @@ char	*do_o(t_cs *cs)
 	if (cs->flag['#'] && str[0] != '0')
 		str = ft_strjoin_2("0", str);
 	str = precision(str, cs);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
+}
+
+char	*print_u(t_cs *cs)
+{
+	unsigned long long	ulonlon;
+	char				*str;
+
+	ulonlon = va_arg(cs->ap, unsigned long long);
+	if (cs->len == 1)
+		str = ft_itoa_base_uns((unsigned char)ulonlon, 10, cs);
+	else if (cs->len == 2)
+		str = ft_itoa_base_uns((unsigned short)ulonlon, 10, cs);
+	else if (cs->len == 3)
+		str = ft_itoa_base_uns((unsigned long)ulonlon, 10, cs);
+	else if (cs->len == 4)
+		str = ft_itoa_base_uns(ulonlon, 10, cs);
+	else 
+		str = ft_itoa_base_uns((unsigned int)ulonlon, 10, cs);
+	str = precision(str, cs);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	if (cs->flag['\''])
+		str = thousands_separation(str);
+	ft_putstr(str);
+	return (str);
+}
+
+
+char	*print_pointer(t_cs *cs)
+{
+	char	*str;
+	
+	str = ft_itoa_base((long long)va_arg(cs->ap, void *), 16, cs);
+	str = precision(str, cs);
+	str = ft_strjoin_2("0x", str);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
+
+}
+
+void	put_char_null(char *str)
+{
+	while (*str)
+	{
+		if (*str == '^')
+		{
+			ft_putchar(0);
+			str += 2;
+		}
+		else
+		{
+			ft_putchar(*str);
+			++str;
+		}
+	}
+}
+
+
+char	*print_string(t_cs *cs)
+{
+	char 	*s;
+	char 	*str;
+	char 	*new;
+
+	s = va_arg(cs->ap, char *);
+	if (!s)
+		str = ft_strcpy(ft_strnew(6), "(null)");
+	else
+		str = ft_strjoin("", s);
+	if (cs->preci < 0)
+		str = precision(str, cs);
+	else
+	{
+		new = ft_strncpy(ft_strnew(cs->preci), str, cs->preci);
+		if (cs->flag['0'] && !cs->flag['-'])
+			new = zero(new, cs);
+		free(str);
+		str = new;
+	}
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);
@@ -417,35 +395,90 @@ char	*do_x(t_cs *cs)
 	return (str);
 }
 
-char	*print_pointer(t_cs *cs)
+char	*print_decimal(t_cs *cs)
+{
+	long long	lonlon;
+	char	 	*str;
+
+	lonlon = va_arg(cs->ap, long long);
+	if (cs->len == 1)
+		str = ft_itoa_base((char)lonlon, 10, cs);
+	else if (cs->len == 2)
+		str = ft_itoa_base((short)lonlon, 10, cs);
+	else if (cs->len == 3)
+		str = ft_itoa_base((long)lonlon, 10, cs);
+	else if (cs->len == 4)
+		str = ft_itoa_base(lonlon, 10, cs);
+	else 
+		str = ft_itoa_base((int)lonlon, 10, cs);
+	str = precision(str, cs);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	if (cs->flag['\''])
+		str = thousands_separation(str);
+	ft_putstr(str);
+	return (str);
+}
+
+char	*print_float(t_cs *cs)
 {
 	char	*str;
-	
-	str = ft_itoa_base((long long)va_arg(cs->ap, void *), 16, cs);
+
+	if (cs->ext)
+		str = ft_itoa_float(va_arg(cs->ap, long double), cs);
+	else
+		str = ft_itoa_float(va_arg(cs->ap, double), cs);
+	if (cs->flag['0'] && !cs->flag['-'])
+		str = zero(str, cs);
+	str = plus_and_space(str, cs);
+	str = minimum_and_minus(str, cs);
+	if (cs->flag['\''])
+		str = thousands_separation(str);
+	ft_putstr(str);
+	return (str);
+}
+
+char	*print_binary(t_cs *cs)
+{
+	unsigned long long	ulonlon;
+	int					bits;
+	char				*str;
+	int					i;
+
+	ulonlon = va_arg(cs->ap, unsigned long long);
+	bits = 32;	
+	if (cs->len == 1)
+		bits = 8;	
+	else if (cs->len == 2)
+		bits = 16;	
+	else if (cs->len == 3 || cs->len == 4)
+		bits = 64;	
+	str = ft_strnew(bits);
+	i = 0;
+	while (bits--)
+		str[i++] = (ulonlon >> bits & 1) + 48;
 	str = precision(str, cs);
-	str = ft_strjoin_2("0x", str);
 	str = plus_and_space(str, cs);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);
 	return (str);
-
 }
 
-void	put_char_null(char *str)
+char	*print_date(t_cs *cs)
 {
-	while (*str)
-	{
-		if (*str == '^')
-		{
-			ft_putchar(0);
-			str += 2;
-		}
-		else
-		{
-			ft_putchar(*str);
-			++str;
-		}
-	}
+	long long		lonlon;
+	char	*str;
+	t_tm	tm;
+	int		dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	
+	lonlon = va_arg(cs->ap, long long);
+	if (lonlon < 0)
+		str = get_date_negative(lonlon, &tm, dim);
+	else
+		str = get_date_positive(lonlon, &tm, dim);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
 }
 
 char	*print_char(t_cs *cs)
@@ -471,6 +504,20 @@ char	*print_char(t_cs *cs)
 	return (str);
 }	
 
+char	*print_other(t_cs *cs)
+{
+	char	 c;
+	char	*str;
+
+	c = *cs->ptr;
+	str = ft_memset(ft_strnew(1), c, 1);
+	str = precision(str, cs);
+	str = minimum_and_minus(str, cs);
+	ft_putstr(str);
+	return (str);
+}
+
+
 
 void	fill_fun_pointer_array(funPointer fpa[])
 {
@@ -479,27 +526,27 @@ void	fill_fun_pointer_array(funPointer fpa[])
 	i = 0;
 	while (i < 128)
 		fpa[i++] = &print_other;
-	fpa['d'] = &print_decimal;
-	fpa['i'] = &print_decimal;
-	fpa['u'] = &print_base_unsigned;
-	fpa['U'] = &print_base_unsigned;
+//	fpa['d'] = &print_decimal;
+//	fpa['i'] = &print_decimal;
+//	fpa['u'] = &print_base_unsigned;
+//	fpa['U'] = &print_base_unsigned;
 //	fpa['o'] = &print_base_unsigned;
 //	fpa['x'] = &print_base_unsigned;
 //	fpa['X'] = &print_base_unsigned;
 //	fpa['c'] = &print_char;
-	fpa['s'] = &print_string;	//     <------------------------
+//	fpa['s'] = &print_string;	//     <------------------------
 //	fpa['p'] = &print_pointer;
-	fpa['f'] = &print_float;
-	fpa['e'] = &print_float;
-	fpa['g'] = &print_float;
-	fpa['b'] = &print_binary;
-	fpa['k'] = &print_date;
+//	fpa['f'] = &print_float;
+//	fpa['e'] = &print_float;
+//	fpa['g'] = &print_float;
+//	fpa['b'] = &print_binary;
+//	fpa['k'] = &print_date;
 }	
 
 void		print_type(t_cs *cs)
 {
 	char		*str;
-	funPointer	fpa[128];
+//	funPointer	fpa[128];
 	
 	if (*cs->ptr == 'o')
 		str = do_o(cs);
@@ -509,21 +556,34 @@ void		print_type(t_cs *cs)
 		str = print_pointer(cs);
 	else if (*cs->ptr == 'c')
 		str = print_char(cs);
+	else if (*cs->ptr == 's')
+		str = print_string(cs);
+	else if (*cs->ptr == 'u' || *cs->ptr == 'U')
+		str = print_u(cs);
+	else if (*cs->ptr == 'd' || *cs->ptr == 'i')
+		str = print_decimal(cs);
+	else if (*cs->ptr == 'f' || *cs->ptr == 'e' || *cs->ptr == 'g')
+		str = print_float(cs);
+	else if (*cs->ptr == 'b')
+		str = print_binary(cs);
+	else if (*cs->ptr == 'k')
+		str = print_date(cs);
+	else	
+		str = print_other(cs);
+//	else
+//	{
+//	fill_fun_pointer_array(fpa);
+//	str = fpa[(int)*cs->ptr](cs);
 
-	else
-	{
-	fill_fun_pointer_array(fpa);
-	str = fpa[(int)*cs->ptr](cs);
-
-	str = precision(str, cs);
-	str = plus_and_space(str, cs);
-	str = minimum_and_minus(str, cs);
+//	str = precision(str, cs);
+//	str = plus_and_space(str, cs);
+//	str = minimum_and_minus(str, cs);
 	
-	if (cs->flag['\''])
-		str = thousands_separation(str);
+//	if (cs->flag['\''])
+//		str = thousands_separation(str);
 
-	ft_putstr(str);
-	}
+//	ft_putstr(str);
+//	}
 
 	cs->ret += ft_strlen(str);
 	free(str);

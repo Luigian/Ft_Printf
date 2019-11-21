@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/20 18:47:24 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/21 10:55:39 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	store_adjustments(t_cs *cs)
 		cs->preci = 6;
 	if (*cs->ptr == 'g' && cs->preci == 0)
 		cs->preci = 1;
-	if (!(ft_chrstr(*cs->ptr, "diuf")))
+	if (!(ft_chrstr(*cs->ptr, "diuUf")))
 		cs->flag['\''] = 0;
 	if (*cs->ptr == 'k')
 		cs->flag['0'] = 0;
