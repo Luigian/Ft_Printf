@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/16 20:18:30 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:16:55 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,32 +79,6 @@ char	*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs)
 	{
 		str[--len] = base_string[nbr % base];
 		nbr /= base;
-	}
-	return (str);
-}
-
-char	*ft_itoa_unsigned(unsigned long long n)
-{
-	int					len;
-	unsigned long long	nbr;
-	char				*str;
-
-	if (n == 0)
-		return (ft_memset(ft_strnew(1), '0', 1));
-	len = 0;
-	nbr = n;
-	while (nbr)
-	{
-		nbr /= 10;
-		len += 1;
-	}
-	nbr = n;
-	if (!(str = ft_strnew(len)))
-		return (NULL);
-	while (nbr)
-	{
-		str[--len] = (nbr % 10) + 48;
-		nbr /= 10;
 	}
 	return (str);
 }
@@ -371,7 +345,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 		}
 		af *= 100;
 		cs->exp -= 2;
-		pt = ft_itoa_unsigned((unsigned long long)af);
+		pt = ft_itoa_base_uns((unsigned long long)af, 10, cs);
 		tm = ft_memset(ft_strnew(cs->exp), '0', cs->exp);
 		cs->exp = 0;
 		cs->bef = ft_strjoin(pt, tm);
@@ -381,7 +355,7 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	}	
 	else	
 	{
-		cs->bef = ft_itoa_unsigned((unsigned long long)n);
+		cs->bef = ft_itoa_base_uns((unsigned long long)n, 10, cs);
 		af = n - (unsigned long long)n;
 		if (af == 0)
 			cs->aft = ft_memset(ft_strnew(1), '0', 1);

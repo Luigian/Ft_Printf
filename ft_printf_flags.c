@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_report.c                                 :+:      :+:    :+:   */
+/*   ft_printf_flags.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 11:56:28 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:16:58 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ char	*zero(char *str, t_cs *cs)
 	len = 0;
 	if (str[0] != '-')
 		len = 0 - (cs->flag['+'] || cs->flag[' ']); 
-	if (cs->flag['#'] && (*cs->ptr == 'x' || *cs->ptr == 'X' || *cs->ptr == 'p'))
+	if (cs->flag['#'] && (*cs->ptr == 'x' || *cs->ptr == 'X'\
+		|| *cs->ptr == 'p'))
 		len -= 2; 
 	if ((len = len + cs->minwid - ft_strlen(str)) > 0)
 	{
@@ -81,12 +82,10 @@ char	*zero(char *str, t_cs *cs)
 char	*precision(char *str, t_cs *cs)
 {
 	char	*new;
-	char	*ret;
 	int		len;
 
-	ret = str;
 	if (cs->preci < 0 && cs->flag['0'] && !cs->flag['-'])
-			ret = zero(str, cs);
+		str = zero(str, cs);
 	else if (!cs->preci && ft_strlen(str) == 1 && str[0] == '0')
 	{
 		if (*cs->ptr == 'p')
@@ -104,18 +103,7 @@ char	*precision(char *str, t_cs *cs)
 		}
 		else
 			new = ft_memset(ft_strnew(len), '0', len);
-		ret = ft_strjoin(new, str);
-		free(new);
-		free(str);
+		str = ft_strjoin_2(new, str, 2);
 	}
-	return (ret);
-}
-
-char	*ft_strjoin_2(char *a, char *b)
-{
-	char	*new;
-	
-	new = ft_strjoin(a, b);
-	free(b);
-	return (new);
+	return (str);
 }

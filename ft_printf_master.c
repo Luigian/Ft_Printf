@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/20 21:37:14 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:16:48 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,33 @@ void	init_struct(const char *fmt, t_cs *cs)
 	cs->bef = NULL;
 	cs->aft = NULL;
 	cs->ret = 0;
-	ft_memset(cs->base, 0, 128 * sizeof(int));
-	cs->base['u'] = 10;
-	cs->base['U'] = 10;
-	cs->base['o'] = 8;
-	cs->base['x'] = 16;
-	cs->base['X'] = 16;
 	reset_object(cs);
 }
 
 void	print_argument(t_cs *cs)
 {
-	va_list		tp;
-
+	funPointer	fpa[128];
+	char		*str;
+	
 	reset_object(cs);
 	store_format_specifications(cs);
 	if (cs->arg)
 	{
-		va_copy(tp, cs->bp);
+		va_copy(cs->tp, cs->bp);
 		while (--cs->arg)
-			va_arg(tp, void*);
+			va_arg(cs->tp, void*);
 		va_end(cs->ap);
-		va_copy(cs->ap, tp);
-		va_end(tp);
+		va_copy(cs->ap, cs->tp);
+		va_end(cs->tp);
 	}	
 	if (*cs->ptr)
-		print_type(cs);
+	{
+		fill_fun_pointer_array(fpa);
+		str = fpa[(int)*cs->ptr](cs);
+		cs->ret += ft_strlen(str);
+		free(str);
+		++cs->ptr;
+	}
 }
 
 int		ft_printf(const char *fmt, ...)

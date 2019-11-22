@@ -6,58 +6,22 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 10:55:39 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/21 21:16:45 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	store_adjustments(t_cs *cs)
-{
-	if (ft_chrstr(*cs->ptr, "diuUsbk"))
-		cs->flag['#'] = 0;
-	if (!(ft_chrstr(*cs->ptr, "difeg")))
-	{
-		cs->flag[' '] = 0;
-		cs->flag['+'] = 0;
-	}
-	if (*cs->ptr == 'U')
-		cs->len = 3;
-	if (*cs->ptr == 'p')
-		cs->flag['#'] = 1;
-	if (ft_chrstr(*cs->ptr, "feg") && cs->preci == -1)
-		cs->preci = 6;
-	if (*cs->ptr == 'g' && cs->preci == 0)
-		cs->preci = 1;
-	if (!(ft_chrstr(*cs->ptr, "diuUf")))
-		cs->flag['\''] = 0;
-	if (*cs->ptr == 'k')
-		cs->flag['0'] = 0;
-	if (!(ft_chrstr(*cs->ptr, "diuUoxXspfeg")))
-		cs->preci = -1;
-}
-
-int		is_arg_index(char *str)
-{
-	while (ft_isdigit(*str))
-		++str;
-	if (*str == '$')
-		return (1);
-	return (0);
-}
-
 void	minwid_as_argument(t_cs *cs)
 {
-	va_list		tp;
-	
 	if (is_arg_index(cs->ptr + 1))
 	{
 		cs->arg = ft_atoi(cs->ptr + 1);
-		va_copy(tp, cs->bp);
+		va_copy(cs->tp, cs->bp);
 		while (--cs->arg)
-			va_arg(tp, void*);
-		cs->minwid = va_arg(tp, int);
-		va_end(tp);
+			va_arg(cs->tp, void*);
+		cs->minwid = va_arg(cs->tp, int);
+		va_end(cs->tp);
 		cs->arg = 0;
 		++cs->ptr;
 		while (ft_isdigit(*cs->ptr))
@@ -74,16 +38,14 @@ void	minwid_as_argument(t_cs *cs)
 
 void		precision_as_argument(t_cs *cs)
 {
-	va_list		tp;
-	
 	if (is_arg_index(cs->ptr + 1))
 	{
 		cs->arg = ft_atoi(cs->ptr + 1);
-		va_copy(tp, cs->bp);
+		va_copy(cs->tp, cs->bp);
 		while (--cs->arg)
-			va_arg(tp, void*);
-		cs->preci = va_arg(tp, int);
-		va_end(tp);
+			va_arg(cs->tp, void*);
+		cs->preci = va_arg(cs->tp, int);
+		va_end(cs->tp);
 		cs->arg = 0;
 		++cs->ptr;
 		while (ft_isdigit(*cs->ptr))
@@ -170,5 +132,4 @@ void		store_format_specifications(t_cs *cs)
 			break;
 		++cs->ptr;
 	}
-	store_adjustments(cs);
 }
