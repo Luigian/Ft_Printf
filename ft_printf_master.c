@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:16:48 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 10:57:30 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	reset_object(t_cs *cs)
 	cs->g = 0;
 	cs->temp = NULL;
 	cs->arg = 0;
+	cs->sign = 0;
 }
 
 void	init_struct(const char *fmt, t_cs *cs)

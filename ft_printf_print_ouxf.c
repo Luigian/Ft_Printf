@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:11:33 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:17:04 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 08:36:18 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ char	*print_hexa(t_cs *cs)
 
 	cs->flag[' '] = 0;
 	cs->flag['+'] = 0;
-	ulonlon = va_arg(cs->ap, unsigned long long);
+	if ((ulonlon = va_arg(cs->ap, unsigned long long)) == 0)
+		cs->flag['#'] = 0;
 	if (cs->len == 1)
 		str = ft_itoa_base_uns((unsigned char)ulonlon, 16, cs);
 	else if (cs->len == 2)

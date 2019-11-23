@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/22 21:37:07 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 12:41:29 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct		s_cs
 	va_list			ap;
 	va_list			bp;
 	va_list			tp;
+	unsigned int	sign;
 }					t_cs;
 
 typedef struct		s_tm
@@ -94,24 +95,29 @@ char		*ft_strjoin_2(char *a, char *b, int code);
 void		put_char_null(char *str);
 
 //itoa
-char		*itoa_helper(long long nbr, int len, t_cs *cs, int base);
 char		*ft_itoa_base(long long n, int base, t_cs *cs);
+char		*itoa_helper(long long nbr, int len, t_cs *cs, int base);
 char		*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs);
-//char		*ft_itoa_extended(long double n, t_cs *cs);
+
+char		*ft_itoa_float(long double n, t_cs *cs);///////////////////////////1*
+char		*prepare_float(long double n, t_cs *cs);////////////////////////1.1*
+int			change_ptr_content(long double n, t_cs *cs);//////////////1.1.1*
+void		get_after_max_ull(long double n, t_cs *cs);///////////////1.1.2*
+void		get_float(long double n, t_cs *cs);///////////////////////1.1.3*
+int			round_float(t_cs *cs);///////////////////////////////1.1.3.1
+int			round_all_nines(t_cs *cs, char *join, int len);//1.1.3.1.1
+int			rounding(char *join, int p_len);/////////////////1.1.3.1.2
+void		get_exp_format(t_cs *cs);///////////////////////////////////////1.2*
+char		*ft_strncpy_zero(char *dst, const char *src, size_t n);////1.2.2
+int			trim_trailing_zeros_e(char *str, int len);/////////////////1.2.3
+void		exponent_helper(t_cs *cs, char *b, int trz, int len);//////1.2.4*
+char		*preci_zero(t_cs *cs, char *tm);////////////////////////////////1.3*
+int			trim_trailing_zeros(char *str, int len);////////////////////////1.4
+char		*add_minus(char *str);//////////////////////////////////////////1.5
+int			turnback_ptr_content(t_cs *cs);/////////////////////////////////1.6
 
 
-int			change_ptr_content(t_cs *cs, long double n);
-int			round_all_nines(t_cs *cs, char *join, int len);
-int			rounding(char *join, int p_len);
-int			round_float(t_cs *cs);
-char		*add_minus(char *str);
-int			turnback_ptr_content(t_cs *cs);
-char		*ft_strncpy_zero(char *dst, const char *src, size_t n);
-int			trim_trailing_zeros_e(char *str, int len);
-int			get_exp_format(t_cs *cs);
-int			trim_trailing_zeros(char *str, int len);
 
-char		*ft_itoa_float(long double n, t_cs *cs);
 
 //bonus
 char		*get_date_negative(long long lonlon, t_tm *tm, int *dim);
