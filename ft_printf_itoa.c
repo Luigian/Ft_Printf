@@ -6,22 +6,35 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:16:55 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:42:38 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+char	*itoa_helper(long long nbr, int len, t_cs *cs, int base)
+{
+	unsigned long long	unlon;
+	char				*str;
+	char				*bastr;
+
+	unlon = (unsigned long long)nbr;
+	str = ft_strnew(len);
+	bastr = *cs->ptr == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
+	while (unlon)
+	{
+		str[--len] = bastr[unlon % base];
+		unlon /= base;
+	}
+	return (str);
+}
+			
 char	*ft_itoa_base(long long n, int base, t_cs *cs)
 {
 	int					len;
 	long long			nbr;
-	unsigned long long	unlon;
 	char				*str;
-	char				*base_string = "0123456789abcdef";
 
-	if (*cs->ptr == 'X')
-		base_string = "0123456789ABCDEF";
 	if (n == 0)
 		return (ft_memset(ft_strnew(1), '0', 1));
 	len = 0;
@@ -38,28 +51,22 @@ char	*ft_itoa_base(long long n, int base, t_cs *cs)
 			len += 1;
 		nbr *= -1;
 	}
-	unlon = (unsigned long long)nbr;
-	if (!(str = ft_strnew(len)))
-		return (NULL);
-	while (unlon)
-	{
-		str[--len] = base_string[unlon % base];
-		unlon /= base;
-	}
+	str = itoa_helper(nbr, len, cs, base);
 	if (n < 0 && base == 10)
 		str[0] = '-';
 	return (str);
 }
+
+/////////////////////////////////////////////////////////////////////////
 
 char	*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs)
 {
 	int					len;
 	unsigned long long	nbr;
 	char				*str;
-	char				*base_string = "0123456789abcdef";
+	char				*bastr;
 
-	if (*cs->ptr == 'X')
-		base_string = "0123456789ABCDEF";
+	bastr = *cs->ptr == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
 	if (n == 0)
 	{
 		*cs->ptr != 'o' ? cs->flag['#'] = 0 : 0;
@@ -73,15 +80,16 @@ char	*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs)
 		len += 1;
 	}
 	nbr = n;
-	if (!(str = ft_strnew(len)))
-		return (NULL);
+	str = ft_strnew(len);
 	while (nbr)
 	{
-		str[--len] = base_string[nbr % base];
+		str[--len] = bastr[nbr % base];
 		nbr /= base;
 	}
 	return (str);
 }
+
+/////////////////////////////////////////////////////////////////////
 
 char	*ft_strncpy_zero(char *dst, const char *src, size_t n)
 {
@@ -101,6 +109,8 @@ char	*ft_strncpy_zero(char *dst, const char *src, size_t n)
 	dst[i] = '\0';
 	return (dst);
 }
+
+///////////////////////////////////////////////////////////////////////
 
 int		round_all_nines(t_cs *cs, char *join, int len)
 {
@@ -136,6 +146,8 @@ int		round_all_nines(t_cs *cs, char *join, int len)
 	return (0);
 }
 
+////////////////////////////////////////////////////////////////////
+
 int		rounding(char *join, int p_len)
 {
 	if (join[p_len] == '9')
@@ -147,6 +159,8 @@ int		rounding(char *join, int p_len)
 		++(join[p_len]);
 	return (0);
 }
+
+//////////////////////////////////////////////////////////////////////
 
 int		round_float(t_cs *cs)
 {
@@ -191,6 +205,8 @@ int		round_float(t_cs *cs)
 	return (0);
 }
 		
+/////////////////////////////////////////////////////////////////////
+
 char	*add_minus(char *str)
 {
 	char	*tmp;
@@ -202,6 +218,8 @@ char	*add_minus(char *str)
 	free(str);	
 	return (ret);
 }
+
+/////////////////////////////////////////////////////////////////
 
 int		trim_trailing_zeros_e(char *str, int len)
 {
@@ -215,6 +233,8 @@ int		trim_trailing_zeros_e(char *str, int len)
 	}
 	return (counter);
 }
+
+//////////////////////////////////////////////////////////////////
 
 int		get_exp_format(t_cs *cs)
 {
@@ -262,11 +282,15 @@ int		get_exp_format(t_cs *cs)
 	return (0);
 }
 
+////////////////////////////////////////////////////////////
+
 int		turnback_ptr_content(t_cs *cs)
 {
 	cs->ptr = cs->temp;
 	return (0);
 }
+
+////////////////////////////////////////////////////////////////
 
 int		change_ptr_content(t_cs *cs, long double n)
 {
@@ -301,6 +325,9 @@ int		change_ptr_content(t_cs *cs, long double n)
 	return (0);
 }
 		
+/////////////////////////////////////////////////////////////
+
+
 int		trim_trailing_zeros(char *str, int len)
 {
 	while (str[--len] == '0')
@@ -310,6 +337,8 @@ int		trim_trailing_zeros(char *str, int len)
 	return (0);
 }
 
+///////////////////////////////////////////////////////////////
+
 char	*ft_itoa_float(long double n, t_cs *cs)
 {
 	char					*tm;
@@ -317,7 +346,6 @@ char	*ft_itoa_float(long double n, t_cs *cs)
 	int						sign;
 	long double				af;
 
-//	printf("real: %.30Lf\n", n);
 	if (!(n == 0 || n > 0 || n < 0))
 	{
 		cs->flag['0'] = 0;

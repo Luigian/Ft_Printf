@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:16:31 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:37:07 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,20 +94,24 @@ char		*ft_strjoin_2(char *a, char *b, int code);
 void		put_char_null(char *str);
 
 //itoa
+char		*itoa_helper(long long nbr, int len, t_cs *cs, int base);
 char		*ft_itoa_base(long long n, int base, t_cs *cs);
 char		*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs);
-char		*ft_itoa_float(long double n, t_cs *cs);
-char		*ft_itoa_extended(long double n, t_cs *cs);
-char		*ft_strncpy_zero(char *dst, const char *src, size_t n);
+//char		*ft_itoa_extended(long double n, t_cs *cs);
+
+
+int			change_ptr_content(t_cs *cs, long double n);
 int			round_all_nines(t_cs *cs, char *join, int len);
 int			rounding(char *join, int p_len);
 int			round_float(t_cs *cs);
 char		*add_minus(char *str);
+int			turnback_ptr_content(t_cs *cs);
+char		*ft_strncpy_zero(char *dst, const char *src, size_t n);
 int			trim_trailing_zeros_e(char *str, int len);
 int			get_exp_format(t_cs *cs);
-int			turnback_ptr_content(t_cs *cs);
-int			change_ptr_content(t_cs *cs, long double n);
 int			trim_trailing_zeros(char *str, int len);
+
+char		*ft_itoa_float(long double n, t_cs *cs);
 
 //bonus
 char		*get_date_negative(long long lonlon, t_tm *tm, int *dim);
