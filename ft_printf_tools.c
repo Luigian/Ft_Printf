@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:05:42 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/23 21:33:56 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/24 12:42:53 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,6 @@ char	*ft_strjoin_2(char *a, char *b, int code)
 	if (code == 2 || code == 3)
 		free(b);
 	return (new);
-}
-
-void	fill_fun_pointer_array(funPointer fpa[])
-{
-	int		i;
-
-	i = 0;
-	while (i < 128)
-		fpa[i++] = &print_other;
-	fpa['c'] = &print_char;
-	fpa['s'] = &print_string;
-	fpa['p'] = &print_pointer;
-	fpa['d'] = &print_decimal;
-	fpa['i'] = &print_decimal;
-	fpa['o'] = &print_octal;
-	fpa['u'] = &print_unsigned;
-	fpa['U'] = &print_unsigned;
-	fpa['x'] = &print_hexa;
-	fpa['X'] = &print_hexa;
-	fpa['f'] = &print_float;
-	fpa['e'] = &print_float;
-	fpa['g'] = &print_float;
-	fpa['b'] = &print_binary;
-	fpa['k'] = &print_date;
 }
 
 int		is_arg_index(char *str)

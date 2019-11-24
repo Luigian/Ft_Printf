@@ -6,26 +6,40 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:06:53 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/23 20:11:51 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/24 11:41:04 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+char	*ft_date_format(t_tm *tm)
+{
+	char 	*date;
+	char 	*temp;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	date = tm->second < 10 ? ft_strjoin_2("0", ft_itoa(tm->second), 2)\
+		: ft_itoa(tm->second);
+	date = ft_strjoin_2(":", date, 2);
+	temp = tm->minute < 10 ? ft_strjoin_2("0", ft_itoa(tm->minute), 2)\
+		: ft_itoa(tm->minute);
+	date = ft_strjoin_2(temp, date, 3);
+	date = ft_strjoin_2(":", date, 2);
+	temp = tm->hour < 10 ? ft_strjoin_2("0", ft_itoa(tm->hour), 2)\
+		: ft_itoa(tm->hour);
+	date = ft_strjoin_2(temp, date, 3);
+	date = ft_strjoin_2("T", date, 2);
+	temp = tm->day < 10 ? ft_strjoin_2("0", ft_itoa(tm->day), 2)\
+		: ft_itoa(tm->day);
+	date = ft_strjoin_2(temp, date, 3);
+	date = ft_strjoin_2("-", date, 2);
+	temp = tm->month < 10 ? ft_strjoin_2("0", ft_itoa(tm->month), 2)\
+		: ft_itoa(tm->month);
+	date = ft_strjoin_2(temp, date, 3);
+	date = ft_strjoin_2("-", date, 2);
+	temp = ft_itoa(tm->year);
+	date = ft_strjoin_2(temp, date, 3);
+	return (ft_strjoin_2(date, "+00:00", 1));
+}
 
 void	get_date_positive(long long lonlon, t_tm *tm, int *dim, int i)
 {
@@ -49,7 +63,6 @@ void	get_date_positive(long long lonlon, t_tm *tm, int *dim, int i)
 		lonlon -= 86400;
 	}
 }
-
 
 void	get_date_negative(long long lonlon, t_tm *tm, int *dim, int i)
 {
@@ -78,7 +91,6 @@ void	get_date_negative(long long lonlon, t_tm *tm, int *dim, int i)
 		lonlon -= 86400;
 	}
 }
-
 
 void	init_time(t_tm *tm, int dim[], char c)
 {

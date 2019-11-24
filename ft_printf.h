@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/23 19:44:07 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/24 13:32:24 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,119 +15,116 @@
 
 #include "libft/libft.h"
 #include <stdarg.h>
-#include <stdio.h>
+//#include <stdio.h>
 
-typedef struct		s_cs
+typedef struct		s_ptf
 {
-	int				flag[128]; 
-	int				minwid;
-	int				preci;
+	int				f[128]; 
+	int				wid;
+	int				pre;
 	unsigned int	len;
 	unsigned int	ext;
 	char			*ptr;
-	const char		*begin;
+	const char		*beg;
 	char			*bef;
 	char			*aft;
 	int				ret;
 	int				exp;
 	unsigned int	g;
-	char			*temp;
+	char			*tmp;
 	unsigned int	arg;
 	va_list			ap;
 	va_list			bp;
 	va_list			tp;
-	unsigned int	sign;
-}					t_cs;
+	unsigned int	sgn;
+}					t_ptf;
 
-typedef struct		s_tm
+typedef struct		s_tms
 {
-	int				year;
-	int				month;
+	int				yr;
+	int				mth
 	int				day;
-	int				hour;
-	int				minute;
-	int				second;
-}					t_tm;
+	int				hr;
+	int				min;
+	int				sec;
+}					t_tms;
 
-typedef char *(*funPointer)(t_cs *);
+typedef char *(*fpa)(t_ptf *);
 
-// master 
+// printf_master
 int			ft_printf(const char *fmt, ...);
-void		print_argument(t_cs *cs);
-void		init_struct(const char *fmt, t_cs *cs);
-void		reset_object(t_cs *cs);
-int			close_program(int code, t_cs cs);
+void		pf_init(const char *fmt, t_ptf *p);
+void		pf_reset(t_ptf *p);
+void		pf_print(t_ptf *p);
+void		pf_funfill(fpa fun[]);
 
-// store 
-void		store_format_specifications(t_cs *cs);
-void		store_length(t_cs *cs);
-void		store_precision_minwid(t_cs *cs);
-void		precision_as_argument(t_cs *cs);
-void		minwid_as_argument(t_cs *cs);
+// printf_store.c
+void		pf_store(t_ptf *p);
+void		pf_length(t_ptf *p);
+void		pf_prewid(t_ptf *p);
+void		pf_prearg(t_ptf *p);
+void		pf_widarg(t_ptf *p);
 
-// print_cspdi
-char		*print_other(t_cs *cs);
-char		*print_char(t_cs *cs);
-char		*print_string(t_cs *cs);
-char		*print_pointer(t_cs *cs);
-char		*print_decimal(t_cs *cs);
+// printf_cspd.c
+char		*pf_other(t_ptf *p);
+char		*pf_char(t_ptf *p);
+char		*pf_string(t_ptf *p);
+char		*pf_pointer(t_ptf *p);
+char		*pf_decimal(t_ptf *p);
 
-// print_ouxf
-char		*print_octal(t_cs *cs);
-char		*print_unsigned(t_cs *cs);
-char		*print_hexa(t_cs *cs);
-char		*print_float(t_cs *cs);
+// printf_ouxf.c
+char		*pf_octal(t_ptf *p);
+char		*pf_unsigned(t_ptf *p);
+char		*pf_hexa(t_ptf *p);
+char		*pf_float(t_ptf *p);
 
-// print_bk
-char		*print_binary(t_cs *cs);
+// printf_time.c
+char		*pf_time(t_ptf *p);
+void		pf_tinit(t_tms *t, int dim[], char c);
+void		pf_tineg(long long lonlon, t_tms *t, int *dim, int i);
+void		pf_tipos(long long lonlon, t_tms *t, int *dim, int i);
+char		*pf_tifor(t_tms *t);
 
-// timestamp
-char		*print_date(t_cs *cs);
-void		init_time(t_tm *tm, int dim[], char c);
-void		get_date_negative(long long lonlon, t_tm *tm, int *dim, int i);
-void		get_date_positive(long long lonlon, t_tm *tm, int *dim, int i);
-char		*ft_date_format(t_tm *tm);
+// printf_bonus.c
+char		*pf_binary(t_ptf *p);
+char		*pf_thousands(char *str);
+int			pf_increment(char *str, int *dot);
+char		*pf_thelper(char *str, char *nw, int inc, int len); 
 
-// flags
-char		*precision(char *str, t_cs *cs);
-char		*zero(char *str, t_cs *cs);
-char		*plus_and_space(char *str, t_cs *cs);
-char		*minimum_and_minus(char *str, t_cs *cs);
+// printf_flags.c
+char		*pf_precision(char *str, t_ptf *p);
+char		*pf_zero(char *str, t_ptf *p);
+char		*pf_pluspace(char *str, t_ptf *p);
+char		*pf_widmin(char *str, t_ptf *p);
 
-// tools 
-int			is_arg_index(char *str);
-void		fill_fun_pointer_array(funPointer fpa[]);
-char		*ft_strjoin_2(char *a, char *b, int code);
-void		put_char_null(char *str);
+// printf_tools.c
+int			pf_argindex(char *str);
+char		*pf_strjoin(char *a, char *b, int code);
+void		pf_putchar(char *str);
 
-// itoa *
-char		*ft_itoa_base(long long n, int base, t_cs *cs);
-char		*itoa_helper(long long nbr, int len, t_cs *cs, int base);
-char		*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs);
-char		*ft_itoa_float(long double n, t_cs *cs);///////////////////////////1*
+// printf_itoa.c
+char		*pf_itoab(long long n, int base, t_ptf *p);
+char		*pf_ibhelper(long long nbr, int len, t_ptf *p, int base);
+char		*pf_itoabuns(unsigned long long n, int base, t_ptf *p);
+char		*pf_itoaf(long double n, t_ptf *p);
 
-// float *
-char		*prepare_float(long double n, t_cs *cs);////////////////////////1.1*
-int			change_ptr_content(long double n, t_cs *cs);//////////////1.1.1*
-void		get_after_max_ull(long double n, t_cs *cs);///////////////1.1.2*
-void		get_float(long double n, t_cs *cs);///////////////////////1.1.3*
+// printf_float.c
+char		*pf_prefloat(long double n, t_ptf *p);
+int			pf_ptrchange(long double n, t_ptf *p);
+void		pf_postull(long double n, t_ptf *p);
+void		pf_getfloat(long double n, t_ptf *p);
 
-// round *
-int			round_float(t_cs *cs);///////////////////////////////1.1.3.1*
-int			round_all_nines(t_cs *cs, char *join, int len);//1.1.3.1.1*
-int			round_recursive(char *join, int p_len);//////////1.1.3.1.2*
-void		copy_rounded(t_cs *cs, char *pt);////////////////1.1.3.1.3*
+// printf_round.c
+int			pf_roundfloat(t_ptf *p);
+int			pf_roundnine(t_ptf *p, char *join, int len);
+int			pf_roundrecursion(char *join, int len);
+void		pf_copyround(t_ptf *p, char *pt);
 
-// exponent *
-void		get_exp_format(t_cs *cs);///////////////////////////////////////1.2*
-char		*ft_strncpy_zero(char *dst, const char *src, size_t n);////1.2.2*
-void		exponent_helper(t_cs *cs, char *b, int trz, int len);//////1.2.4*
-char		*preci_zero(t_cs *cs, char *tm);////////////////////////////////1.3*
-int			trim_trailing_zeros(char *str, int len, char c);////////////////1.4*
-
-// bonus
-char		*thousands_separation(char *str);
-
-
+// printf_exponent.c
+void		pf_getexp(t_ptf *p);
+char		*pf_strncpy(char *dst, const char *src, size_t n);
+void		pf_exphelper(t_ptf *p, char *b, int trz, int len);
+char		*pf_precizero(t_ptf *p, char *tm);
+int			pf_trimzeros(char *str, int len, char c);
 
 #endif

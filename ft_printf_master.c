@@ -6,22 +6,34 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/23 18:15:34 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/24 12:45:44 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		close_program(int code, t_cs cs)
+void	fill_fun_pointer_array(funPointer fpa[])
 {
-	va_end(cs.ap);
-	va_end(cs.bp);
-	if (code == -1)
-	{
-		write(1, "[SORRY] Not type of conversion provided.\n", 41);
-		exit(code);
-	}
-	return (cs.ret);
+	int		i;
+
+	i = 0;
+	while (i < 128)
+		fpa[i++] = &print_other;
+	fpa['c'] = &print_char;
+	fpa['s'] = &print_string;
+	fpa['p'] = &print_pointer;
+	fpa['d'] = &print_decimal;
+	fpa['i'] = &print_decimal;
+	fpa['o'] = &print_octal;
+	fpa['u'] = &print_unsigned;
+	fpa['U'] = &print_unsigned;
+	fpa['x'] = &print_hexa;
+	fpa['X'] = &print_hexa;
+	fpa['f'] = &print_float;
+	fpa['e'] = &print_float;
+	fpa['g'] = &print_float;
+	fpa['b'] = &print_binary;
+	fpa['k'] = &print_date;
 }
 
 void	reset_object(t_cs *cs)
@@ -97,5 +109,7 @@ int		ft_printf(const char *fmt, ...)
 			++cs.ret;
 		}
 	}
-	return (close_program(0, cs));
+	va_end(cs.ap);
+	va_end(cs.bp);
+	return (cs.ret);
 }
