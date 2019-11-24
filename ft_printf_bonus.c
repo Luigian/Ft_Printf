@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:27:18 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:16:52 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 21:32:49 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,72 @@ char	*thousands_separation(char *str)
 	}
 	return (result);
 }
+/*
+char	*ft_date_format(t_tm *tm)
+{
+	char 	*date;
+	char 	*temp;
+	char 	*del;
+
+//	date = ft_strcpy(ft_strnew(25), "-0.-0.T0.:0.:0.+00:00");
+	date = ft_itoa(tm->second);
+	date = tm->second < 10 ? ft_strjoin_2("0", tm->second, 2) : 0;
+	date = ft_strjoin_2(":", tm->second, 2);
+	temp  = tm->minute < 10 ? ft_strjoin("0", ft_itoa(tm->minute), 2) : ft_itoa(tm->minute;
+	 
+	date = ft_strjoin(
+	
+	if (tm->second > 9)
+	{
+		date[13] = temp[0];
+		date[14] = temp[1];
+	}
+	else
+		date[14] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->minute);
+	if (tm->minute > 9)
+	{
+		date[10] = temp[0];
+		date[11] = temp[1];
+	}
+	else
+		date[11] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->hour);
+	if (tm->hour > 9)
+	{
+		date[7] = temp[0];
+		date[8] = temp[1];
+	}
+	else
+		date[8] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->day);
+	if (tm->day > 9)
+	{
+		date[4] = temp[0];
+		date[5] = temp[1];
+	}
+	else
+		date[5] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->month);
+	if (tm->month > 9)
+	{
+		date[1] = temp[0];
+		date[2] = temp[1];
+	}
+	else
+		date[2] = temp[0];
+	free(temp);
+	temp = ft_itoa(tm->year);
+	del = date;
+	date = ft_strjoin(temp, del);
+	free(del);
+	free(temp);
+	return (date);
+}*/
 
 char	*ft_date_format(t_tm *tm)
 {
@@ -139,99 +205,79 @@ char	*ft_date_format(t_tm *tm)
 	date = ft_strjoin(temp, del);
 	free(del);
 	free(temp);
-//	free(tm);
 	return (date);
 }
 
-
-char	*get_date_positive(long long lonlon, t_tm *tm, int *dim)
+/*
+void	get_date_positive(long long lonlon, t_tm *tm, int *dim, int i)
 {
-	int		i;
-
-	tm->year = 1970;
-	tm->month = 1;
-   	tm->day = 1;
-	tm->hour = 0;
-	tm->minute = 0;
-	tm->second = 0;
-	i = 0;
 	tm->second = lonlon % 60;
 	tm->minute = (lonlon % (60 * 60)) / 60;
 	tm->hour = (lonlon % (60 * 60 * 24)) / (60 * 60);
 	while (lonlon >= 86400)
 	{
-		++tm->day;
-		if (tm->day == dim[i] + 1)
+		if (++tm->day == dim[i] + 1)
 		{
 			tm->day = 1;
-			++tm->month;
 			++i;
-			if (tm->month == 12 + 1)
+			if (++tm->month == 12 + 1)
 			{
 				tm->month = 1;
-				++tm->year;
-				if (tm->year % 4 == 0 && (tm->year % 100 != 0\
-					|| tm->year % 400 == 0))
-					dim[1] = 29;
-				else
-					dim[1] = 28;
+				dim[1] = ++tm->year % 4 == 0 && (tm->year % 100 != 0\
+					|| tm->year % 400 == 0) ? 29 : 28;
 				i = 0;
 			}
 		}
 		lonlon -= 86400;
 	}
-	return (ft_date_format(tm));
 }
 
-char	*get_date_negative(long long lonlon, t_tm *tm, int *dim)
+void	init_time(t_tm *tm, int dim[], char c)
 {
-	int		i;
+	if (c == '-')
+	{
+		tm->year = 1969;
+		tm->month = 12;
+   		tm->day = dim[11];
+		tm->hour = 24;
+		tm->minute = 60;
+		tm->second = 60;
+	}
+	else
+	{
+		tm->year = 1970;
+		tm->month = 1;
+	   	tm->day = 1;
+		tm->hour = 0;
+		tm->minute = 0;
+		tm->second = 0;
+	}
+}
 
-	tm->year = 1969;
-	tm->month = 12;
-   	tm->day = dim[11];
-	tm->hour = 24;
-	tm->minute = 60;
-	tm->second = 60;
-	lonlon *= -1;
+void	get_date_negative(long long lonlon, t_tm *tm, int *dim, int i)
+{
 	tm->second -= (lonlon % 60);
 	tm->minute -= ((lonlon % (60 * 60)) / 60);
 	tm->hour -= ((lonlon % (60 * 60 * 24)) / (60 * 60));
-	if (tm->second == 60)
-		tm->second = 0;
-	if (tm->second)
-		tm->minute -= 1;
-	if (tm->minute == 60)
-		tm->minute = 0;
-	if (tm->second || tm->minute)
-		tm->hour -= 1;
-	if (tm->hour == 24)
-		tm->hour = 0;
-
+	tm->second == 60 ? tm->second = 0 : 0;
+	tm->second ? tm->minute -= 1 : 0;
+	tm->minute == 60 ? tm->minute = 0 : 0;
+	tm->second || tm->minute ? tm->hour -= 1 : 0;
+	tm->hour == 24 ? tm->hour = 0 : 0;
 	i = 11;
 	while (lonlon > 86400)
 	{
-		--tm->day;
-		if (tm->day == 0)
+		if (--tm->day == 0)
 		{
-			if (i)
-				--i;
-			else
-				i = 11;
+			i = i ? i - 1 : 11;
 			tm->day = dim[i];
-			--tm->month;
-			if (tm->month == 0)
+			if (--tm->month == 0)
 			{
 				tm->month = 12;
-				--tm->year;
-				if (tm->year % 4 == 0 && (tm->year % 100 != 0\
-					|| tm->year % 400 == 0))
-					dim[1] = 29;
-				else
-					dim[1] = 28;
+				dim[1] = --tm->year % 4 == 0 && (tm->year % 100 != 0\
+				|| tm->year % 400 == 0) ? 29 : 28;
 			}
 		}
 		lonlon -= 86400;
 	}
-	return (ft_date_format(tm));
-}
+}*/

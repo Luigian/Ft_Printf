@@ -6,28 +6,39 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:18:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:17:01 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 20:08:45 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+/*
 char	*print_date(t_cs *cs)
 {
-	long long		lonlon;
-	char	*str;
-	t_tm	tm;
-	int		dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	long long	lonlon;
+	char		*str;
+	t_tm		tm;
+	int			dim[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	int			i;
 
+	i = 0;
 	lonlon = va_arg(cs->ap, long long);
 	if (lonlon < 0)
-		str = get_date_negative(lonlon, &tm, dim);
+	{
+		init_time(&tm, dim, '-');
+		get_date_negative(lonlon * -1 , &tm, dim, i);
+	}
 	else
-		str = get_date_positive(lonlon, &tm, dim);
+	{
+		init_time(&tm, dim, '+');
+		get_date_positive(lonlon, &tm, dim, i);
+	}
+	str = ft_date_format(&tm);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);
 	return (str);
 }
+*/
 
 char	*print_binary(t_cs *cs)
 {

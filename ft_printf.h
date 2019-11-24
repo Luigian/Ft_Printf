@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/23 12:41:29 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 19:44:07 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,13 @@ char		*print_float(t_cs *cs);
 
 // print_bk
 char		*print_binary(t_cs *cs);
+
+// timestamp
 char		*print_date(t_cs *cs);
+void		init_time(t_tm *tm, int dim[], char c);
+void		get_date_negative(long long lonlon, t_tm *tm, int *dim, int i);
+void		get_date_positive(long long lonlon, t_tm *tm, int *dim, int i);
+char		*ft_date_format(t_tm *tm);
 
 // flags
 char		*precision(char *str, t_cs *cs);
@@ -88,41 +94,38 @@ char		*zero(char *str, t_cs *cs);
 char		*plus_and_space(char *str, t_cs *cs);
 char		*minimum_and_minus(char *str, t_cs *cs);
 
-//tools
+// tools 
 int			is_arg_index(char *str);
 void		fill_fun_pointer_array(funPointer fpa[]);
 char		*ft_strjoin_2(char *a, char *b, int code);
 void		put_char_null(char *str);
 
-//itoa
+// itoa *
 char		*ft_itoa_base(long long n, int base, t_cs *cs);
 char		*itoa_helper(long long nbr, int len, t_cs *cs, int base);
 char		*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs);
-
 char		*ft_itoa_float(long double n, t_cs *cs);///////////////////////////1*
+
+// float *
 char		*prepare_float(long double n, t_cs *cs);////////////////////////1.1*
 int			change_ptr_content(long double n, t_cs *cs);//////////////1.1.1*
 void		get_after_max_ull(long double n, t_cs *cs);///////////////1.1.2*
 void		get_float(long double n, t_cs *cs);///////////////////////1.1.3*
-int			round_float(t_cs *cs);///////////////////////////////1.1.3.1
-int			round_all_nines(t_cs *cs, char *join, int len);//1.1.3.1.1
-int			rounding(char *join, int p_len);/////////////////1.1.3.1.2
+
+// round *
+int			round_float(t_cs *cs);///////////////////////////////1.1.3.1*
+int			round_all_nines(t_cs *cs, char *join, int len);//1.1.3.1.1*
+int			round_recursive(char *join, int p_len);//////////1.1.3.1.2*
+void		copy_rounded(t_cs *cs, char *pt);////////////////1.1.3.1.3*
+
+// exponent *
 void		get_exp_format(t_cs *cs);///////////////////////////////////////1.2*
-char		*ft_strncpy_zero(char *dst, const char *src, size_t n);////1.2.2
-int			trim_trailing_zeros_e(char *str, int len);/////////////////1.2.3
+char		*ft_strncpy_zero(char *dst, const char *src, size_t n);////1.2.2*
 void		exponent_helper(t_cs *cs, char *b, int trz, int len);//////1.2.4*
 char		*preci_zero(t_cs *cs, char *tm);////////////////////////////////1.3*
-int			trim_trailing_zeros(char *str, int len);////////////////////////1.4
-char		*add_minus(char *str);//////////////////////////////////////////1.5
-int			turnback_ptr_content(t_cs *cs);/////////////////////////////////1.6
+int			trim_trailing_zeros(char *str, int len, char c);////////////////1.4*
 
-
-
-
-//bonus
-char		*get_date_negative(long long lonlon, t_tm *tm, int *dim);
-char		*get_date_positive(long long lonlon, t_tm *tm, int *dim);
-char		*ft_date_format(t_tm *tm);
+// bonus
 char		*thousands_separation(char *str);
 
 

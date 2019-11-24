@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:11:33 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/23 08:36:18 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 18:16:00 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ char	*print_hexa(t_cs *cs)
 		str = ft_itoa_base_uns((unsigned int)ulonlon, 16, cs);
 	str = precision(str, cs);
 	if (cs->flag['#'] && *cs->ptr == 'x')
-		str = ft_strjoin_2("0x", str, 1);
+		str = ft_strjoin_2("0x", str, 2);
 	else if (cs->flag['#'] && *cs->ptr == 'X')
-		str = ft_strjoin_2("0X", str, 1);
+		str = ft_strjoin_2("0X", str, 2);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);
 	return (str);
@@ -113,7 +113,7 @@ char	*print_octal(t_cs *cs)
 	else if (cs->len == 4)
 		str = ft_itoa_base_uns(ulonlon, 8, cs);
 	if (cs->flag['#'] && str[0] != '0')
-		str = ft_strjoin_2("0", str, 1);
+		str = ft_strjoin_2("0", str, 2);
 	str = precision(str, cs);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);

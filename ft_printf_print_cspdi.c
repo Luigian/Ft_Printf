@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 12:25:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:17:08 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 18:15:50 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*print_pointer(t_cs *cs)
 	cs->flag['#'] = 1;	
 	str = ft_itoa_base((long long)va_arg(cs->ap, void *), 16, cs);
 	str = precision(str, cs);
-	str = ft_strjoin_2("0x", str, 1);
+	str = ft_strjoin_2("0x", str, 2);
 	str = minimum_and_minus(str, cs);
 	ft_putstr(str);
 	return (str);

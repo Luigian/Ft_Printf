@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:05:42 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/23 12:48:08 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 21:33:56 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ char	*ft_strjoin_2(char *a, char *b, int code)
 	char	*new;
 
 	new = ft_strjoin(a, b);
-	free(b);
-	if (code == 2)
+	if (code == 1 || code == 3)
 		free(a);
+	if (code == 2 || code == 3)
+		free(b);
 	return (new);
 }
 

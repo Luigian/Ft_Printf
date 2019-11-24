@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 10:06:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/21 21:16:58 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/23 18:14:33 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ char	*minimum_and_minus(char *str, t_cs *cs)
 	{
 		new = ft_memset(ft_strnew(len), ' ', len);
 		if (cs->flag['-'])
-			ret = ft_strjoin(str, new);
+			ret = ft_strjoin_2(str, new, 3);
 		else
-			ret = ft_strjoin(new, str);
-		free(new);
-		free(str);
+			ret = ft_strjoin_2(new, str, 3);
 		return (ret);
 	}
 	return (str);
@@ -35,7 +33,6 @@ char	*minimum_and_minus(char *str, t_cs *cs)
 char	*plus_and_space(char *str, t_cs *cs)
 {
 	char	*new;
-	char	*ret;
 
 	if ((cs->flag['+'] || cs->flag[' ']) && str[0] != '-')
 	{
@@ -43,10 +40,8 @@ char	*plus_and_space(char *str, t_cs *cs)
 			new = ft_memset(ft_strnew(1), '+', 1);
 		else
 			new = ft_memset(ft_strnew(1), ' ', 1);
-		ret = ft_strjoin(new, str);
-		free(new);
-		free(str);
-		return (ret);
+		new = ft_strjoin_2(new, str, 3);
+		return (new);
 	}
 	return (str);
 }
@@ -54,7 +49,6 @@ char	*plus_and_space(char *str, t_cs *cs)
 char	*zero(char *str, t_cs *cs)
 {
 	char	*new;
-	char	*ret;
 	int		len;
 		
 	len = 0;
@@ -71,10 +65,8 @@ char	*zero(char *str, t_cs *cs)
 			str[0] = '0';
 			new[0] = '-';
 		}
-		ret = ft_strjoin(new, str);
-		free(new);
-		free(str);
-		return (ret);
+		new = ft_strjoin_2(new, str, 3);
+		return (new);
 	}
 	return (str);
 }
@@ -103,7 +95,7 @@ char	*precision(char *str, t_cs *cs)
 		}
 		else
 			new = ft_memset(ft_strnew(len), '0', len);
-		str = ft_strjoin_2(new, str, 2);
+		str = ft_strjoin_2(new, str, 3);
 	}
 	return (str);
 }
