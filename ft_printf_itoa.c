@@ -6,47 +6,47 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:34:58 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/24 11:40:48 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:55:47 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_itoa_float(long double n, t_cs *cs)
+char	*pf_itoaf(long double n, t_ptf *p)
 {
 	char					*tm;
 	char					*pt;
-	
-	if ((pt = prepare_float(n, cs)))
+
+	if ((pt = pf_prefloat(n, p)))
 		return (pt);
-	if (*cs->ptr == 'e')
-		get_exp_format(cs);
+	if (*p->ptr == 'e')
+		pf_getexp(p);
 	tm = NULL;
-	if (cs->preci == 0)	
-		if ((pt = preci_zero(cs, tm)))
+	if (p->pre == 0)
+		if ((pt = pf_precizero(p, tm)))
 			return (pt);
-	if (*cs->ptr == 'e')
-		pt = ft_strdup(cs->aft);
+	if (*p->ptr == 'e')
+		pt = ft_strdup(p->aft);
 	else
-		pt = ft_strncpy_zero(ft_strnew(cs->preci), cs->aft, cs->preci);
-	free(cs->aft);
-	cs->aft = ft_strjoin_2(".", pt, 2);
-	tm = ft_strjoin_2(cs->bef, cs->aft, 3);
-	if (cs->g && *cs->ptr == 'f' && !cs->flag['#'])
-		trim_trailing_zeros(tm, (int)ft_strlen(tm), 'f');
-	cs->sign ? tm = ft_strjoin_2("-", tm, 2): 0;
-	cs->g ?	cs->ptr = cs->temp : 0;
+		pt = pf_strncpy(ft_strnew(p->pre), p->aft, p->pre);
+	free(p->aft);
+	p->aft = pf_strjoin(".", pt, 2);
+	tm = pf_strjoin(p->bef, p->aft, 3);
+	if (p->g && *p->ptr == 'f' && !p->f['#'])
+		pf_trimzeros(tm, (int)ft_strlen(tm), 'f');
+	p->sgn ? tm = pf_strjoin("-", tm, 2) : 0;
+	p->g ? p->ptr = p->tmp : 0;
 	return (tm);
 }
 
-char	*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs)
+char	*pf_itoabuns(unsigned long long n, int base, t_ptf *p)
 {
 	int					len;
 	unsigned long long	nbr;
 	char				*str;
 	char				*bastr;
 
-	bastr = *cs->ptr == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
+	bastr = *p->ptr == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
 	if (n == 0)
 		return (ft_memset(ft_strnew(1), '0', 1));
 	len = 0;
@@ -66,7 +66,7 @@ char	*ft_itoa_base_uns(unsigned long long n, int base, t_cs *cs)
 	return (str);
 }
 
-char	*itoa_helper(long long nbr, int len, t_cs *cs, int base)
+char	*pf_ibhelper(long long nbr, int len, t_ptf *p, int base)
 {
 	unsigned long long	unlon;
 	char				*str;
@@ -74,7 +74,7 @@ char	*itoa_helper(long long nbr, int len, t_cs *cs, int base)
 
 	unlon = (unsigned long long)nbr;
 	str = ft_strnew(len);
-	bastr = *cs->ptr == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
+	bastr = *p->ptr == 'X' ? "0123456789ABCDEF" : "0123456789abcdef";
 	while (unlon)
 	{
 		str[--len] = bastr[unlon % base];
@@ -83,7 +83,7 @@ char	*itoa_helper(long long nbr, int len, t_cs *cs, int base)
 	return (str);
 }
 
-char	*ft_itoa_base(long long n, int base, t_cs *cs)
+char	*pf_itoab(long long n, int base, t_ptf *p)
 {
 	int					len;
 	long long			nbr;
@@ -105,7 +105,7 @@ char	*ft_itoa_base(long long n, int base, t_cs *cs)
 			len += 1;
 		nbr *= -1;
 	}
-	str = itoa_helper(nbr, len, cs, base);
+	str = pf_ibhelper(nbr, len, p, base);
 	if (n < 0 && base == 10)
 		str[0] = '-';
 	return (str);

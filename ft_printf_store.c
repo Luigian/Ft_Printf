@@ -6,130 +6,130 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/24 11:41:12 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:42:28 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	minwid_as_argument(t_cs *cs)
+void	pf_widarg(t_ptf *p)
 {
-	if (is_arg_index(cs->ptr + 1))
+	if (pf_argindex(p->ptr + 1))
 	{
-		cs->arg = ft_atoi(cs->ptr + 1);
-		va_copy(cs->tp, cs->bp);
-		while (--cs->arg)
-			va_arg(cs->tp, void*);
-		cs->minwid = va_arg(cs->tp, int);
-		va_end(cs->tp);
-		cs->arg = 0;
-		++cs->ptr;
-		while (ft_isdigit(*cs->ptr))
-			++cs->ptr;
+		p->arg = ft_atoi(p->ptr + 1);
+		va_copy(p->tp, p->bp);
+		while (--p->arg)
+			va_arg(p->tp, void*);
+		p->wid = va_arg(p->tp, int);
+		va_end(p->tp);
+		p->arg = 0;
+		++p->ptr;
+		while (ft_isdigit(*p->ptr))
+			++p->ptr;
 	}
 	else
-		cs->minwid = va_arg(cs->ap, int);
-	if (cs->minwid < 0)
+		p->wid = va_arg(p->ap, int);
+	if (p->wid < 0)
 	{
-		cs->flag['-'] = 1;
-		cs->minwid *= -1;
+		p->f['-'] = 1;
+		p->wid *= -1;
 	}
 }
 
-void		precision_as_argument(t_cs *cs)
+void	pf_prearg(t_ptf *p)
 {
-	if (is_arg_index(cs->ptr + 1))
+	if (pf_argindex(p->ptr + 1))
 	{
-		cs->arg = ft_atoi(cs->ptr + 1);
-		va_copy(cs->tp, cs->bp);
-		while (--cs->arg)
-			va_arg(cs->tp, void*);
-		cs->preci = va_arg(cs->tp, int);
-		va_end(cs->tp);
-		cs->arg = 0;
-		++cs->ptr;
-		while (ft_isdigit(*cs->ptr))
-			++cs->ptr;
+		p->arg = ft_atoi(p->ptr + 1);
+		va_copy(p->tp, p->bp);
+		while (--p->arg)
+			va_arg(p->tp, void*);
+		p->pre = va_arg(p->tp, int);
+		va_end(p->tp);
+		p->arg = 0;
+		++p->ptr;
+		while (ft_isdigit(*p->ptr))
+			++p->ptr;
 	}
 	else
-		cs->preci = va_arg(cs->ap, int);
-	if (cs->preci < 0)
-		cs->preci = -1;
+		p->pre = va_arg(p->ap, int);
+	if (p->pre < 0)
+		p->pre = -1;
 }
 
-void	store_precision_minwid(t_cs *cs)
+void	pf_prewid(t_ptf *p)
 {
-	if (*cs->ptr == '.')
+	if (*p->ptr == '.')
 	{
-		if (*(++cs->ptr) == '*')
-			precision_as_argument(cs);
+		if (*(++p->ptr) == '*')
+			pf_prearg(p);
 		else
 		{
-			cs->preci = 0;
-			if (ft_isdigit(*cs->ptr))
-				cs->preci = ft_atoi(cs->ptr);
-			while (ft_isdigit(*cs->ptr))
-				++cs->ptr;
-			--cs->ptr;
+			p->pre = 0;
+			if (ft_isdigit(*p->ptr))
+				p->pre = ft_atoi(p->ptr);
+			while (ft_isdigit(*p->ptr))
+				++p->ptr;
+			--p->ptr;
 		}
 	}
 	else
 	{
-		if (is_arg_index(cs->ptr))
-			cs->arg = ft_atoi(cs->ptr);
+		if (pf_argindex(p->ptr))
+			p->arg = ft_atoi(p->ptr);
 		else
-			cs->minwid = ft_atoi(cs->ptr);
-		while (ft_isdigit(*cs->ptr))
-			++cs->ptr;
-		!cs->arg ? --cs->ptr : 0;
+			p->wid = ft_atoi(p->ptr);
+		while (ft_isdigit(*p->ptr))
+			++p->ptr;
+		!p->arg ? --p->ptr : 0;
 	}
 }
 
-void	store_length(t_cs *cs)
+void	pf_length(t_ptf *p)
 {
-	if (*cs->ptr == 'h' && cs->len < 2)
+	if (*p->ptr == 'h' && p->len < 2)
 	{
-		cs->len = 2;
-		if (*(cs->ptr + 1) == 'h')
+		p->len = 2;
+		if (*(p->ptr + 1) == 'h')
 		{
-			cs->len = 1;
-			++cs->ptr;
+			p->len = 1;
+			++p->ptr;
 		}
 	}
-	else if (*cs->ptr == 'l' && cs->len < 4)
+	else if (*p->ptr == 'l' && p->len < 4)
 	{
-		cs->len = 3;
-		if (*(cs->ptr + 1) == 'l')
+		p->len = 3;
+		if (*(p->ptr + 1) == 'l')
 		{
-			cs->len = 4;
-			++cs->ptr;
+			p->len = 4;
+			++p->ptr;
 		}
 	}
-	else if (*cs->ptr == 'j')
-		cs->len = 3;
-	else if (*cs->ptr == 'z')
-		cs->len = 4;
-	else if (*cs->ptr == 'L')
-		cs->ext = 1;
+	else if (*p->ptr == 'j')
+		p->len = 3;
+	else if (*p->ptr == 'z')
+		p->len = 4;
+	else if (*p->ptr == 'L')
+		p->ext = 1;
 }
 
-void		store_format_specifications(t_cs *cs)
+void	pf_store(t_ptf *p)
 {
 	while (1)
 	{
-		if (ft_chrstr(*cs->ptr, "#0- +\'"))
-			cs->flag[(int)*cs->ptr] = 1;
-		else if (ft_chrstr(*cs->ptr, "123456789.*"))
+		if (ft_chrstr(*p->ptr, "#0- +\'"))
+			p->f[(int)*p->ptr] = 1;
+		else if (ft_chrstr(*p->ptr, "123456789.*"))
 		{
-			if (*cs->ptr == '*')
-				minwid_as_argument(cs);
-			else	
-				store_precision_minwid(cs);
+			if (*p->ptr == '*')
+				pf_widarg(p);
+			else
+				pf_prewid(p);
 		}
-		else if (ft_chrstr(*cs->ptr, "hlLjz"))
-			store_length(cs);
+		else if (ft_chrstr(*p->ptr, "hlLjz"))
+			pf_length(p);
 		else
-			break;
-		++cs->ptr;
+			break ;
+		++p->ptr;
 	}
 }

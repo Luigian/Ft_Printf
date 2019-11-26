@@ -6,12 +6,12 @@
 #    By: lusanche <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 18:24:34 by lusanche          #+#    #+#              #
-#    Updated: 2019/10/16 21:07:04 by lusanche         ###   ########.fr        #
+#    Updated: 2019/11/25 16:20:48 by lusanche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-SRC_PF = ft*.c
+SRC_PF = ft_printf_*.c
 SRC_LB = libft/ft*.c
 HEAD_PF = ft_printf.h
 HEAD_LB = libft/libft.h

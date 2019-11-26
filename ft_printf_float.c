@@ -6,37 +6,37 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:54:13 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/24 11:40:51 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:54:47 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	get_float(long double n, t_cs *cs)
+void	pf_getfloat(long double n, t_ptf *p)
 {
 	long double				af;
 	char					*pt;
 	char					*tm;
 
-	cs->bef = ft_itoa_base_uns((unsigned long long)n, 10, cs);
+	p->bef = pf_itoabuns((unsigned long long)n, 10, p);
 	af = n - (unsigned long long)n;
 	if (af == 0)
-		cs->aft = ft_memset(ft_strnew(1), '0', 1);
+		p->aft = ft_memset(ft_strnew(1), '0', 1);
 	pt = "";
 	while (af > 0)
 	{
 		af *= 10;
 		tm = ft_itoa(af);
-		cs->aft = ft_strjoin_2(pt, tm, 2);
+		p->aft = pf_strjoin(pt, tm, 2);
 		*pt ? free(pt) : 0;
-		pt = cs->aft;
+		pt = p->aft;
 		af -= (unsigned long long)af;
 	}
-	if ((int)ft_strlen(cs->aft) > cs->preci && !(*cs->ptr == 'e'))
-		round_float(cs);
+	if ((int)ft_strlen(p->aft) > p->pre && !(*p->ptr == 'e'))
+		pf_roundfloat(p);
 }
 
-void	get_after_max_ull(long double n, t_cs *cs)
+void	pf_postull(long double n, t_ptf *p)
 {
 	long double				af;
 	char					*pt;
@@ -45,69 +45,69 @@ void	get_after_max_ull(long double n, t_cs *cs)
 	af = n;
 	while (af >= 100000000000000000)
 	{
-		++cs->exp;
+		++p->exp;
 		af /= 10;
 	}
 	af *= 100;
-	cs->exp -= 2;
-	pt = ft_itoa_base_uns((unsigned long long)af, 10, cs);
-	tm = ft_memset(ft_strnew(cs->exp), '0', cs->exp);
-	cs->exp = 0;
-	cs->bef = ft_strjoin_2(pt, tm, 3);
-	cs->aft = ft_memset(ft_strnew(1), '0', 1);
+	p->exp -= 2;
+	pt = pf_itoabuns((unsigned long long)af, 10, p);
+	tm = ft_memset(ft_strnew(p->exp), '0', p->exp);
+	p->exp = 0;
+	p->bef = pf_strjoin(pt, tm, 3);
+	p->aft = ft_memset(ft_strnew(1), '0', 1);
 }
 
-int		change_ptr_content(long double n, t_cs *cs)
+int		pf_ptrchange(long double n, t_ptf *p)
 {
 	while (n > 0 && n < 1)
 	{
-		--cs->exp;
+		--p->exp;
 		n *= 10;
 	}
 	while (n >= 10)
 	{
-		++cs->exp;
+		++p->exp;
 		n /= 10;
 	}
-	if (cs->exp < -4 || cs->exp >= cs->preci)
+	if (p->exp < -4 || p->exp >= p->pre)
 	{
-		cs->temp = cs->ptr;
-		cs->ptr = "e";
-		--cs->preci;
+		p->tmp = p->ptr;
+		p->ptr = "e";
+		--p->pre;
 	}
 	else
 	{
-		cs->temp = cs->ptr;
-		cs->ptr = "f";
-		cs->preci = cs->preci - (cs->exp + 1);
+		p->tmp = p->ptr;
+		p->ptr = "f";
+		p->pre = p->pre - (p->exp + 1);
 	}
-	cs->g = 1;
-	cs->exp = 0;
+	p->g = 1;
+	p->exp = 0;
 	return (0);
 }
 
-char	*prepare_float(long double n, t_cs *cs)
+char	*pf_prefloat(long double n, t_ptf *p)
 {
 	if (!(n == 0 || n > 0 || n < 0))
 	{
-		cs->flag['0'] = 0;
-		cs->flag[' '] = 0;
-		cs->flag['+'] = 0;
-		cs->preci = -1;
-		return(ft_strcpy(ft_strnew(3), "nan"));
+		p->f['0'] = 0;
+		p->f[' '] = 0;
+		p->f['+'] = 0;
+		p->pre = -1;
+		return (ft_strcpy(ft_strnew(3), "nan"));
 	}
-	cs->sign = n < 0 ? 1 : 0;
+	p->sgn = n < 0 ? 1 : 0;
 	n *= n < 0 ? -1 : 1;
-	if (*cs->ptr == 'g')
-		change_ptr_content(n, cs);
-	while (*cs->ptr == 'e' && n && n < 1)
+	if (*p->ptr == 'g')
+		pf_ptrchange(n, p);
+	while (*p->ptr == 'e' && n && n < 1)
 	{
 		n *= 10;
-		++cs->exp;
+		++p->exp;
 	}
 	if (n > 1 && (unsigned long long)n == 0)
-		get_after_max_ull(n, cs);
+		pf_postull(n, p);
 	else
-		get_float(n, cs);
+		pf_getfloat(n, p);
 	return (NULL);
 }

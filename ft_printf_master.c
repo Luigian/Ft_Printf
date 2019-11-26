@@ -6,110 +6,110 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/24 12:45:44 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:40:27 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	fill_fun_pointer_array(funPointer fpa[])
+void	pf_funfill(fpa fun[])
 {
 	int		i;
 
 	i = 0;
 	while (i < 128)
-		fpa[i++] = &print_other;
-	fpa['c'] = &print_char;
-	fpa['s'] = &print_string;
-	fpa['p'] = &print_pointer;
-	fpa['d'] = &print_decimal;
-	fpa['i'] = &print_decimal;
-	fpa['o'] = &print_octal;
-	fpa['u'] = &print_unsigned;
-	fpa['U'] = &print_unsigned;
-	fpa['x'] = &print_hexa;
-	fpa['X'] = &print_hexa;
-	fpa['f'] = &print_float;
-	fpa['e'] = &print_float;
-	fpa['g'] = &print_float;
-	fpa['b'] = &print_binary;
-	fpa['k'] = &print_date;
+		fun[i++] = &pf_other;
+	fun['c'] = &pf_char;
+	fun['s'] = &pf_string;
+	fun['p'] = &pf_pointer;
+	fun['d'] = &pf_decimal;
+	fun['i'] = &pf_decimal;
+	fun['o'] = &pf_octal;
+	fun['u'] = &pf_unsigned;
+	fun['U'] = &pf_unsigned;
+	fun['x'] = &pf_hexa;
+	fun['X'] = &pf_hexa;
+	fun['f'] = &pf_float;
+	fun['e'] = &pf_float;
+	fun['g'] = &pf_float;
+	fun['b'] = &pf_binary;
+	fun['k'] = &pf_time;
 }
 
-void	reset_object(t_cs *cs)
+void	pf_reset(t_ptf *p)
 {
-	ft_memset(cs->flag, 0, 128 * sizeof(int));
-	cs->minwid = 0;
-	cs->preci = -1;
-	cs->len = 0; 
-	cs->ext = 0; 
-	cs->bef = NULL;
-	cs->aft = NULL;
-	cs->exp = 0;
-	cs->g = 0;
-	cs->temp = NULL;
-	cs->arg = 0;
-	cs->sign = 0;
+	ft_memset(p->f, 0, 128 * sizeof(int));
+	p->wid = 0;
+	p->pre = -1;
+	p->len = 0;
+	p->ext = 0;
+	p->bef = NULL;
+	p->aft = NULL;
+	p->exp = 0;
+	p->g = 0;
+	p->tmp = NULL;
+	p->arg = 0;
+	p->sgn = 0;
 }
 
-void	init_struct(const char *fmt, t_cs *cs)
+void	pf_init(const char *fmt, t_ptf *p)
 {
-	cs->begin = fmt;
-	cs->ptr = (char *)fmt;
-	cs->bef = NULL;
-	cs->aft = NULL;
-	cs->ret = 0;
-	reset_object(cs);
+	p->beg = fmt;
+	p->ptr = (char *)fmt;
+	p->bef = NULL;
+	p->aft = NULL;
+	p->ret = 0;
+	pf_reset(p);
 }
 
-void	print_argument(t_cs *cs)
+void	pf_print(t_ptf *p)
 {
-	funPointer	fpa[128];
-	char		*str;
-	
-	reset_object(cs);
-	store_format_specifications(cs);
-	if (cs->arg)
+	fpa		fun[128];
+	char	*str;
+
+	pf_reset(p);
+	pf_store(p);
+	if (p->arg)
 	{
-		va_copy(cs->tp, cs->bp);
-		while (--cs->arg)
-			va_arg(cs->tp, void*);
-		va_end(cs->ap);
-		va_copy(cs->ap, cs->tp);
-		va_end(cs->tp);
-	}	
-	if (*cs->ptr)
+		va_copy(p->tp, p->bp);
+		while (--p->arg)
+			va_arg(p->tp, void*);
+		va_end(p->ap);
+		va_copy(p->ap, p->tp);
+		va_end(p->tp);
+	}
+	if (*p->ptr)
 	{
-		fill_fun_pointer_array(fpa);
-		str = fpa[(int)*cs->ptr](cs);
-		cs->ret += ft_strlen(str);
+		pf_funfill(fun);
+		str = fun[(int)*p->ptr](p);
+		p->ret += ft_strlen(str);
 		free(str);
-		++cs->ptr;
+		++p->ptr;
 	}
 }
 
 int		ft_printf(const char *fmt, ...)
 {
-	t_cs		cs;
-	
-	va_start(cs.ap, fmt);
-	va_copy(cs.bp, cs.ap);
-	init_struct(fmt, &cs);
-	while (*cs.ptr)
+	t_ptf	p;
+
+	va_start(p.ap, fmt);
+	va_copy(p.bp, p.ap);
+	pf_init(fmt, &p);
+	while (*p.ptr)
 	{
-		if (*cs.ptr == '%')
+		if (*p.ptr == '%')
 		{
-			++cs.ptr;
-			print_argument(&cs);
-		}	
+			++p.ptr;
+			pf_print(&p);
+		}
 		else
 		{
-			ft_putchar(*cs.ptr);
-			++cs.ptr;
-			++cs.ret;
+			ft_putchar(*p.ptr);
+			++p.ptr;
+			++p.ret;
 		}
 	}
-	va_end(cs.ap);
-	va_end(cs.bp);
-	return (cs.ret);
+	va_end(p.ap);
+	va_end(p.bp);
+	return (p.ret);
 }

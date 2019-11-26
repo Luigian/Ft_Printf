@@ -6,50 +6,50 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:50:56 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/24 11:40:54 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:58:03 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	copy_rounded(t_cs *cs, char *pt)
+void	pf_copyround(t_ptf *p, char *pt)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (i < (int)ft_strlen(cs->bef))
-		cs->bef[i++] = pt[j++];
+	while (i < (int)ft_strlen(p->bef))
+		p->bef[i++] = pt[j++];
 	i = 0;
-	if (*cs->ptr == 'e')
+	if (*p->ptr == 'e')
 	{
-		while (i < (cs->preci - ((int)ft_strlen(cs->bef) - 1)))
-			cs->aft[i++] = pt[j++];
+		while (i < (p->pre - ((int)ft_strlen(p->bef) - 1)))
+			p->aft[i++] = pt[j++];
 	}
 	else
 	{
-		while (i < cs->preci)
-			cs->aft[i++] = pt[j++];
+		while (i < p->pre)
+			p->aft[i++] = pt[j++];
 	}
 }
 
-int		round_recursive(char *pt, int len)
+int		pf_roundrecursion(char *pt, int len)
 {
 	if (pt[len] == '9')
 	{
 		pt[len] = '0';
-		round_recursive(pt, len - 1);
+		pf_roundrecursion(pt, len - 1);
 	}
 	else
 		++(pt[len]);
 	return (0);
 }
 
-int		round_all_nines(t_cs *cs, char *pt, int len)
+int		pf_roundnine(t_ptf *p, char *pt, int len)
 {
 	int		i;
-	char 	*del;
+	char	*del;
 
 	i = 0;
 	del = NULL;
@@ -57,46 +57,46 @@ int		round_all_nines(t_cs *cs, char *pt, int len)
 		++i;
 	if (i == len && pt[i] > '4')
 	{
-		del = cs->bef;
-		cs->bef = ft_memset(ft_strnew(ft_strlen(cs->bef) + 1), '0',\
-				ft_strlen(cs->bef) + 1);
-		cs->bef[0] = '1';
+		del = p->bef;
+		p->bef = ft_memset(ft_strnew(ft_strlen(p->bef) + 1), '0',\
+				ft_strlen(p->bef) + 1);
+		p->bef[0] = '1';
 		free(del);
 		i = 0;
-		if (*cs->ptr == 'e')
-			while (i < (cs->preci - (int)(ft_strlen(cs->bef) - 1)))
-				cs->aft[i++] = '0';
+		if (*p->ptr == 'e')
+			while (i < (p->pre - (int)(ft_strlen(p->bef) - 1)))
+				p->aft[i++] = '0';
 		else
-			while (i < cs->preci)
-				cs->aft[i++] = '0';
+			while (i < p->pre)
+				p->aft[i++] = '0';
 		return (1);
 	}
 	return (0);
 }
 
-int		round_float(t_cs *cs)
+int		pf_roundfloat(t_ptf *p)
 {
-	char 	*pt;
+	char	*pt;
 	int		len;
 
-	pt = ft_strjoin(cs->bef, cs->aft);
-	if (*cs->ptr == 'e')
-		len = 1 + cs->preci;
+	pt = ft_strjoin(p->bef, p->aft);
+	if (*p->ptr == 'e')
+		len = 1 + p->pre;
 	else
-		len = ft_strlen(cs->bef) + cs->preci;
-	if (round_all_nines(cs, pt, len))
+		len = ft_strlen(p->bef) + p->pre;
+	if (pf_roundnine(p, pt, len))
 	{
-		cs->g ? --cs->preci : 0;
-		free (pt);
+		p->g ? --p->pre : 0;
+		free(pt);
 		return (2);
 	}
 	if (pt[len] > '4')
 	{
-		round_recursive(pt, len - 1);
-		copy_rounded(cs, pt);
-		free (pt);
+		pf_roundrecursion(pt, len - 1);
+		pf_copyround(p, pt);
+		free(pt);
 		return (1);
 	}
-	free (pt);
+	free(pt);
 	return (0);
 }

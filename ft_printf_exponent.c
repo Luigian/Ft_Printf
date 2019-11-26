@@ -6,13 +6,13 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:43:41 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/24 11:40:57 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:50:17 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		trim_trailing_zeros(char *str, int len, char c)
+int		pf_trimzeros(char *str, int len, char c)
 {
 	int		counter;
 
@@ -33,35 +33,35 @@ int		trim_trailing_zeros(char *str, int len, char c)
 	return (0);
 }
 
-char	*preci_zero(t_cs *cs, char *tm)
+char	*pf_precizero(t_ptf *p, char *tm)
 {
-	if (cs->preci == 0 && cs->flag['#'] == 0)
+	if (p->pre == 0 && p->f['#'] == 0)
 	{
-		if (*cs->ptr == 'e')
+		if (*p->ptr == 'e')
 		{
-			tm = ft_strjoin_2(cs->bef, cs->aft, 3);
-			cs->sign ? tm = ft_strjoin_2("-", tm, 2): 0;
-			if (cs->g)
-				cs->ptr = cs->temp;
+			tm = pf_strjoin(p->bef, p->aft, 3);
+			p->sgn ? tm = pf_strjoin("-", tm, 2) : 0;
+			if (p->g)
+				p->ptr = p->tmp;
 			return (tm);
 		}
-		free(cs->aft);
-		cs->sign ? cs->bef = ft_strjoin_2("-", cs->bef, 2): 0;
-		cs->g ?	cs->ptr = cs->temp : 0;
-		return (cs->bef);
+		free(p->aft);
+		p->sgn ? p->bef = pf_strjoin("-", p->bef, 2) : 0;
+		p->g ? p->ptr = p->tmp : 0;
+		return (p->bef);
 	}
-	else if (cs->preci == 0 && cs->flag['#'] && !(*cs->ptr == 'e'))
+	else if (p->pre == 0 && p->f['#'] && !(*p->ptr == 'e'))
 	{
-		tm = ft_strjoin_2(cs->bef, ".", 1);
-		free(cs->aft);
-		cs->sign ? tm = ft_strjoin_2("-", tm, 2): 0;
-		cs->g ?	cs->ptr = cs->temp : 0;
+		tm = pf_strjoin(p->bef, ".", 1);
+		free(p->aft);
+		p->sgn ? tm = pf_strjoin("-", tm, 2) : 0;
+		p->g ? p->ptr = p->tmp : 0;
 		return (tm);
 	}
 	return (NULL);
 }
 
-void	exponent_helper(t_cs *cs, char *b, int trz, int len)
+void	pf_exhelper(t_ptf *p, char *b, int trz, int len)
 {
 	char	*num;
 	char	*j;
@@ -69,24 +69,24 @@ void	exponent_helper(t_cs *cs, char *b, int trz, int len)
 
 	if (len < 10)
 	{
-		b[cs->preci - trz + 2] = '0';
-		b[cs->preci - trz + 3] = len + '0';
-		b[cs->preci - trz + 4] = '\0';
+		b[p->pre - trz + 2] = '0';
+		b[p->pre - trz + 3] = len + '0';
+		b[p->pre - trz + 4] = '\0';
 	}
 	else
 	{
 		num = ft_itoa(len);
-		j = ft_strjoin_2(b, num, 3);
+		j = pf_strjoin(b, num, 3);
 		b = j;
 	}
-	a = ft_strncpy(ft_strnew(1), cs->bef, 1);
-	free (cs->bef);
-	free (cs->aft);
-	cs->bef = a;
-	cs->aft = b;
+	a = ft_strncpy(ft_strnew(1), p->bef, 1);
+	free(p->bef);
+	free(p->aft);
+	p->bef = a;
+	p->aft = b;
 }
 
-char	*ft_strncpy_zero(char *dst, const char *src, size_t n)
+char	*pf_strncpy(char *dst, const char *src, size_t n)
 {
 	size_t	i;
 
@@ -105,25 +105,25 @@ char	*ft_strncpy_zero(char *dst, const char *src, size_t n)
 	return (dst);
 }
 
-void	get_exp_format(t_cs *cs)
+void	pf_getexp(t_ptf *p)
 {
 	char	*b;
 	int		trz;
 	int		len;
 
-	round_float(cs);
+	pf_roundfloat(p);
 	b = NULL;
-	b = ft_strncpy(ft_strnew(cs->preci + 4), cs->bef + 1, cs->preci);
-	if ((cs->preci - (int)ft_strlen(cs->bef + 1)) > 0)
-		ft_strncpy_zero(b + ft_strlen(cs->bef + 1), cs->aft,\
-			cs->preci - ft_strlen(cs->bef + 1));
+	b = ft_strncpy(ft_strnew(p->pre + 4), p->bef + 1, p->pre);
+	if ((p->pre - (int)ft_strlen(p->bef + 1)) > 0)
+		pf_strncpy(b + ft_strlen(p->bef + 1), p->aft,\
+			p->pre - ft_strlen(p->bef + 1));
 	trz = 0;
-	if (cs->g)
-		trz	= trim_trailing_zeros(b, cs->preci, 'e');
-	b[cs->preci - trz] = 'e';
-	len = ft_strlen(cs->bef) - 1 - cs->exp;
-	b[cs->preci - trz + 1] = len >= 0 ? '+' : '-';
+	if (p->g)
+		trz = pf_trimzeros(b, p->pre, 'e');
+	b[p->pre - trz] = 'e';
+	len = ft_strlen(p->bef) - 1 - p->exp;
+	b[p->pre - trz + 1] = len >= 0 ? '+' : '-';
 	len *= len >= 0 ? 1 : -1;
-	b[cs->preci - trz + 2] = '\0';
-	exponent_helper(cs, b, trz, len);
+	b[p->pre - trz + 2] = '\0';
+	pf_exhelper(p, b, trz, len);
 }
