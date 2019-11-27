@@ -6,26 +6,26 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 19:05:42 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/25 21:30:29 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/26 12:47:23 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	pf_months(int **dim)
+void	pf_months(int dim[])
 {
-	*dim[0] = 31;
-	*dim[1] = 28;
-	*dim[2] = 31;
-	*dim[3] = 30;
-	*dim[4] = 31;
-	*dim[5] = 30;
-	*dim[6] = 31;
-	*dim[7] = 31;
-	*dim[8] = 30;
-	*dim[9] = 31;
-	*dim[10] = 30;
-	*dim[11] = 31;
+	dim[0] = 31;
+	dim[1] = 28;
+	dim[2] = 31;
+	dim[3] = 30;
+	dim[4] = 31;
+	dim[5] = 30;
+	dim[6] = 31;
+	dim[7] = 31;
+	dim[8] = 30;
+	dim[9] = 31;
+	dim[10] = 30;
+	dim[11] = 31;
 }
 
 void	pf_putchar(char *str)

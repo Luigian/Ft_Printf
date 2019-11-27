@@ -6,13 +6,13 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/25 20:40:27 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/26 21:13:39 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	pf_funfill(fpa fun[])
+void	pf_funfill(t_fpa fun[])
 {
 	int		i;
 
@@ -54,7 +54,7 @@ void	pf_reset(t_ptf *p)
 
 void	pf_init(const char *fmt, t_ptf *p)
 {
-	p->beg = fmt;
+	p->beg = (char *)fmt;
 	p->ptr = (char *)fmt;
 	p->bef = NULL;
 	p->aft = NULL;
@@ -64,7 +64,7 @@ void	pf_init(const char *fmt, t_ptf *p)
 
 void	pf_print(t_ptf *p)
 {
-	fpa		fun[128];
+	t_fpa	fun[128];
 	char	*str;
 
 	pf_reset(p);

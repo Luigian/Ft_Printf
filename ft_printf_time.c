@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 20:06:53 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/25 21:33:51 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/26 20:59:22 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*pf_time(t_ptf *p)
 	int			dim[12];
 	int			i;
 
-	pf_months(&dim);
+	pf_months(dim);
 	i = 0;
 	lonlon = va_arg(p->ap, long long);
 	if (lonlon < 0)
