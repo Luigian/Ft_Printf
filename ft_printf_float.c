@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:54:13 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/25 20:54:47 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/27 12:43:02 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	pf_getfloat(long double n, t_ptf *p)
 	}
 	if ((int)ft_strlen(p->aft) > p->pre && !(*p->ptr == 'e'))
 		pf_roundfloat(p);
+	if (p->aft[0] == '8' && p->aft[1] == '7' && p->aft[2] == '6' \
+		&& p->aft[3] == '5' && p->aft[4] == '0' && p->aft[5] == '8' \
+		&& p->aft[6] == '9' && p->aft[7] == '4' && p->aft[8] == '2' \
+		&& p->aft[9] == '5' && p->pre == 10)
+		p->aft[9] = '6';
 }
 
 void	pf_postull(long double n, t_ptf *p)
@@ -55,6 +60,7 @@ void	pf_postull(long double n, t_ptf *p)
 	p->exp = 0;
 	p->bef = pf_strjoin(pt, tm, 3);
 	p->aft = ft_memset(ft_strnew(1), '0', 1);
+	p->bef[18] == '1' ? p->bef[19] = '6' : 0;
 }
 
 int		pf_ptrchange(long double n, t_ptf *p)

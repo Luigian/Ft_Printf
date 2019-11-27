@@ -6,11 +6,11 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 21:08:55 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/18 19:24:24 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/27 12:22:12 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "printf.h"
 #include <stdio.h>
 
 int		main(void)
@@ -1869,8 +1869,17 @@ int		main(void)
 	ft_printf("2 February 1966 2:26:51:\t%-30k\n", (long long)-123456789);
 	ft_printf("13 October 1578 4:44:59:\t%-30k\n", (long long)-12345678901);
 	printf("[final tests]  ---------------------------------------------------\n");
-//	printf("%0-#+");	
-//	ft_printf("%0-#+");	
+	printf("%0-#+");	
+	ft_printf("%0-#+");	
+	ft_printf();	
+	printf("%s\n", "piedra", "papel", "tijera");	
+	ft_printf("%s\n", "piedra", "papel", "tijera");
+	printf("%.10Lf\n", 0.87650894255l);	
+	ft_printf("%.10Lf\n", 0.87650894255l);	
+	printf("%.11Lf\n", 0.87650894255);	
+	ft_printf("%.11Lf\n", 0.87650894255);	
+//	printf("%s\n", 12);	
+//	ft_printf("%s\n", 12);	
 	//fflush(stdout);
 	system("leaks a.out");
 	return (0);

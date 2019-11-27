@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:18:19 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/26 21:13:39 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/27 11:24:50 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int		ft_printf(const char *fmt, ...)
 {
 	t_ptf	p;
 
+	if (!fmt)
+		return (0);
 	va_start(p.ap, fmt);
 	va_copy(p.bp, p.ap);
 	pf_init(fmt, &p);
