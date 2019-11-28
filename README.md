@@ -80,7 +80,7 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 * An extension of the previous table with a more concise display was very practical while coding.
 <img src="resources/images/pf_fmtspecs_table_2.png" width="1000">
 
-After this 'analysis phase', i started writing the code in the following order:
+After this analysis i started writing the code in the following order:
 
 * Storing the format specifications (flags, width, precision, length) in variables of a structure.
 * The functions to print d, i and u.
