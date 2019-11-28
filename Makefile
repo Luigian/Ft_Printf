@@ -6,13 +6,13 @@
 #    By: lusanche <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 18:24:34 by lusanche          #+#    #+#              #
-#    Updated: 2019/11/26 21:18:43 by lusanche         ###   ########.fr        #
+#    Updated: 2019/11/28 08:34:31 by lusanche         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-PF_DIR = ./
+PF_DIR = ./ft_printf/
 PF_SRC = ft_printf_master.c \
 		ft_printf_store.c \
 		ft_printf_cspd.c \
@@ -26,8 +26,8 @@ PF_SRC = ft_printf_master.c \
 		ft_printf_bonus.c \
 		ft_printf_time.c
 
-LB_DIR = libft/
-LB_SRC =  ft_atoi.c \
+LB_DIR = ./ft_printf/libft/
+LB_SRC = ft_atoi.c \
 		ft_chrstr.c \
 		ft_isdigit.c \
 		ft_isspecial.c \
@@ -45,8 +45,8 @@ LB_SRC =  ft_atoi.c \
 
 LIBFT = $(addprefix $(LB_DIR), $(LB_SRC))
 PRINTF = $(addprefix $(PF_DIR), $(PF_SRC))
-PF_H = ft_printf.h
-LB_H = libft/libft.h
+PF_H = ft_printf/ft_printf.h
+LB_H = ft_printf/libft/libft.h
 OBJ = $(PF_SRC:.c=.o) $(LB_SRC:.c=.o)
 
 $(NAME):
