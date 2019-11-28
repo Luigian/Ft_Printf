@@ -3,9 +3,23 @@
 # Ft_Printf
 42 School Project
 
-This project was my first approach to the basics of graphic programming. Fdf project is about taking a text file as a parameter and retrieving data (characters) wich correspond to the x, y and z coordenates, and also the color, of many points that represent a map. I worked with the miniLibX graphic library and learned how to open a graphic window, how to calculate the place of the points and connect them with line segments to represent different perspectives (isometric, plane, front) of the same map. Dealing with these segments involved learning how to light a single pixel in the screen and use the Bresenham's algorithm. Observing the scene from a particular viewpoint made me learn about mouse and keyboard events and how these can make a program interact with the user.
+This projects seeks to discover variadic functions in C in a particularly relevant context, as well as to learn about a great example of a basic “dispatcher” in C via the use of an array of function’s pointers. This projects represents a good exercise in programming, because of printf's versatility in C. The key to a successful ft_printf is a well-structured and good extensible code.
 
-One of the most interesting parts, in my opinion, is to deal with the calculation of gradients in the lines, which helped me to better understand the way in which the color is encoded and then manipulated.
+Re-creation of the printf function, supporting %s, %S, %p, %d, %D, %i, %o, %O, %u, %U, %x, %X, %c, %C and more
+
+This project aims at rebuilding the printf library with basic functionality.
+
+This implementation includes management of:
+
+Minimal field width
+Precision
+Wildcards
+Length flags "hh, h, l, ll, j, z"
+Flags "#, 0, -, +"
+Unicode characters
+Convensions "s, S, p, d, D, i, o, O, u, U, x, X, c, C, n"
+
+using self-built standard functions
 
 ## Flowchart
 <img src="resources/images/fdf_flowchart.png" width="1000">
@@ -42,9 +56,9 @@ One of the most interesting parts, in my opinion, is to deal with the calculatio
 
 `make re` | Delete files generated from compilation and recompile.
 
-## Execution
+## Usage
 
-`gcc resources/test_main.c ft_printf/libftprintf.a && ./a.out` | Prints the test main is provided. 
+`gcc resources/test_main.c ft_printf/libftprintf.a && ./a.out` | Prints the test main provided as example. 
 
 ## Credits
 
