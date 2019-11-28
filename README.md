@@ -88,8 +88,6 @@ After this, i started writing the code in the following order:
 
 
 
-
-
 ## Flowchart
 <img src="resources/images/fdf_flowchart.png" width="1000">
 
