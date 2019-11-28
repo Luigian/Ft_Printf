@@ -18,8 +18,17 @@
 This implementation handles:
 <h3>Handled Conversion specifiers</h3>
 
-|Character | Description|
-|----------|------------|
+|Group|Specifier | Description|
+|-----|----------|------------|
+|argument|`n$`|Decimal digit string followed by a $, specifying the next argument to access.|
+|flag|`#`|May add '0' to `o`, '0x' to `x` and '0X' to `X`. Print the decimal point for `f`. Known as the 'alternate form'.|
+|flag|`0`|The value is padded on the left with zeros rather than blanks when the 'width' option is specified.|
+|flag|`-`|the converted value is to be left adjusted on the field boundary.|
+|flag|` `|A blank should be left before a positive number produced by a signed conversion.|
+|flag|`+`| A sign must always be placed before a number produced by a signed conversion.|
+|flag|`'`| Decimal and floating point conversion should be grouped and separated by thousands.|
+
+
 |`%` | literal % character.|
 |<code>c</code> | a specified char.|
 |<code>s</code> | string, a sequence of characters preceded of a '\0' char.|
@@ -40,11 +49,7 @@ This implementation handles:
 |<code>l</code> | For integer types, expects a long-sized integer argument. No effects on floating point vars.|
 |<code>ll</code> | For integer types, expects a long long-sized integer argument.|
 |<code>L</code> | For floating point types, causes printf to expect a long double argument.|
-|<code>#</code> | Prints alternate form.|
-|<code>0</code> | When the 'width' option is specified, prepends zeros for numeric types. (The default prepends spaces)|
-|<code> </code> | Prepends a space for positive signed-numeric types. (Overwritten by '+' flag)|
-|<code>-</code> | Left-align the output of this placeholder.|
-|<code>+</code> | Prepends a plus for positive signed-numeric types.|
+
 
 
 
