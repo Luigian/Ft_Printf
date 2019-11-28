@@ -15,7 +15,7 @@
 
   `%[argument][flags][width][precision][length]type`
 
-* This implementation handles:
+<h3>Implementation</h3>
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
