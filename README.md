@@ -93,6 +93,7 @@ After this 'analysis phase', i started writing the code in the following order:
 
 ## Installation
 `make && make clean` | Compiles and creates the library `libftprintf.a`.
+
 `make re && make clean` | Recompiles.
 
 ## Usage
