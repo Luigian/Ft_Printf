@@ -72,7 +72,7 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 * I made the next table to visualize the two last points:
 <img src="resources/images/pf_lengths_table.png" width="1000">
 
-* I made the following table to help me see, by testing the real printf, how the different types worked with different combinations of format specifications.
+* I made the following tables to help me see, by testing the real printf, how the different types worked with the different combinations of format specifications.
 <img src="resources/images/pf_fmtspecs_table_1.png" width="1000">
 <img src="resources/images/pf_fmtspecs_table_2.png" width="1000">
 
