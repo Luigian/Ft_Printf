@@ -57,7 +57,7 @@
 |`b`|The argument is printed in binary.|
 |`k`|The int argument is converted to timestamp.|
 
-<h3>My Project Logbook</h3>
+## Project Logbook
 
 The key to a successful ft_printf is a well-structured and good extensible code.
 
