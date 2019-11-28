@@ -1,4 +1,4 @@
-#<img src="resources/images/fdf_banner.png" width="1200">
+<img src="resources/images/fdf_banner.png" width="1200">
 
 # Ft_Printf - 42 School Project 
 
@@ -91,7 +91,7 @@ After this analysis i started writing the code in the following order:
 * After that i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
 
 ## Flowchart
-#<img src="resources/images/fdf_flowchart.png" width="1000">
+<img src="resources/images/fdf_flowchart.png" width="1000">
 
 ## Functions Hierarchy
 
@@ -104,8 +104,8 @@ After this analysis i started writing the code in the following order:
 `gcc resources/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
 
 ## Input & Output
-#<img src="resources/images/fdf_input.png" width="500">
-#<img src="resources/images/fdf_output.png" width="1000">
+<img src="resources/images/fdf_input.png" width="500">
+<img src="resources/images/fdf_output.png" width="1000">
 
 ## Credits
 [*Luis Julian Sanchez Quiros*](https://www.linkedin.com/in/luis-juli%C3%A1n-s%C3%A1nchez-quir%C3%B3s-13bb3b189/)
