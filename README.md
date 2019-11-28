@@ -3,15 +3,15 @@
 # Ft_Printf
 ### 42 School Project
 
-This project is about re-building the printf function with most of its functionality by using only other self-built functions based on the C standard library.
+* This project is about re-building the printf function with most of its functionality by using only other self-built functions based on the C standard library.
 
-ft_printf writes output to stdout according to a format and returns the number of characters printed or a negative number in case of error.  
+* ft_printf writes output to stdout according to a format and returns the number of characters printed or a negative number in case of error.  
 
-ft_printf is prototyped similarly to printf: `int ft_printf(const char* format, ...)`
+* ft_printf is prototyped similarly to printf: `int ft_printf(const char* format, ...)`
 
-ft_printf is a variadic function wich means that it can print a varying number of arguments of varying types.
+* ft_printf is a variadic function wich means that it can print a varying number of arguments of varying types.
 
-The string `const char* format` is composed by ordinary characters (not %), which are copied unchanged to the output; and conversion specifications introduced by `%` and ended by the type of conversion which must correspond properly to the next argument in the argument list `...`. The following may appear in a conversion sequence: 
+* The string `const char* format` is composed by ordinary characters (not %), which are copied unchanged to the output; and conversion specifications introduced by `%` and ended by the type of conversion which must correspond properly to the next argument in the argument list `...`. The following may appear in a conversion sequence: 
 
 `%[argument][flags][width][precision][length]type`
 
