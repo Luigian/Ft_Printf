@@ -20,19 +20,38 @@ This implementation handles:
 
 |Group|Specifier | Description|
 |-----|----------|------------|
-|argument|`n$`|Decimal digit string followed by a $, specifying the next argument to access.|
-|flag|`#`|Known as the 'alternate form', may add '0' for o, '0x' for x and '0X' for X. For 'f' always print the decimal point.|
+|argument|n`$`|Decimal digit string followed by a $, specifying the next argument to access.|
+|flag|`#`|Known as the 'alternate form', may add '0' for o, '0x' for x and '0X' for X. For f always print the decimal point.|
 |flag|`0`|The value is padded on the left with zeros rather than blanks when the 'width' option is specified.|
 |flag|`-`|The converted value is to be left adjusted on the field boundary.|
 |flag|` `(space)|A blank should be left before a positive number produced by a signed conversion.|
-|flag|`+`| A sign must always be placed before a number produced by a signed conversion.|
-|flag|`'`| Decimal and floating point conversion should be grouped and separated by thousands.|
+|flag|`+`|A sign must always be placed before a number produced by a signed conversion.|
+|flag|`'`|Decimal and floating point conversion should be grouped and separated by thousands.|
 |width|n| Decimal digit string specifying a minimum field width.|
-|precision|.n| A period '.' followed by a digit string gives the minimum number of digits to appear for d, i, o, u, x, and X conversions, the number of digits to appear after the decimal point for f, or the maximum number of characters to be printed from a string for s conversions.
-|length|`hh`| Specifies the size of the argument to 'signed char' or 'unsigned char'.
-|length|`h`| Specifies the size of the argument to 'short' or 'unsigned short'.
-|length|`l`| Specifies the size of the argument to 'signed char' or 'unsigned char'.
-|length|`ll`| Specifies the size of the argument to 'signed char' or 'unsigned char'.
+|precision|`.`n|A period '.' followed by a digit string gives the minimum number of digits to appear for d, i, o, u, x, and X conversions, the number of digits to appear after the decimal point for f, or the maximum number of characters to be printed from a string for s conversions.
+|length|`hh`|Specifies the size of the argument as 'signed char' or 'unsigned char'.
+|length|`h`|Specifies the size of the argument as 'short' or 'unsigned short'.
+|length|`l`|Specifies the size of the argument as 'long' or 'unsigned long'.
+|length|`ll`|Specifies the size of the argument as 'long long' or 'unsigned long long'.
+|length|`j`|Specifies the size of the argument as 'intmax_t' or 'uintmax_t'.
+|length|`z`|Specifies the size of the argument as 'size_t'.
+|length|`L`|Specifies the size of the argument as 'long double'.
+
+|Type|Description|
+|-----|----------|------------|
+
+
+|`d`,`i`|The argument is converted to signed decimal.|
+|`o`|The argument is converted to unsigned octal.|
+|`u`|The argument is converted to unsigned decimal.|
+|`U`|The 'long int' argument is converted to unsigned decimal.|
+|`x`|The argument is converted to unsigned hexadecimal in lowercase.|
+|`X`|The argument is converted to unsigned hexadecimal in uppercase.|
+|`f`|The double argument is rounded and converted to decimal notation in the style `[-]ddd.ddd`.|
+|`e`|The double argument is rounded and converted in the style `[-]d.ddde+-dd`.|
+|`g`|The double argument is converted in style f or e. Style e is used if the exponent from its conversion is less than -4 or greater than or equal to the precision.
+
+
 
 |`%` | literal % character.|
 |<code>c</code> | a specified char.|
@@ -44,16 +63,6 @@ This implementation handles:
 |<code>x</code> | unsigned int as a hexadecimal number (lowercase).|
 |<code>X</code> | unsigned int as a hexadecimal number (UPPERCASE).|
 |<code>f</code> | double in normal (fixed-point) notation.|
-
-<h3>Handled Flags</h3>
-
-|Character | Description|
-|----------|------------|
-|<code>h</code> | For integer types, expects an int-sized integer argument which was promoted from a short.|
-|<code>hh</code> | For integer types, expects an int-sized integer argument which was promoted from a char.|
-|<code>l</code> | For integer types, expects a long-sized integer argument. No effects on floating point vars.|
-|<code>ll</code> | For integer types, expects a long long-sized integer argument.|
-|<code>L</code> | For floating point types, causes printf to expect a long double argument.|
 
 
 
