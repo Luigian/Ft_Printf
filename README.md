@@ -3,7 +3,19 @@
 # Ft_Printf
 42 School Project
 
-This projects seeks to discover variadic functions in C in a particularly relevant context, as well as to learn about a great example of a basic “dispatcher” in C via the use of an array of function’s pointers. This projects represents a good exercise in programming, because of printf's versatility in C. The key to a successful ft_printf is a well-structured and good extensible code.
+This projects is about re-building the printf function with most of its functionality by using only other self-built functions based on the C standard library.
+
+ft_printf writes output to stdout according to a format and returns the number of characters printed or a negative number in case of error.  
+
+ft_printf is prototyped similarly to printf: `int ft_printf(const char* format, ...)`
+
+ft_printf is a variadic function wich means that it can print a varying number of arguments of varying types.
+
+The string `const char* format` is composed by ordinary characters (not %), which are copied unchanged to the output; and conversion specifications introduced by `%`. This conversion specifications end with a `type` which must correspond properly to the next argument in the argument list `...`. Between the introducer `%` and the `type` the following appear in sequence: 
+
+
+
+discover variadic functions in C in a particularly relevant context, as well as to learn about a great example of a basic “dispatcher” in C via the use of an array of function’s pointers. This projects represents a good exercise in programming, because of printf's versatility in C. The key to a successful ft_printf is a well-structured and good extensible code.
 
 Re-creation of the printf function, supporting %s, %S, %p, %d, %D, %i, %o, %O, %u, %U, %x, %X, %c, %C and more
 
@@ -19,7 +31,8 @@ Flags "#, 0, -, +"
 Unicode characters
 Convensions "s, S, p, d, D, i, o, O, u, U, x, X, c, C, n"
 
-using self-built standard functions
+
+
 
 ## Flowchart
 <img src="resources/images/fdf_flowchart.png" width="1000">
@@ -29,24 +42,6 @@ using self-built standard functions
 
 ## Output
 <img src="resources/images/fdf_output.png" width="1000">
-
-## Key points
-
-* Trigonometry
-* Objects
-* Data structures.
-
-## Objectives
-* Simple graphic library
-* Segment layout
-* Events
-* 3D projection to 2D
-
-## Skills
-* Graphics
-* Imperative programming
-* Algorithms & AI
-* Rigor 
 
 ## Installation
 
