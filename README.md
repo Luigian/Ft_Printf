@@ -15,7 +15,7 @@
 
   `%[argument][flags][width][precision][length]type`
 
-This implementation handles:
+* This implementation handles:
 
 |Group|Specifier | Description|
 |-----|----------|------------|
