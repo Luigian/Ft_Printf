@@ -69,7 +69,7 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 * Read the man: `man 3 stdarg` `man printf` `man 3 printf`.
 * Learn about format conversion specifications for printf.
 * Learn more about data types.
-* Learn about integers lengths: char, short, long, long long, nan.
+* Learn about integers lengths: `char`, `short`, `long`, `long long`, `nan`.
 * Learn about floats: single precision, double precision and extended precision. 
 * I made the next table to visualize the two last points:
 <img src="resources/images/pf_lengths_table.png" width="1000">
