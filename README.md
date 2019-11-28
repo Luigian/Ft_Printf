@@ -15,7 +15,7 @@
 
   `%[argument][flags][width][precision][length]type`
 
-<h3>Implementation</h3>
+<h3>Supported</h3>
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
