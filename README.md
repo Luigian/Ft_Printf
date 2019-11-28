@@ -17,7 +17,7 @@
   
 * ft_printf is a great opportunity to implement a basic 'dispatcher' in C via the use of an array of function’s pointers. 
 
-<h3>Supported</h3>
+<h3>This Implementation Manage</h3>
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
