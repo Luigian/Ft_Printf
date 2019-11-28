@@ -50,15 +50,13 @@ using self-built standard functions
 
 ## Installation
 
-`make` | First time compilation. Creates the library `libftprintf.a` in the `ft_printf` directory.
+`make && make clean` | Compiles and creates the library `libftprintf.a`.
 
-`make fclean` | Delete files generated from compilation.
-
-`make re` | Delete files generated from compilation and recompile.
+`make re && make clean` | Recompiles.
 
 ## Usage
 
-`gcc resources/test_main.c ft_printf/libftprintf.a && ./a.out` | Prints the test main provided as example. 
+`gcc resources/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
 
 ## Credits
 
