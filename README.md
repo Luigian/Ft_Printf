@@ -1,7 +1,7 @@
 <img src="resources/images/fdf_banner.png" width="1200">
 
 # Ft_Printf
-## 42 School Project
+### 42 School Project
 
 This projects is about re-building the printf function with most of its functionality by using only other self-built functions based on the C standard library.
 
