@@ -1,7 +1,6 @@
 <img src="resources/images/fdf_banner.png" width="1200">
 
-# Ft_Printf 
-<h3>A 42 School Project</h3>
+# Ft_Printf <h3>A 42 School Project</h3>
 
 * This project is about re-building the printf function with most of its functionality by using only other self-built functions based on the C standard library.
 
@@ -59,19 +58,7 @@
 
 a great example of a basic “dispatcher” in C via the use of an array of function’s pointers. This projects represents a good exercise in programming, because of printf's versatility in C. The key to a successful ft_printf is a well-structured and good extensible code.
 
-Re-creation of the printf function, supporting %s, %S, %p, %d, %D, %i, %o, %O, %u, %U, %x, %X, %c, %C and more
 
-This project aims at rebuilding the printf library with basic functionality.
-
-This implementation includes management of:
-
-Minimal field width
-Precision
-Wildcards
-Length flags "hh, h, l, ll, j, z"
-Flags "#, 0, -, +"
-Unicode characters
-Convensions "s, S, p, d, D, i, o, O, u, U, x, X, c, C, n"
 
 
 
