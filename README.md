@@ -18,7 +18,7 @@
   
 * ft_printf is a great opportunity to implement a basic 'dispatcher' in C via the use of an array of function’s pointers. 
 
-## Supported in this implementation
+## Handled Specifiers
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
@@ -40,6 +40,8 @@
 |`z`|length|Specifies the size of the argument as 'size_t'.|
 |`L`|length|Specifies the size of the argument as 'long double'.|
 
+## Handled Types
+
 |Type|Description|
 |----|-----------|
 |`c`|The int argument is converted to an unsigned char.|
@@ -58,7 +60,7 @@
 |`b`|The argument is printed in binary.|
 |`k`|The int argument is converted to timestamp.|
 
-## Project Logbook
+## Process Logbook
 
 As they say: "The key to a successful ft_printf is a well-structured and good extensible code", so i try to give me the time to understand how the true printf worked to be prepared for the battle and this is the summary of what I did:
 
@@ -86,12 +88,15 @@ After this 'analysis phase', i started writing the code in the following order:
 * Then i worked on big numbers (negatives and positives), zero and null cases.
 * After that i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
 
-
-
-
-
 ## Flowchart
 <img src="resources/images/fdf_flowchart.png" width="1000">
+
+## Installation
+`make && make clean` | Compiles and creates the library `libftprintf.a`.
+`make re && make clean` | Recompiles.
+
+## Usage
+`gcc resources/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
 
 ## Input
 <img src="resources/images/fdf_input.png" width="500">
@@ -99,17 +104,8 @@ After this 'analysis phase', i started writing the code in the following order:
 ## Output
 <img src="resources/images/fdf_output.png" width="1000">
 
-## Installation
-
-`make && make clean` | Compiles and creates the library `libftprintf.a`.
-
-`make re && make clean` | Recompiles.
-
-## Usage
-
-`gcc resources/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
-
 ## Credits
-
 [*Luis Julian Sanchez Quiros*](https://www.linkedin.com/in/luis-juli%C3%A1n-s%C3%A1nchez-quir%C3%B3s-13bb3b189/)
 2019. Freemont, CA
+
+## About 42 School
