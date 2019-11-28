@@ -60,8 +60,29 @@
 
 ## Project Logbook
 
-The key to a successful ft_printf is a well-structured and good extensible code.
+As they say: "The key to a successful ft_printf is a well-structured and good extensible code", so i try to give me the time to understand how the true printf worked to be prepared for the battle and this is the summary of what I did:
 
+* Read the pdf.
+* Read about variadic functions on internet.
+* Read the man: `man 3 stdarg` `man printf` `man 3 printf`.
+* Learn about format conversion specifications for printf.
+* Learn more about data types.
+* Learn about integers lengths: char, short, long, long long, nan.
+* Learn about floats: single precision, double precision and extended precision. 
+* I made the next table to visualize the two last points:
+<img src="resources/images/pf_lengths_table.png" width="1000">
+* I made a 'printf format specifications' table to see how the different types worked with different combinations of flags. I did this by testing the real printf.
+<img src="resources/images/pf_fmtspecs_table.png" width="1000">
+
+After this, i started writing the code in the following order:
+
+* Storing the format specifications (flags, width, precision, length) in variables of a structure.
+* The functions to print d, i and u.
+* Then the functions to print o, x, X and p.
+* Then the functions to print c, s.
+* The most difficult one, the function to print f.
+* Then i worked on really big numbers (negatives and positives), zero and null cases.
+* After that i started with bonuses: \*, j, z, U, e, g, $, ', b, k.
 
 
 
