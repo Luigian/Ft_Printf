@@ -30,15 +30,15 @@
 |`+`|flag|A sign must always be placed before a number produced by a signed conversion.|
 |`'`|flag|Decimal and floating point conversion should be grouped and separated by thousands.|
 |n|width| Decimal digit string specifying a minimum field width.|
-|`.`n|precision|A period '.' followed by a digit string gives the minimum number of digits to appear for d, i, o, u, x, and X conversions, the number of digits to appear after the decimal point for f, or the maximum number of characters to be printed from a string for s conversions.
-|`*`|A field width or precision, or both, may be indicated by an asterisk or an asterisk followed by one or more decimal digits and a $ instead of a digit string. In this case, an int argument supplies the field width or precision.
-|`hh`|length|Specifies the size of the argument as 'signed char' or 'unsigned char'.
-|`h`|length|Specifies the size of the argument as 'short' or 'unsigned short'.
-|`l`|length|Specifies the size of the argument as 'long' or 'unsigned long'.
-|`ll`|length|Specifies the size of the argument as 'long long' or 'unsigned long long'.
-|`j`|length|Specifies the size of the argument as 'intmax_t' or 'uintmax_t'.
-|`z`|length|Specifies the size of the argument as 'size_t'.
-|`L`|length|Specifies the size of the argument as 'long double'.
+|`.`n|precision|A period '.' followed by a digit string gives the minimum number of digits to appear for d, i, o, u, x, and X conversions, the number of digits to appear after the decimal point for f, or the maximum number of characters to be printed from a string for s conversions.|
+|`*`||A field width or precision, or both, may be indicated by an asterisk or an asterisk followed by one or more decimal digits and a $ instead of a digit string. In this case, an int argument supplies the field width or precision.|
+|`hh`|length|Specifies the size of the argument as 'signed char' or 'unsigned char'.|
+|`h`|length|Specifies the size of the argument as 'short' or 'unsigned short'.|
+|`l`|length|Specifies the size of the argument as 'long' or 'unsigned long'.|
+|`ll`|length|Specifies the size of the argument as 'long long' or 'unsigned long long'.|
+|`j`|length|Specifies the size of the argument as 'intmax_t' or 'uintmax_t'.|
+|`z`|length|Specifies the size of the argument as 'size_t'.|
+|`L`|length|Specifies the size of the argument as 'long double'.|
 
 |Type|Description|
 |----|-----------|
