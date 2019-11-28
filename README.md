@@ -91,6 +91,8 @@ After this 'analysis phase', i started writing the code in the following order:
 ## Flowchart
 <img src="resources/images/fdf_flowchart.png" width="1000">
 
+## Functions Hierarchy
+
 ## Installation
 `make && make clean` | Compiles and creates the library `libftprintf.a`.
 
@@ -110,3 +112,9 @@ After this 'analysis phase', i started writing the code in the following order:
 2019. Freemont, CA
 
 ## About 42 School
+#### About 42  
+[42][42] is a free, non profit, project-based, peer-to-peer learning coding school. It originated in France and now has over 20 campuses all over the world. More information can be found [here][42]
+
+[42]: http://42.us.org "42 USA"
+[pdf]:  "Pdf"
+
