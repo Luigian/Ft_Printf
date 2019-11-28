@@ -16,8 +16,8 @@
 
 * This implementation handles:
 
-|Group|Specifier | Description|
-|-----|----------|------------|
+|Specifier|Group|Description|
+|---------|-----|-----------|
 |n`$`|argument|Decimal digit string followed by a $, specifying the next argument to access.|
 |`#`|flag|Known as the 'alternate form', may add '0' for o, '0x' for x and '0X' for X. For f always print the decimal point.|
 |`0`|flag|The value is padded on the left with zeros rather than blanks when the 'width' option is specified.|
