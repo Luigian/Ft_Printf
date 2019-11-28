@@ -71,8 +71,8 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 * Learn about floats: single precision, double precision and extended precision. 
 * I made the next table to visualize the two last points:
 <img src="resources/images/pf_lengths_table.png" width="1000">
-* I made a 'printf format specifications' table to see how the different types worked with different combinations of flags. I did this by testing the real printf.
 
+* I made a 'printf format specifications' table to see how the different types worked with different combinations of flags. I did this by testing the real printf.
 <img src="resources/images/pf_fmtspecs_table_1.png" width="1000">
 <img src="resources/images/pf_fmtspecs_table_2.png" width="1000">
 
