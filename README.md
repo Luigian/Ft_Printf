@@ -16,7 +16,6 @@
   `%[argument][flags][width][precision][length]type`
 
 This implementation handles:
-<h3>Handled Conversion specifiers</h3>
 
 |Group|Specifier | Description|
 |-----|----------|------------|
@@ -38,9 +37,7 @@ This implementation handles:
 |length|`L`|Specifies the size of the argument as 'long double'.
 
 |Type|Description|
-|-----|----------|------------|
-
-
+|----|-----------|
 |`d`,`i`|The argument is converted to signed decimal.|
 |`o`|The argument is converted to unsigned octal.|
 |`u`|The argument is converted to unsigned decimal.|
@@ -49,7 +46,7 @@ This implementation handles:
 |`X`|The argument is converted to unsigned hexadecimal in uppercase.|
 |`f`|The double argument is rounded and converted to decimal notation in the style `[-]ddd.ddd`.|
 |`e`|The double argument is rounded and converted in the style `[-]d.ddde+-dd`.|
-|`g`|The double argument is converted in style f or e. Style e is used if the exponent from its conversion is less than -4 or greater than or equal to the precision.
+|`g`|The double argument is converted in style f or e. Style e is used if the exponent from its conversion is less than -4 or greater than or equal to the precision.|
 
 
 
