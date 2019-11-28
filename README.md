@@ -19,25 +19,28 @@ This implementation handles:
 
 |Group|Specifier | Description|
 |-----|----------|------------|
-|argument|n`$`|Decimal digit string followed by a $, specifying the next argument to access.|
-|flag|`#`|Known as the 'alternate form', may add '0' for o, '0x' for x and '0X' for X. For f always print the decimal point.|
-|flag|`0`|The value is padded on the left with zeros rather than blanks when the 'width' option is specified.|
-|flag|`-`|The converted value is to be left adjusted on the field boundary.|
-|flag|` `(space)|A blank should be left before a positive number produced by a signed conversion.|
-|flag|`+`|A sign must always be placed before a number produced by a signed conversion.|
-|flag|`'`|Decimal and floating point conversion should be grouped and separated by thousands.|
-|width|n| Decimal digit string specifying a minimum field width.|
-|precision|`.`n|A period '.' followed by a digit string gives the minimum number of digits to appear for d, i, o, u, x, and X conversions, the number of digits to appear after the decimal point for f, or the maximum number of characters to be printed from a string for s conversions.
-|length|`hh`|Specifies the size of the argument as 'signed char' or 'unsigned char'.
-|length|`h`|Specifies the size of the argument as 'short' or 'unsigned short'.
-|length|`l`|Specifies the size of the argument as 'long' or 'unsigned long'.
-|length|`ll`|Specifies the size of the argument as 'long long' or 'unsigned long long'.
-|length|`j`|Specifies the size of the argument as 'intmax_t' or 'uintmax_t'.
-|length|`z`|Specifies the size of the argument as 'size_t'.
-|length|`L`|Specifies the size of the argument as 'long double'.
+|n`$`|argument|Decimal digit string followed by a $, specifying the next argument to access.|
+|`#`|flag|Known as the 'alternate form', may add '0' for o, '0x' for x and '0X' for X. For f always print the decimal point.|
+|`0`|flag|The value is padded on the left with zeros rather than blanks when the 'width' option is specified.|
+|`-`|flag|The converted value is to be left adjusted on the field boundary.|
+|` ` (space)|flag|A blank should be left before a positive number produced by a signed conversion.|
+|`+`|flag|A sign must always be placed before a number produced by a signed conversion.|
+|`'`|flag|Decimal and floating point conversion should be grouped and separated by thousands.|
+|n|width| Decimal digit string specifying a minimum field width.|
+|`.`n|precision|A period '.' followed by a digit string gives the minimum number of digits to appear for d, i, o, u, x, and X conversions, the number of digits to appear after the decimal point for f, or the maximum number of characters to be printed from a string for s conversions.
+|`hh`|length|Specifies the size of the argument as 'signed char' or 'unsigned char'.
+|`h`|length|Specifies the size of the argument as 'short' or 'unsigned short'.
+|`l`|length|Specifies the size of the argument as 'long' or 'unsigned long'.
+|`ll`|length|Specifies the size of the argument as 'long long' or 'unsigned long long'.
+|`j`|length|Specifies the size of the argument as 'intmax_t' or 'uintmax_t'.
+|`z`|length|Specifies the size of the argument as 'size_t'.
+|`L`|length|Specifies the size of the argument as 'long double'.
 
 |Type|Description|
 |----|-----------|
+|`c`|The int argument is converted to an unsigned char.|
+|`s`|The argument is expected to be a pointer to an array of character type.|
+|`p`|The void * pointer argument is printed in hexadecimal.|
 |`d`,`i`|The argument is converted to signed decimal.|
 |`o`|The argument is converted to unsigned octal.|
 |`u`|The argument is converted to unsigned decimal.|
@@ -47,29 +50,11 @@ This implementation handles:
 |`f`|The double argument is rounded and converted to decimal notation in the style `[-]ddd.ddd`.|
 |`e`|The double argument is rounded and converted in the style `[-]d.ddde+-dd`.|
 |`g`|The double argument is converted in style f or e. Style e is used if the exponent from its conversion is less than -4 or greater than or equal to the precision.|
+|`%`|A '%' is written.  No argument is converted. The complete conversion specification is `%%`.|
+|`b`|The argument is printed in binary.|
+|`k`|The int argument is converted to timestamp.|
 
 
-
-|`%` | literal % character.|
-|<code>c</code> | a specified char.|
-|<code>s</code> | string, a sequence of characters preceded of a '\0' char.|
-|<code>p</code> | the address of a variable in hexadecimal form|
-|<code>d,i</code> | int as a signed decimal number.|
-|<code>o</code> | unsigned int in octal.|
-|<code>u</code> | decimal unsigned int.|
-|<code>x</code> | unsigned int as a hexadecimal number (lowercase).|
-|<code>X</code> | unsigned int as a hexadecimal number (UPPERCASE).|
-|<code>f</code> | double in normal (fixed-point) notation.|
-
-
-
-
-
-
-
-
-
-n$, #, 0, -, (space), +, ', n, .n 
 
 
 a great example of a basic “dispatcher” in C via the use of an array of function’s pointers. This projects represents a good exercise in programming, because of printf's versatility in C. The key to a successful ft_printf is a well-structured and good extensible code.
