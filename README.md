@@ -36,7 +36,7 @@ One of the most interesting parts, in my opinion, is to deal with the calculatio
 
 ## Installation
 
-`make` | First time compilation.
+`make` | First time compilation. Creates the library `libftprintf.a` in the `ft_printf` directory.
 
 `make fclean` | Delete files generated from compilation.
 
@@ -44,7 +44,7 @@ One of the most interesting parts, in my opinion, is to deal with the calculatio
 
 ## Execution
 
-`./fdf 'source_file'` | Initialize a map in the graphic interface.
+`gcc resources/test_main.c ft_printf/libftprintf.a && ./a.out` | Prints the test main is provided. 
 
 ## Credits
 
