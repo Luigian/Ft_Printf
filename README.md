@@ -14,6 +14,8 @@
 * The string `const char* format` is composed by ordinary characters (not %), which are copied unchanged to the output; and conversion specifications introduced by `%` and ended by the type of conversion which must correspond properly to the next argument in the argument list `...`. The following may appear in a conversion sequence: 
 
   `%[argument][flag][width][precision][length]type`
+  
+* ft_printf is a great opportunity to implement a basic 'dispatcher' in C via the use of an array of function’s pointers. 
 
 <h3>Supported</h3>
 
@@ -54,10 +56,12 @@
 |`b`|The argument is printed in binary.|
 |`k`|The int argument is converted to timestamp.|
 
+<h3>My Project Logbook</h3>
+
+The key to a successful ft_printf is a well-structured and good extensible code.
 
 
 
-a great example of a basic “dispatcher” in C via the use of an array of function’s pointers. This projects represents a good exercise in programming, because of printf's versatility in C. The key to a successful ft_printf is a well-structured and good extensible code.
 
 
 
