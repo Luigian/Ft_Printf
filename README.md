@@ -7,46 +7,46 @@ This project was my first approach to the basics of graphic programming. Fdf pro
 
 One of the most interesting parts, in my opinion, is to deal with the calculation of gradients in the lines, which helped me to better understand the way in which the color is encoded and then manipulated.
 
-## Flowchart:
+## Flowchart
 <img src="resources/images/fdf_flowchart.png" width="1000">
 
-## Input:
+## Input
 <img src="resources/images/fdf_input.png" width="500">
 
-## Output:
+## Output
 <img src="resources/images/fdf_output.png" width="1000">
 
-## Key points:
+## Key points
 
 * Trigonometry
 * Objects
 * Data structures.
 
-## Objectives:
+## Objectives
 * Simple graphic library
 * Segment layout
 * Events
 * 3D projection to 2D
 
-## Skills:
+## Skills
 * Graphics
 * Imperative programming
 * Algorithms & AI
 * Rigor 
 
-## Installation:
+## Installation
 
-`make all` | First time compilation.
+`make` | First time compilation.
 
 `make fclean` | Delete files generated from compilation.
 
 `make re` | Delete files generated from compilation and recompile.
 
-## Execution:
+## Execution
 
 `./fdf 'source_file'` | Initialize a map in the graphic interface.
 
-## Credits:
+## Credits
 
 [*Luis Julian Sanchez Quiros*](https://www.linkedin.com/in/luis-juli%C3%A1n-s%C3%A1nchez-quir%C3%B3s-13bb3b189/)
 2019. Freemont, CA
