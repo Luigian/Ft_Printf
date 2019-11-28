@@ -82,7 +82,7 @@ After this, i started writing the code in the following order:
 * Then the functions to print c, s.
 * The most difficult one, the function to print f.
 * Then i worked on really big numbers (negatives and positives), zero and null cases.
-* After that i started with bonuses: \*, j, z, U, e, g, $, ', b, k.
+* After that i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
 
 
 
