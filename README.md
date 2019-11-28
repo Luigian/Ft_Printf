@@ -20,7 +20,7 @@ This implementation handles:
 
 |Character | Description|
 |----------|------------|
-|<code>%</code> | literal % character.|
+|% | literal % character.|
 |<code>c</code> | a specified char.|
 |<code>s</code> | string, a sequence of characters preceded of a '\0' char.|
 |<code>p</code> | the address of a variable in hexadecimal form|
