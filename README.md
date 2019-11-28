@@ -13,7 +13,7 @@
 
 * The string `const char* format` is composed by ordinary characters (not %), which are copied unchanged to the output; and conversion specifications introduced by `%` and ended by the type of conversion which must correspond properly to the next argument in the argument list `...`. The following may appear in a conversion sequence: 
 
-  `%[argument][flags][width][precision][length]type`
+  `%[argument][flag][width][precision][length]type`
 
 <h3>Supported</h3>
 
