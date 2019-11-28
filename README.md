@@ -21,13 +21,18 @@ This implementation handles:
 |Group|Specifier | Description|
 |-----|----------|------------|
 |argument|`n$`|Decimal digit string followed by a $, specifying the next argument to access.|
-|flag|`#`|May add '0' to `o`, '0x' to `x` and '0X' to `X`. Print the decimal point for `f`. Known as the 'alternate form'.|
+|flag|`#`|Known as the 'alternate form', may add '0' for o, '0x' for x and '0X' for X. For 'f' always print the decimal point.|
 |flag|`0`|The value is padded on the left with zeros rather than blanks when the 'width' option is specified.|
-|flag|`-`|the converted value is to be left adjusted on the field boundary.|
-|flag|` `|A blank should be left before a positive number produced by a signed conversion.|
+|flag|`-`|The converted value is to be left adjusted on the field boundary.|
+|flag|` `(space)|A blank should be left before a positive number produced by a signed conversion.|
 |flag|`+`| A sign must always be placed before a number produced by a signed conversion.|
 |flag|`'`| Decimal and floating point conversion should be grouped and separated by thousands.|
-
+|width|n| Decimal digit string specifying a minimum field width.|
+|precision|.n| A period '.' followed by a digit string gives the minimum number of digits to appear for d, i, o, u, x, and X conversions, the number of digits to appear after the decimal point for f, or the maximum number of characters to be printed from a string for s conversions.
+|length|`hh`| Specifies the size of the argument to 'signed char' or 'unsigned char'.
+|length|`h`| Specifies the size of the argument to 'short' or 'unsigned short'.
+|length|`l`| Specifies the size of the argument to 'signed char' or 'unsigned char'.
+|length|`ll`| Specifies the size of the argument to 'signed char' or 'unsigned char'.
 
 |`%` | literal % character.|
 |<code>c</code> | a specified char.|
