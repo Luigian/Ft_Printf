@@ -34,7 +34,7 @@ One of the most interesting parts, in my opinion, is to deal with the calculatio
 * Algorithms & AI
 * Rigor 
 
-## Compilation ('fdf' directory):
+## Installation:
 
 `make all` | First time compilation.
 
