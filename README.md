@@ -1,7 +1,8 @@
 <img src="resources/images/fdf_banner.png" width="1200">
 
-<h1>Ft_Printf - 42 School Project</h1> 
-<h3>Highlights</h3>
+#Ft_Printf - 42 School Project 
+
+##Highlights
 
 * This project is about re-building the printf function with most of its functionality by using only other self-built functions based on the C standard library.
 
@@ -17,7 +18,7 @@
   
 * ft_printf is a great opportunity to implement a basic 'dispatcher' in C via the use of an array of function’s pointers. 
 
-<h3>This Implementation Manage</h3>
+##Supported in this implementation
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
