@@ -18,7 +18,7 @@
   
 * ft_printf is a great opportunity to implement a basic 'dispatcher' in C via the use of an array of function’s pointers. 
 
-## Handled Specifiers
+### Handled Specifiers
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
@@ -40,7 +40,7 @@
 |`z`|length|Specifies the size of the argument as 'size_t'.|
 |`L`|length|Specifies the size of the argument as 'long double'.|
 
-## Handled Types
+### Handled Types
 
 |Type|Description|
 |----|-----------|
