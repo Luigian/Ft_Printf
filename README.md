@@ -71,7 +71,7 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 * Learn more about data types.
 * Learn about integers lengths: `char`, `short`, `long`, `long long`, `nan`.
 * Learn about floats: single precision, double precision and extended precision. 
-* I made the next table to visualize the two last points:
+* I made the next table to visualize the last two points:
 <img src="resources/images/pf_lengths_table.png" width="1000">
 
 * I made the following table to help me see, by testing the real printf, how the different types worked with the different combinations of format specifications.
