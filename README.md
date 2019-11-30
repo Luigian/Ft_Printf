@@ -102,8 +102,8 @@ After this, i started to write the code in the following order:
 `gcc resources/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
 
 ## Input & Output
-<img src="resources/images/pf_input.png" width="500">
-<img src="resources/images/pf_output.png" width="500">
+<img src="resources/images/pf_input.png" width="300">
+<img src="resources/images/pf_output.png" width="300">
 
 ## Credits
 [*Luis Julian Sanchez Quiros*](https://www.linkedin.com/in/luis-juli%C3%A1n-s%C3%A1nchez-quir%C3%B3s-13bb3b189/)
