@@ -6,7 +6,7 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/16 19:19:00 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/27 12:44:53 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/29 09:24:05 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ void			pf_funfill(t_fpa fun[]);
 */
 
 void			pf_store(t_ptf *p);
-void			pf_length(t_ptf *p);
+void			pf_widarg(t_ptf *p);
 void			pf_prewid(t_ptf *p);
 void			pf_prearg(t_ptf *p);
-void			pf_widarg(t_ptf *p);
+void			pf_length(t_ptf *p);
 
 /*
 ** ft_printf_cspd.c

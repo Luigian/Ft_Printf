@@ -6,34 +6,38 @@
 /*   By: lusanche <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 10:15:02 by lusanche          #+#    #+#             */
-/*   Updated: 2019/11/27 09:44:19 by lusanche         ###   ########.fr       */
+/*   Updated: 2019/11/29 09:25:34 by lusanche         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	pf_widarg(t_ptf *p)
+void	pf_length(t_ptf *p)
 {
-	if (pf_argindex(p->ptr + 1))
+	if (*p->ptr == 'h' && p->len < 2)
 	{
-		p->arg = ft_atoi(p->ptr + 1);
-		va_copy(p->tp, p->bp);
-		while (--p->arg)
-			va_arg(p->tp, void*);
-		p->wid = va_arg(p->tp, int);
-		va_end(p->tp);
-		p->arg = 0;
-		++p->ptr;
-		while (ft_isdigit(*p->ptr))
+		p->len = 2;
+		if (*(p->ptr + 1) == 'h')
+		{
+			p->len = 1;
 			++p->ptr;
+		}
 	}
-	else
-		p->wid = va_arg(p->ap, int);
-	if (p->wid < 0)
+	else if (*p->ptr == 'l' && p->len < 4)
 	{
-		p->f['-'] = 1;
-		p->wid *= -1;
+		p->len = 3;
+		if (*(p->ptr + 1) == 'l')
+		{
+			p->len = 4;
+			++p->ptr;
+		}
 	}
+	else if (*p->ptr == 'j')
+		p->len = 3;
+	else if (*p->ptr == 'z')
+		p->len = 4;
+	else if (*p->ptr == 'L')
+		p->ext = 1;
 }
 
 void	pf_prearg(t_ptf *p)
@@ -85,32 +89,28 @@ void	pf_prewid(t_ptf *p)
 	}
 }
 
-void	pf_length(t_ptf *p)
+void	pf_widarg(t_ptf *p)
 {
-	if (*p->ptr == 'h' && p->len < 2)
+	if (pf_argindex(p->ptr + 1))
 	{
-		p->len = 2;
-		if (*(p->ptr + 1) == 'h')
-		{
-			p->len = 1;
+		p->arg = ft_atoi(p->ptr + 1);
+		va_copy(p->tp, p->bp);
+		while (--p->arg)
+			va_arg(p->tp, void*);
+		p->wid = va_arg(p->tp, int);
+		va_end(p->tp);
+		p->arg = 0;
+		++p->ptr;
+		while (ft_isdigit(*p->ptr))
 			++p->ptr;
-		}
 	}
-	else if (*p->ptr == 'l' && p->len < 4)
+	else
+		p->wid = va_arg(p->ap, int);
+	if (p->wid < 0)
 	{
-		p->len = 3;
-		if (*(p->ptr + 1) == 'l')
-		{
-			p->len = 4;
-			++p->ptr;
-		}
+		p->f['-'] = 1;
+		p->wid *= -1;
 	}
-	else if (*p->ptr == 'j')
-		p->len = 3;
-	else if (*p->ptr == 'z')
-		p->len = 4;
-	else if (*p->ptr == 'L')
-		p->ext = 1;
 }
 
 void	pf_store(t_ptf *p)
