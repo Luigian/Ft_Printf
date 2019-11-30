@@ -90,10 +90,8 @@ After this analysis i started writing the code in the following order:
 * Then i worked on big numbers (negatives and positives), zero and null cases.
 * After that i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
 
-## Flowchart
-<img src="resources/images/fdf_flowchart.png" width="1000">
-
 ## Functions Hierarchy
+<img src="resources/images/pf_funhierarchy.png" width="1000">
 
 ## Installation
 `make && make clean` | Compiles and creates the library `libftprintf.a`.
