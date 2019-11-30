@@ -18,6 +18,9 @@
   
 * ft_printf is a great opportunity to implement a basic 'dispatcher' in C via the use of an array of function’s pointers. 
 
+## Functions Hierarchy
+<img src="resources/images/pf_funhierarchy.png" width="1000">
+
 ### Handled Specifiers
 
 |Specifier|Group|Description|
@@ -78,9 +81,9 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 <img src="resources/images/pf_fmtspecs_table_1.png" width="1000">
 
 * An extension of the previous table with a more concise display was very practical while coding.
-<img src="resources/images/pf_fmtspecs_table_2.png" width="1000">
+<img src="resources/images/pf_fmtspecs_table_2.png" width="700">
 
-After this analysis i started writing the code in the following order:
+After this, i started to write the code in the following order:
 
 * Storing the format specifications (flags, width, precision, length) in variables of a structure.
 * The functions to print d, i and u.
@@ -89,9 +92,6 @@ After this analysis i started writing the code in the following order:
 * The most difficult one, the function to print f.
 * Then i worked on big numbers (negatives and positives), zero and null cases.
 * After that i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
-
-## Functions Hierarchy
-<img src="resources/images/pf_funhierarchy.png" width="1000">
 
 ## Installation
 `make && make clean` | Compiles and creates the library `libftprintf.a`.
