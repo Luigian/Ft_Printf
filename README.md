@@ -81,7 +81,7 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 <img src="resources/images/pf_fmtspecs_table_1.png" width="1000">
 
 * An extension of the previous table with a more concise display was very practical while coding.
-<img src="resources/images/pf_fmtspecs_table_2.png" width="1000">
+<img src="resources/images/pf_fmtspecs_table_2.png" width="700">
 
 After this analysis i started writing the code in the following order:
 
