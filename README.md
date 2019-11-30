@@ -1,4 +1,4 @@
-<img src="resources/images/fdf_banner.png" width="1200">
+<img src="resources/images/pf_banner.png" width="1200">
 
 # Ft_Printf - 42 School Project 
 
