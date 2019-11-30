@@ -21,7 +21,7 @@
 ## Functions Hierarchy
 <img src="resources/images/pf_funhierarchy.png" width="1000">
 
-### Handled Specifiers
+## Handled Specifiers and Types
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
@@ -42,8 +42,6 @@
 |`j`|length|Specifies the size of the argument as 'intmax_t' or 'uintmax_t'.|
 |`z`|length|Specifies the size of the argument as 'size_t'.|
 |`L`|length|Specifies the size of the argument as 'long double'.|
-
-### Handled Types
 
 |Type|Description|
 |----|-----------|
