@@ -18,7 +18,7 @@
   
 * ft_printf is a great opportunity to implement a basic 'dispatcher' in C via the use of an array of function’s pointers. 
 
-## Supported in this implementation
+### Handled Specifiers
 
 |Specifier|Group|Description|
 |---------|-----|-----------|
@@ -40,6 +40,8 @@
 |`z`|length|Specifies the size of the argument as 'size_t'.|
 |`L`|length|Specifies the size of the argument as 'long double'.|
 
+### Handled Types
+
 |Type|Description|
 |----|-----------|
 |`c`|The int argument is converted to an unsigned char.|
@@ -58,7 +60,7 @@
 |`b`|The argument is printed in binary.|
 |`k`|The int argument is converted to timestamp.|
 
-## Project Logbook
+## Process Logbook
 
 As they say: "The key to a successful ft_printf is a well-structured and good extensible code", so i try to give me the time to understand how the true printf worked to be prepared for the battle and this is the summary of what I did:
 
@@ -67,47 +69,49 @@ As they say: "The key to a successful ft_printf is a well-structured and good ex
 * Read the man: `man 3 stdarg` `man printf` `man 3 printf`.
 * Learn about format conversion specifications for printf.
 * Learn more about data types.
-* Learn about integers lengths: char, short, long, long long, nan.
+* Learn about integers lengths: `char`, `short`, `long`, `long long`, `nan`.
 * Learn about floats: single precision, double precision and extended precision. 
-* I made the next table to visualize the two last points:
+* I made the next table to visualize the last two points:
 <img src="resources/images/pf_lengths_table.png" width="1000">
-* I made a 'printf format specifications' table to see how the different types worked with different combinations of flags. I did this by testing the real printf.
-<img src="resources/images/pf_fmtspecs_table.png" width="1000">
 
-After this, i started writing the code in the following order:
+* I made the following table to help me see, by testing the real printf, how the different types worked with the different combinations of format specifications.
+<img src="resources/images/pf_fmtspecs_table_1.png" width="1000">
+
+* An extension of the previous table with a more concise display was very practical while coding.
+<img src="resources/images/pf_fmtspecs_table_2.png" width="1000">
+
+After this analysis i started writing the code in the following order:
 
 * Storing the format specifications (flags, width, precision, length) in variables of a structure.
 * The functions to print d, i and u.
 * Then the functions to print o, x, X and p.
 * Then the functions to print c, s.
 * The most difficult one, the function to print f.
-* Then i worked on really big numbers (negatives and positives), zero and null cases.
+* Then i worked on big numbers (negatives and positives), zero and null cases.
 * After that i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
 
-
-
-
-
-## Flowchart
-<img src="resources/images/fdf_flowchart.png" width="1000">
-
-## Input
-<img src="resources/images/fdf_input.png" width="500">
-
-## Output
-<img src="resources/images/fdf_output.png" width="1000">
+## Functions Hierarchy
+<img src="resources/images/pf_funhierarchy.png" width="1000">
 
 ## Installation
-
 `make && make clean` | Compiles and creates the library `libftprintf.a`.
 
 `make re && make clean` | Recompiles.
 
 ## Usage
-
 `gcc resources/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
 
-## Credits
+## Input & Output
+<img src="resources/images/fdf_input.png" width="500">
+<img src="resources/images/fdf_output.png" width="1000">
 
+## Credits
 [*Luis Julian Sanchez Quiros*](https://www.linkedin.com/in/luis-juli%C3%A1n-s%C3%A1nchez-quir%C3%B3s-13bb3b189/)
 2019. Freemont, CA
+
+## About 42 School
+[42][42] is a free, non profit, project-based, peer-to-peer learning coding school. It originated in France and now has over 20 campuses all over the world. More information can be found [here][42]
+
+[42]: http://42.us.org "42 USA"
+[pdf]:  "Pdf"
+
