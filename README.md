@@ -87,9 +87,9 @@ After this, i started to write the code in the following order:
 * The functions to print d, i and u.
 * Then the functions to print o, x, X and p.
 * Then the functions to print c, s.
-* The most difficult one, the function to print f.
+* The most difficult one for me, the function to print f.
 * Then i worked on big numbers (negatives and positives), zero and null cases.
-* After that i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
+* After that, i started with bonuses: \*, j, z, U, e, g, $, ', b and k.
 
 ## Installation
 `make && make clean` | Compiles and creates the library `libftprintf.a`.
