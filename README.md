@@ -97,7 +97,7 @@ After this, i started to write the code in the following order:
 `make re && make clean` | Recompiles.
 
 ## Usage
-`gcc resources/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
+`gcc resources/test/test_main.c libftprintf.a && ./a.out` | Prints the test main provided as example. 
 
 ## Input & Output
 <img src="resources/images/pf_input.png" width="300">
