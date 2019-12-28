@@ -1,0 +1,61 @@
+
+PRINTF LOGBOOK
+
+
+Pre-production
+
+- read the pdf
+- read about variadic functions in wikipedia
+- read the man: 'man 3 stdarg' 'man printf' 'man 3 printf'
+- learn about format conversion specifications for printf
+- learn about data types
+- learn about integers lengths: char, short, long, long long, nan
+- learn about floats: single precision, double precision and extended precision
+- create 'printf format specifications' table (testing real printf in shell) 
+
+--------------------------------------------------------------------------------------------------------
+
+Production
+
+- planning the main with a flowchart
+- write code : parsing, copy flags in a structure.
+- write code: analyze and manage flags, manage different lengths and print: d, i, u, 
+- implementing itoa base to write o, x, X, p. 
+- write c, s, %.
+- f, casting adecuado para no perder bits al momento de convertir el float a string. Encontrar la forma de leer cada digito, en particular los que se encuentran despues del punto decimal, (multiplicar por 10 para recorrer el punto decimal hacia la derecha, y restar para separar y no incrementar exageradamente debido a las multiplicaciones, separando cada digito, se convierten a char y se pasan a un string temporal de un elemento  que con strjoin se unira inmediatamente al final del string mayor, que se retornara finalmente como el resultado del itoa).
+- test cases: big numbers (positives, negatives), zero, null.
+- run filechecker and correct the failed cases for mandatory and bonuses.
+- work in bonuses
+
+'va_start' and 'va_end' works with 	= structname.ap
+'va_arg' works with 			= structname->ap
+
+handle (real value as 'unsigned long long max' + 1) with floats.
+check negative floats
+check zero with floats
+return value
+filechecker
+bonus: *, j, z, U, e, g, $, ', %b, %k
+norminette
+check speed (7%)
+crash tests
+search other printf tests (curquiza/curqui_test, gavinfielder/pft)
+evaluations
+git documentation
+
+-------------------------------------------------------------------------------------------------------
+
+Remember:
+
+- proper use of malloc and free to avoid leaks, and of course segfaults and bus errors.
+- optimize speed (less if-else, smart code)
+- array of pointers to functions.
+- use structures as a champion.
+- write clean, organized, taking care of the norm from the beginning of project.
+- be simple and efficient.
+- before starting coding from scratch read what was others approach to resolve the problems and see how they structured their code.
+- for similar flag management as in ft_printf: is better to handle the flags separatedly, dont let them share functions, keep this in mind for future flags.
+
+
+
+
