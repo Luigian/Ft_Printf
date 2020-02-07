@@ -104,7 +104,7 @@ After this, i started to write the code in the following order:
 <img src="resources/images/pf_output.png" width="300">
 
 ## Credits
-[*Luis Julian Sanchez Quiros*](https://www.linkedin.com/in/luis-juli%C3%A1n-s%C3%A1nchez-quir%C3%B3s-13bb3b189/)
+[*Luis Sanchez*](https://www.linkedin.com/in/luis-sanchez-13bb3b189/)
 2019. Freemont, CA
 
 ## About 42 School
